@@ -1,4 +1,4 @@
-=== Email Customizer For Woocommerce ===
+=== Wbcom Designs – Woocommerce Email Customizer ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://wbcomdesigns.com/
 Tags: comments, spam
