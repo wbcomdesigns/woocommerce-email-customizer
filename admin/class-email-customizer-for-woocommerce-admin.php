@@ -781,7 +781,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $text Email Footer Text.
 	 */
 	public function wb_email_customizer_email_footer_text( $text ) {
-		return get_option( 'woocommerce_email_footer_text', __( 'WooCommece Email Customizer - Powered by WooCommerce and WordPress', 'woocommerce-email-customizer' ) );
+		return get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For Woocommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 	}
 
 	/**
@@ -797,9 +797,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$localized_vars = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'ajaxSendEmailNonce' => wp_create_nonce( '_wc_email_customizer_send_email_nonce' ),
-			'error'              => __( 'Error, Try again!', 'woocommerce-email-customizer' ),
-			'success'            => __( 'Email Sent!', 'woocommerce-email-customizer' ),
-			'saveFirst'          => __( 'Please click on save/publish before sending the test email', 'woocommerce-email-customizer' ),
+			'error'              => __( 'Error, Try again!', 'email-customizer-for-woocommerce' ),
+			'success'            => __( 'Email Sent!', 'email-customizer-for-woocommerce' ),
+			'saveFirst'          => __( 'Please click on save/publish before sending the test email', 'email-customizer-for-woocommerce' ),
 		);
 
 		wp_localize_script( 'woocommerce-email-customizer-controls', 'woocommerce_email_customizer_controls_local', $localized_vars );
