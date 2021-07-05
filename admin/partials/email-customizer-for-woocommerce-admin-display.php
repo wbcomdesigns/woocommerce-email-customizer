@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin
  *
@@ -12,5 +11,83 @@
  * @subpackage Email_Customizer_For_Woocommerce/admin/partials
  */
 ?>
+<p><?php esc_html_e( 'Your order has been received and is now being processed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<a href="#"><?php esc_html_e( 'Order', 'email-customizer-for-woocommerce' ); ?> #2020</a>
+
+<table>
+	<thead>
+		<tr>
+			<th><?php esc_html_e( 'Product', 'email-customizer-for-woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Quantity', 'email-customizer-for-woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Price', 'email-customizer-for-woocommerce' ); ?></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>Ninja Silhouette<br /></td>
+			<td>1</td>
+			<td>
+				<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+			</td>
+		</tr>
+	</tbody>
+
+	<tfoot>
+		<tr>
+			<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
+			<td>
+				<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
+			<td><?php esc_html_e( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
+		</tr>
+
+		<tr>
+			<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
+			<td>
+				<span>$2.00</span>
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="2"><?php esc_html_e( 'Payment Method:', 'email-customizer-for-woocommerce' ); ?></th>
+			<td><?php esc_html_e( 'Direct Bank Transfer', 'email-customizer-for-woocommerce' ); ?></td>
+		</tr>
+
+		<tr>
+			<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
+			<td>
+				<span>$22.00</span>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<br />
+<table class="addresses">
+	<tr>
+		<td valign="top" width="50%">
+			<h3><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
+
+			<p>
+				John Doe<br />
+				1234 Fake Street<br />
+				WooVille, SA
+			</p>
+		</td>
+
+		<td valign="top" width="50%">
+			<h3><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
+
+			<p>
+				John Doe<br />
+				1234 Fake Street<br />
+				WooVille, SA
+			</p>
+		</td>
+	</tr>
+</table>

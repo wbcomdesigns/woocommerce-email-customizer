@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -153,10 +152,19 @@ class Email_Customizer_For_Woocommerce {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Email_Customizer_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
-
+		$this->loader->add_action( 'wp_ajax_woocommerce_email_customizer_send_email', $plugin_admin, 'wb_email_customizer_send_email' );
+		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'wb_email_customizer_enqueue_customizer_control_script' );
+		$this->loader->add_filter( 'woocommerce_email_footer_text', $plugin_admin, 'wb_email_customizer_email_footer_text' );
+		$this->loader->add_filter( 'woocommerce_email_styles', $plugin_admin, 'wb_email_customizer_add_styles' );
+		$this->loader->add_filter( 'query_vars', $plugin_admin, 'wb_email_customizer_add_query_vars' );
+		$this->loader->add_action( 'customize_preview_init', $plugin_admin, 'wb_email_customizer_enqueue_customizer_script' );
+		$this->loader->add_action( 'template_redirect', $plugin_admin, 'wb_email_customizer_load_email_template', 10, 2 );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_sections', 40 );
+		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_controls', 50 );
+		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_customizer_settings' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_admin_setting_submenu_pages' );
 	}
 
 	/**
@@ -214,5 +222,4 @@ class Email_Customizer_For_Woocommerce {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

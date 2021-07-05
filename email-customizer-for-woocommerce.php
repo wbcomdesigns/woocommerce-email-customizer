@@ -35,6 +35,30 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
+if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION' ) ) {
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
+}
+if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR' ) ) {
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR', trailingslashit( dirname( __FILE__ ) ) );
+}
+if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH' ) ) {
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+}
+if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL' ) ) {
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+}
+if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_BASENAME' ) ) {
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+}
+if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_FILE' ) ) {
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_FILE', __FILE__ );
+}
+
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
 define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
 
 /**
@@ -44,8 +68,33 @@ define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
 function activate_email_customizer_for_woocommerce() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-email-customizer-for-woocommerce-activator.php';
 	Email_Customizer_For_Woocommerce_Activator::activate();
+	do_action( 'wb_email_customizer_update_option' );
 }
+/**
+ * Activation tasks.
+ */
+function wb_email_customizer_update_option() {
+	// Save current email settings.
+	$header_image     = get_option( 'woocommerce_email_header_image', 'http://' );
+	$footer_text      = get_option( 'woocommerce_email_footer_text', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) . ' - Powered by WooCommerce' );
+	$base_color       = get_option( 'woocommerce_email_base_color', '#557da1' );
+	$background_color = get_option( 'woocommerce_email_background_color', '#f5f5f5' );
+	$body_bg_color    = get_option( 'woocommerce_email_body_background_color', '#fdfdfd' );
+	$text_color       = get_option( 'woocommerce_email_text_color', '#505050' );
 
+	$settings = array(
+		'woocommerce_email_header_image'          => $header_image,
+		'woocommerce_email_footer_text'           => $footer_text,
+		'woocommerce_email_base_color'            => $base_color,
+		'woocommerce_email_background_color'      => $background_color,
+		'woocommerce_email_body_background_color' => $body_bg_color,
+		'woocommerce_email_text_color'            => $text_color,
+	);
+
+	update_option( 'wc_email_customizer_old_settings', $settings );
+
+	return true;
+}
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-email-customizer-for-woocommerce-deactivator.php
@@ -58,6 +107,47 @@ function deactivate_email_customizer_for_woocommerce() {
 register_activation_hook( __FILE__, 'activate_email_customizer_for_woocommerce' );
 register_deactivation_hook( __FILE__, 'deactivate_email_customizer_for_woocommerce' );
 
+if ( ! function_exists( 'wb_email_customizer_check_woocomerce' ) ) {
+
+	add_action( 'admin_init', 'wb_email_customizer_check_woocomerce' );
+	/**
+	 * Function check for woocommerce is installed and activate.
+	 *
+	 * @since    1.0.0
+	 */
+	function wb_email_customizer_check_woocomerce() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			add_action( 'admin_notices', 'wb_email_customizer_admin_notice' );
+			unset( $_GET['activate'] );
+		} else {
+			run_email_customizer_for_woocommerce();
+		}
+
+	}
+}
+
+
+if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
+	/**
+	 * Admin notice if WooCommerce not found.
+	 *
+	 * @since    1.0.0
+	 */
+	function wb_email_customizer_admin_notice() {
+
+		$email_customizer_plugin = esc_html__( 'Wbcom Designs – Woocommerce Email Customizer', 'email-customizer-for-woocommerce' );
+		$woo_plugin              = esc_html__( 'WooCommerce', 'email-customizer-for-woocommerce' );
+		echo '<div class="error"><p>';
+		/* Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce   */
+		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'email-customizer-for-woocommerce' ), '<strong>' . esc_html( $email_customizer_plugin ) . '</strong>', '<strong>' . esc_html( $woo_plugin ) . '</strong>' );
+		echo '</p></div>';
+		if ( isset( $_GET['activate'] ) ) {
+			unset( $_GET['activate'] );
+		}
+
+	}
+}
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
