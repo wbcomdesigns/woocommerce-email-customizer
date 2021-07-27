@@ -1,0 +1,242 @@
+# Copyright (C) 2021
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-27 14:12:54+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Varun Dubey\n"
+"Language-Team: Wbcom Designs\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: grunt-wp-i18n1.0.2\n"
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:141
+msgid "Woocommerce Email Customizer"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:141
+msgid "WC Email Customizer"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:164
+msgid "Email Customizer"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:173
+msgid "Email Header"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:182
+msgid "Email Body"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:192
+msgid "Email Footer"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:202
+msgid "Send Test Email"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:226
+msgid "Upload a Header"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:240
+msgid "Header Background Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:254
+#: admin/class-email-customizer-for-woocommerce-admin.php:255
+#: admin/class-email-customizer-for-woocommerce-admin.php:339
+#: admin/class-email-customizer-for-woocommerce-admin.php:340
+#: admin/class-email-customizer-for-woocommerce-admin.php:457
+#: admin/class-email-customizer-for-woocommerce-admin.php:458
+msgid "Font Size"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:270
+msgid "Header Text Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:286
+msgid "Background Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:299
+msgid "Content Background Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:312
+msgid "Link Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:325
+msgid "Text Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:355
+msgid "Email Width"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:361
+msgid "Narrow"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:362
+msgid "Default"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:363
+msgid "Wide"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:374
+msgid "Font Family"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:380
+msgid "Sans Serif"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:381
+msgid "Serif"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:393
+msgid "Rounded Corners"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:394
+msgid "Rounded corners"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:410
+msgid "Shadow Spread"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:411
+msgid "Amount of shadow behind email"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:429
+msgid "Footer Text Color"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:442
+msgid "Footer Text"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:610
+msgid "WooCommece Email Customizer - Powered by WooCommerce and WordPress"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:670
+msgid "HTML Email Template!"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:784
+msgid "Email Customizer For Woocommerce - Powered by WooCommerce and WordPress"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:800
+msgid "Error, Try again!"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:801
+msgid "Email Sent!"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:802
+msgid "Please click on save/publish before sending the test email"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:14
+msgid ""
+"Your order has been received and is now being processed. Your order details "
+"are shown below for your reference:"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:16
+msgid "Order"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:21
+msgid "Product"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:22
+msgid "Quantity"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:23
+msgid "Price"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:32
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:41
+msgid "(ex. tax)"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:39
+msgid "Subtotal:"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:46
+msgid "Shipping:"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:47
+msgid "Free Shipping"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:51
+msgid "Tax:"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:58
+msgid "Payment Method:"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:59
+msgid "Direct Bank Transfer"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:63
+msgid "Total:"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:74
+msgid "Billing address"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:84
+msgid "Shipping address"
+msgstr ""
+
+#: woocommerce-email-customizer.php:132
+msgid "Wbcom Designs – Woocommerce Email Customizer"
+msgstr ""
+
+#: woocommerce-email-customizer.php:133
+msgid "WooCommerce"
+msgstr ""
+
+#: woocommerce-email-customizer.php:136
+#. Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce
+msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
+msgstr ""
