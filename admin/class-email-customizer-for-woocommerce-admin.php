@@ -322,7 +322,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_body_text_color_control',
 				array(
-					'label'    => __( 'Text Color', 'eemail-customizer-for-woocommerce' ),
+					'label'    => __( 'Text Color', 'email-customizer-for-woocommerce' ),
 					'priority' => 70,
 					'section'  => 'wc_email_body',
 					'settings' => 'woocommerce_email_body_text_color',
@@ -360,7 +360,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'choices'  => array(
 						'500' => __( 'Narrow', 'email-customizer-for-woocommerce' ),
 						'600' => __( 'Default', 'email-customizer-for-woocommerce' ),
-						'700' => __( 'Wide', 'email-customizer-for-woocommercer' ),
+						'700' => __( 'Wide', 'email-customizer-for-woocommerce' ),
 					),
 				)
 			)
