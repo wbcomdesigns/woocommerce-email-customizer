@@ -138,7 +138,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$url
 		);
 
-		add_submenu_page( 'woocommerce', __( 'Woocommerce Email Customizer', 'email-customizer-for-woocommerce' ), __( 'WC Email Customizer', 'email-customizer-for-woocommerce' ), 'manage_woocommerce', $this->plugin_name, array( $this, 'wb_email_customizer_admin_page' ) );
+		add_submenu_page( 'woocommerce', __( 'Woocommerce Email Customizer', 'email-customizer-for-woocommerce' ), __( 'Email Customizer', 'email-customizer-for-woocommerce' ), 'manage_woocommerce', $this->plugin_name, array( $this, 'wb_email_customizer_admin_page' ) );
 		$submenu['woocommerce'][2][2] = esc_url_raw( $url );
 	}
 
