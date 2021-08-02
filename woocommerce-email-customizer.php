@@ -147,6 +147,13 @@ if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-email-customizer-for-woocommerce.php';
 
+require plugin_dir_path( __FILE__ ) . 'wec-update-checker\wec-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://demos.wbcomdesigns.com/exporter/free-plugins/woocommerce-email-customizer.json',
+	__FILE__, // Full path to the main plugin file or functions.php.
+	'woocommerce-email-customizer'
+);
+
 /**
  * Begins execution of the plugin.
  *
@@ -160,13 +167,5 @@ function run_email_customizer_for_woocommerce() {
 
 	$plugin = new Email_Customizer_For_Woocommerce();
 	$plugin->run();
-
-	require plugin_dir_path( __FILE__ ) . 'wec-update-checker\wec-update-checker.php';
-	$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-		'https://demos.wbcomdesigns.com/exporter/free-plugins/woocommerce-email-customizer.json',
-		__FILE__, // Full path to the main plugin file or functions.php.
-		'woocommerce-email-customizer'
-	);
-
 }
 run_email_customizer_for_woocommerce();
