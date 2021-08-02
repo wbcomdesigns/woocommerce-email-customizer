@@ -1,17 +1,16 @@
 'use strict';
-module.exports = function ( grunt ) {
+module.exports = function (grunt) {
 
-	// load all grunt tasks matching the `grunt-*` pattern
-	// Ref. https://npmjs.org/package/load-grunt-tasks
-	require( 'load-grunt-tasks' )( grunt );
-	grunt.initConfig(
-		{
+  // load all grunt tasks matching the `grunt-*` pattern
+  // Ref. https://npmjs.org/package/load-grunt-tasks
+  require('load-grunt-tasks')(grunt);
+  grunt.initConfig({
 
-				// Check text domain
-			checktextdomain: {
-				options: {
-					text_domain: [ 'email-customizer-for-woocommerce' ], // Specify allowed domain(s)
-					keywords: [ // List keyword specifications
+    // Check text domain
+    checktextdomain: {
+      options: {
+        text_domain: ['email-customizer-for-woocommerce'], // Specify allowed domain(s)
+        keywords: [ // List keyword specifications
 						'__:1,2d',
 						'_e:1,2d',
 						'_x:1,2c,3d',
@@ -27,44 +26,44 @@ module.exports = function ( grunt ) {
 						'_n_noop:1,2,3d',
 						'_nx_noop:1,2,3c,4d'
 					]
-				},
-				target: {
-					files: [ {
-						src: [
+      },
+      target: {
+        files: [{
+          src: [
 						'*.php',
 						'**/*.php',
 						'!node_modules/**',
 						'!options/framework/**',
-						'!tests/**'
+						'!tests/**',
+						'!wec-update-checker/**'
 							], // all php
-						expand: true
-					} ]
-				}
-			},
-				// make po files
-			makepot: {
-				target: {
-					options: {
-						cwd: '.', // Directory of files to internationalize.
-						domainPath: 'languages/', // Where to save the POT file.
-						exclude: [ 'node_modules/*', 'options/framework/*' ], // List of files or directories to ignore.
-						mainFile: 'index.php', // Main project file.
-						potFilename: 'email-customizer-for-woocommerce.pot', // Name of the POT file.
-						potHeaders: { // Headers to add to the generated POT file.
-							poedit: true, // Includes common Poedit headers.
-							'Last-Translator': 'Varun Dubey',
-							'Language-Team': 'Wbcom Designs',
-							'report-msgid-bugs-to': '',
-							'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
-						},
-						type: 'wp-plugin', // Type of project (wp-plugin or wp-theme).
-						updateTimestamp: true // Whether the POT-Creation-Date should be updated without other changes.
-					}
-				}
-			}
-		}
-	);
+          expand: true
+					}]
+      }
+    },
+    // make po files
+    makepot: {
+      target: {
+        options: {
+          cwd: '.', // Directory of files to internationalize.
+          domainPath: 'languages/', // Where to save the POT file.
+          exclude: ['node_modules/*', 'options/framework/*'], // List of files or directories to ignore.
+          mainFile: 'index.php', // Main project file.
+          potFilename: 'email-customizer-for-woocommerce.pot', // Name of the POT file.
+          potHeaders: { // Headers to add to the generated POT file.
+            poedit: true, // Includes common Poedit headers.
+            'Last-Translator': 'Varun Dubey',
+            'Language-Team': 'Wbcom Designs',
+            'report-msgid-bugs-to': '',
+            'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
+          },
+          type: 'wp-plugin', // Type of project (wp-plugin or wp-theme).
+          updateTimestamp: true // Whether the POT-Creation-Date should be updated without other changes.
+        }
+      }
+    }
+  });
 
-	// register task  'checktextdomain', 'makepot',
-	grunt.registerTask( 'default', [ 'checktextdomain','makepot' ] );
+  // register task  'checktextdomain', 'makepot',
+  grunt.registerTask('default', ['checktextdomain', 'makepot']);
 };
