@@ -157,8 +157,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
 	public function wb_email_customizer_add_sections( $wp_customize ) {
-
-		if ( is_user_logged_in() && true == $_GET['email-customizer-for-woocommerce'] ) {
+		$wb_email_customizer_check_url = isset( $_GET['email-customizer-for-woocommerce'] ) ? $_GET['email-customizer-for-woocommerce'] : '';
+		if ( is_user_logged_in() && true == $wb_email_customizer_check_url ) {
 			$wp_customize->add_panel(
 				'wc_email_header',
 				array(
