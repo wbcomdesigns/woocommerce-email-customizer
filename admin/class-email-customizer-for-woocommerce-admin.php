@@ -158,53 +158,56 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_add_sections( $wp_customize ) {
 
-		$wp_customize->add_panel(
-			'wc_email_header',
-			array(
-				'title'      => __( 'Email Customizer', 'email-customizer-for-woocommerce' ),
-				'capability' => 'edit_theme_options',
-				'priority'   => 10,
-			)
-		);
+		if ( is_user_logged_in() && true == $_GET['email-customizer-for-woocommerce'] ) {
+			$wp_customize->add_panel(
+				'wc_email_header',
+				array(
+					'title'      => __( 'Email Customizer', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 10,
+				)
+			);
 
-		$wp_customize->add_section(
-			'wc_email_header',
-			array(
-				'title'      => __( 'Email Header', 'email-customizer-for-woocommerce' ),
-				'capability' => 'edit_theme_options',
-				'priority'   => 20,
-				'panel'      => 'wc_email_header',
-			)
-		);
-		$wp_customize->add_section(
-			'wc_email_body',
-			array(
-				'title'      => __( 'Email Body', 'email-customizer-for-woocommerce' ),
-				'capability' => 'edit_theme_options',
-				'priority'   => 30,
-				'panel'      => 'wc_email_header',
-			)
-		);
+			$wp_customize->add_section(
+				'wc_email_header',
+				array(
+					'title'      => __( 'Email Header', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 20,
+					'panel'      => 'wc_email_header',
+				)
+			);
+			$wp_customize->add_section(
+				'wc_email_body',
+				array(
+					'title'      => __( 'Email Body', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 30,
+					'panel'      => 'wc_email_header',
+				)
+			);
 
-		$wp_customize->add_section(
-			'wc_email_footer',
-			array(
-				'title'      => __( 'Email Footer', 'email-customizer-for-woocommerce' ),
-				'capability' => 'edit_theme_options',
-				'priority'   => 50,
-				'panel'      => 'wc_email_header',
-			)
-		);
+			$wp_customize->add_section(
+				'wc_email_footer',
+				array(
+					'title'      => __( 'Email Footer', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 50,
+					'panel'      => 'wc_email_header',
+				)
+			);
 
-		$wp_customize->add_section(
-			'wc_email_send',
-			array(
-				'title'      => __( 'Send Test Email', 'email-customizer-for-woocommerce' ),
-				'capability' => 'edit_theme_options',
-				'priority'   => 60,
-				'panel'      => 'wc_email_header',
-			)
-		);
+			$wp_customize->add_section(
+				'wc_email_send',
+				array(
+					'title'      => __( 'Send Test Email', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 60,
+					'panel'      => 'wc_email_header',
+				)
+			);
+
+		}
 
 	}
 	/**
