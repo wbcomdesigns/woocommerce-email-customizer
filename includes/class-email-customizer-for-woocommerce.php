@@ -121,6 +121,8 @@ class Email_Customizer_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-email-customizer-for-woocommerce-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+
 		$this->loader = new Email_Customizer_For_Woocommerce_Loader();
 
 	}
@@ -165,6 +167,8 @@ class Email_Customizer_For_Woocommerce {
 		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_controls', 50 );
 		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_customizer_settings' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_admin_setting_submenu_pages' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_email_customizer_init_plugin_settings' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_views_add_admin_settings' );
 	}
 
 	/**

@@ -111,6 +111,108 @@ class Email_Customizer_For_Woocommerce_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/email-customizer-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+	/**
+	 * Actions performed to create a submenu page content.
+	 *
+	 * @since    1.0.0
+	 * @access public
+	 */
+	public function wb_email_customizer_admin_options_page() {
+		global $allowedposttags;
+		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
+		?>
+	<div class="wrap">
+		<div class="wbcom-wrap">
+			<div class="bupr-header">
+				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+				<hr class="wp-header-end">
+				<h1 class="wbcom-plugin-heading">
+					<?php esc_html_e( 'Email Customizer For Woocommerce', 'email-customizer-for-woocommerce' ); ?>
+				</h1>
+			</div>
+			<div class="wbcom-admin-settings-page">
+				<?php
+				settings_errors();
+				$this->wb_email_customizer_plugin_settings_tabs();
+				settings_fields( $tab );
+				do_settings_sections( $tab );
+				?>
+			</div>
+		</div>
+	</div>
+		<?php
+	}
+
+	/**
+	 * Actions performed on loading plugin settings
+	 *
+	 * @since    1.0.9
+	 * @access   public
+	 * @author   Wbcom Designs
+	 */
+	public function wb_email_customizer_init_plugin_settings() {
+		$this->plugin_settings_tabs['wb-email-customizer-welcome'] = esc_html__( 'Welcome', 'email-customizer-for-woocommerce' );
+		register_setting( 'wb_email_customizer_admin_welcome_options', 'wb_email_customizer_admin_welcome_options' );
+		add_settings_section( 'wb-email-customizer-welcome', ' ', array( $this, 'wb_email_customizer_admin_welcome_content' ), 'wb-email-customizer-welcome' );
+
+		$this->plugin_settings_tabs['wb-email-customizer-faq'] = esc_html__( 'FAQ', 'email-customizer-for-woocommerce' );
+		register_setting( 'wb_email_customizer_faq_options', 'wb_email_customizer_faq_options' );
+		add_settings_section( 'wb-email-customizer-faq', ' ', array( $this, 'wb_email_customizer_faq_options_content' ), 'wb-email-customizer-faq' );
+	}
+
+	/**
+	 * Actions performed to create tabs on the sub menu page.
+	 */
+	public function wb_email_customizer_plugin_settings_tabs() {
+		$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
+		// xprofile setup tab.
+		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
+		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
+			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
+			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wb-email-customizer-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
+		}
+		echo '</div></ul></div>';
+	}
+
+	/**
+	 * Wb_email_customizer_admin_welcome_content
+	 *
+	 * @return void
+	 */
+	public function wb_email_customizer_admin_welcome_content() {
+		include plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/wb-email-customizer-welcome-page.php';
+	}
+
+	/**
+	 * Wb_email_customizer_faq_options_content
+	 *
+	 * @return void
+	 */
+	public function wb_email_customizer_faq_options_content() {
+		include plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/wb-email-customizer-faq.php';
+	}
+
+
+	/**
+	 * Actions performed on loading admin_menu.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @author   Wbcom Designs
+	 */
+	public function wb_email_customizer_views_add_admin_settings() {
+		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			add_menu_page( esc_html__( 'WB Plugins', 'email-customizer-for-woocommerce' ), esc_html__( 'WB Plugins', 'email-customizer-for-woocommerce' ), 'manage_options', 'wbcomplugins', array( $this, 'wb_email_customizer_admin_options_page' ), 'dashicons-lightbulb', 59 );
+			add_submenu_page( 'wbcomplugins', esc_html__( 'Welcome', 'email-customizer-for-woocommerce' ), esc_html__( 'Welcome', 'email-customizer-for-woocommerce' ), 'manage_options', 'wbcomplugins' );
+
+		}
+		add_submenu_page( 'wbcomplugins', esc_html__( 'WC Email Customizer', 'email-customizer-for-woocommerce' ), esc_html__( 'WC Email Customizer', 'email-customizer-for-woocommerce' ), 'manage_options', 'wb-email-customizer-settings', array( $this, 'wb_email_customizer_admin_options_page' ) );
+	}
+
+
+
+
 	/**
 	 * Add a submenu item to the WooCommerce menu.
 	 *
