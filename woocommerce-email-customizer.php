@@ -144,3 +144,17 @@ function run_email_customizer_for_woocommerce() {
 	$plugin->run();
 }
 run_email_customizer_for_woocommerce();
+
+add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_settings' );
+/**
+ * wb_email_customizer_activation_redirect_settings
+ *
+ * @param  string $plugin plugin.
+ * @return void
+ */
+function wb_email_customizer_activation_redirect_settings( $plugin ) {
+
+		wp_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
+		exit;
+
+}
