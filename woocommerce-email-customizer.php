@@ -153,8 +153,9 @@ add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_setting
  * @return void
  */
 function wb_email_customizer_activation_redirect_settings( $plugin ) {
-
+	if ( plugin_basename( __FILE__ ) === $plugin ) {
 		wp_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
 		exit;
+	}
 
 }
