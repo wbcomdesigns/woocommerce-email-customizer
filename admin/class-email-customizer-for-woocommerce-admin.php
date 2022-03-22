@@ -61,7 +61,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$this->version       = $version;
 		$this->email_trigger = 'email-customizer-for-woocommerce';
 
-		if ( isset( $_GET[ $this->email_trigger ] ) ) {
+		if ( isset( $_GET[ $this->email_trigger ] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			add_action( 'wp_print_styles', array( $this, 'wb_email_customizer_remove_theme_styles' ), 100 );
 		}
 	}
@@ -259,7 +259,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
 	public function wb_email_customizer_add_sections( $wp_customize ) {
-		$wb_email_customizer_check_url = isset( $_GET['email-customizer-for-woocommerce'] ) ? $_GET['email-customizer-for-woocommerce'] : '';
+		$wb_email_customizer_check_url = isset( $_GET['email-customizer-for-woocommerce'] ) ? sanitize_text_field( wp_unslash( $_GET['email-customizer-for-woocommerce'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( is_user_logged_in() && true == $wb_email_customizer_check_url ) {
 			$wp_customize->add_panel(
 				'wc_email_header',
@@ -780,7 +780,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			wp_footer();
 
-			echo $message;
+			echo $message; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			exit;
 		}
 

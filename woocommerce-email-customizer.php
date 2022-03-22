@@ -87,7 +87,6 @@ if ( ! function_exists( 'wb_email_customizer_check_woocomerce' ) ) {
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			add_action( 'admin_notices', 'wb_email_customizer_admin_notice' );
-			unset( $_GET['activate'] );
 		} else {
 			run_email_customizer_for_woocommerce();
 		}
@@ -110,10 +109,6 @@ if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
 		/* Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce   */
 		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'email-customizer-for-woocommerce' ), '<strong>' . esc_html( $email_customizer_plugin ) . '</strong>', '<strong>' . esc_html( $woo_plugin ) . '</strong>' );
 		echo '</p></div>';
-		if ( isset( $_GET['activate'] ) ) {
-			unset( $_GET['activate'] );
-		}
-
 	}
 }
 /**
