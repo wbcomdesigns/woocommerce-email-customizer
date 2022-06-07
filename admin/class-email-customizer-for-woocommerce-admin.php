@@ -764,8 +764,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			$mailer = WC()->mailer();
 
-			wp_head();
-
 			ob_start();
 
 			include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
@@ -777,8 +775,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$email = new WC_Email();
 
 			$message = $email->style_inline( $mailer->wrap_message( $email_heading, $message ) );
-
-			wp_footer();
 
 			echo $message; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			exit;
