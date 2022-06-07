@@ -202,7 +202,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @author   Wbcom Designs
 	 */
 	public function wb_email_customizer_views_add_admin_settings() {
-		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) && class_exists( 'WooCommerce' ) ) {
 			add_menu_page( esc_html__( 'WB Plugins', 'email-customizer-for-woocommerce' ), esc_html__( 'WB Plugins', 'email-customizer-for-woocommerce' ), 'manage_options', 'wbcomplugins', array( $this, 'wb_email_customizer_admin_options_page' ), 'dashicons-lightbulb', 59 );
 			add_submenu_page( 'wbcomplugins', esc_html__( 'Welcome', 'email-customizer-for-woocommerce' ), esc_html__( 'Welcome', 'email-customizer-for-woocommerce' ), 'manage_options', 'wbcomplugins' );
 

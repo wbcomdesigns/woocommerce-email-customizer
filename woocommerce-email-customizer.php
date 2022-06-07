@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -102,12 +101,23 @@ if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
 	 * @since    1.0.0
 	 */
 	function wb_email_customizer_admin_notice() {
-
 		$email_customizer_plugin = esc_html__( 'Wbcom Designs – Woocommerce Email Customizer', 'email-customizer-for-woocommerce' );
 		$woo_plugin              = esc_html__( 'WooCommerce', 'email-customizer-for-woocommerce' );
+		$action                  = 'install-plugin';
+		$slug                    = 'woocommerce';
+		$plugin_install_link     = '<a href="' . wp_nonce_url(
+			add_query_arg(
+				array(
+					'action' => $action,
+					'plugin' => $slug,
+				),
+				admin_url( 'update.php' )
+			),
+			$action . '_' . $slug
+		) . '">' . $woo_plugin . '</a>';
 		echo '<div class="error"><p>';
 		/* Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce   */
-		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'email-customizer-for-woocommerce' ), '<strong>' . esc_html( $email_customizer_plugin ) . '</strong>', '<strong>' . esc_html( $woo_plugin ) . '</strong>' );
+		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'email-customizer-for-woocommerce' ), '<strong>' . esc_html( $email_customizer_plugin ) . '</strong>', '<strong>' . wp_kses_post( $plugin_install_link ) . '</strong>' );
 		echo '</p></div>';
 	}
 }
@@ -141,15 +151,17 @@ function run_email_customizer_for_woocommerce() {
 run_email_customizer_for_woocommerce();
 
 add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_settings' );
+
 /**
- * wb_email_customizer_activation_redirect_settings
+ * Redirect to plugin settings page after activated.
  *
- * @param  string $plugin plugin.
- * @return void
+ * @since  1.0.0
+ *
+ * @param string $plugin Path to the plugin file relative to the plugins directory.
  */
 function wb_email_customizer_activation_redirect_settings( $plugin ) {
-	if ( plugin_basename( __FILE__ ) === $plugin ) {
-		wp_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
+	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'WooCommerce' ) ) {
+		wp_safe_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
 		exit;
 	}
 
