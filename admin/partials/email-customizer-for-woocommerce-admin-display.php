@@ -10,6 +10,7 @@
  * @package    Email_Customizer_For_Woocommerce
  * @subpackage Email_Customizer_For_Woocommerce/admin/partials
  */
+
 ?>
 <p><?php esc_html_e( 'Your order has been received and is now being processed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 
