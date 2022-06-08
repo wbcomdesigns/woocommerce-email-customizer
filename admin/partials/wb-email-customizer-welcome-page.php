@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="col">
 						<h3><span class="dashicons dashicons-book"></span><?php esc_html_e( 'Documentation', 'email-customizer-for-woocommerce' ); ?></h3>
 						<p><?php esc_html_e( 'Email Customizer For WooCommerce plugin allows you to personalize your transactional emails. The plugin allows you to insert various elements into the template, such as text, images, Header, Footer, and much more.', 'email-customizer-for-woocommerce' ); ?></p>
-						<a href="<?php echo esc_url( 'https://wbcomdesigns.com/downloads/email-customizer-for-woocommerce/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'email-customizer-for-woocommerce' ); ?></a>
+						<a href="<?php echo esc_url( 'https://docs.wbcomdesigns.com/doc_category/woocommerce-email-customizer/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'email-customizer-for-woocommerce' ); ?></a>
 					</div>
 
 					<div class="col">
