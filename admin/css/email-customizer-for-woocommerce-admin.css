@@ -6,28 +6,7 @@
 .wrap .wbcom-plugin-heading{
 	display: block !important;
 }
-.wbcom-welcome-head h2.wbcom-welcome-title,
-.wb-email-customizer-tab-header h3 {
-    padding: 18px 25px;
-    font-size: 15px;
-    background: #2094f3;
-    color: #fff;
-    margin: 0 -15px 20px;
-}
-.wbcom-welcome-main-wrapper,
-.wb-email-customizer-admin-setting {
-    position: relative;
-    font-size: 15px;
-    background: #f6f6f6;
-    overflow: hidden;
-    padding: 0 15px 15px;
-    margin: 25px 0;
-}
-.wbcom-welcome-support-info {
-    border: 1px solid #ddd;
-    box-shadow: none;
-    margin-bottom: 0;
-}
+
 
  /*----------  Faq Style  ----------*/
 .wb-email-customizer-admin-col-12 {
@@ -159,3 +138,6 @@
 	border-radius: 4px;
 	color: #fff;
   }
+.nav-tab-wrapper ul li a#wb-email-customizer-faq-tab:before {
+	content: "\f125" !important;
+}

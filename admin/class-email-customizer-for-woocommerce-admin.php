@@ -122,25 +122,34 @@ class Email_Customizer_For_Woocommerce_Admin {
 		global $allowedposttags;
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
 		?>
-	<div class="wrap">
-		<div class="wbcom-wrap">
-			<div class="bupr-header">
-				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-				<hr class="wp-header-end">
-				<h1 class="wbcom-plugin-heading">
-					<?php esc_html_e( 'Email Customizer For Woocommerce', 'email-customizer-for-woocommerce' ); ?>
-				</h1>
+		<div class="wrap">
+			<div class="wbcom-bb-plugins-offer-wrapper">
+				<div id="wb_admin_logo">
+					<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/" target="_blank">
+						<img src="<?php echo esc_url( EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
+					</a>
+				</div>
 			</div>
-			<div class="wbcom-admin-settings-page">
-				<?php
-				settings_errors();
-				$this->wb_email_customizer_plugin_settings_tabs();
-				settings_fields( $tab );
-				do_settings_sections( $tab );
-				?>
+			<div class="wbcom-wrap">
+				<div class="blpro-header">
+					<div class="wbcom_admin_header-wrapper">
+						<div id="wb_admin_plugin_name">
+							<?php esc_html_e( 'Email Customizer For Woocommerce', 'email-customizer-for-woocommerce' ); ?>
+							<span><?php printf( __( 'Version %s', 'email-customizer-for-woocommerce' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION ); ?></span>
+						</div>
+						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+					</div>
+				</div>
+				<div class="wbcom-admin-settings-page">
+					<?php
+					settings_errors();
+					$this->wb_email_customizer_plugin_settings_tabs();
+					settings_fields( $tab );
+					do_settings_sections( $tab );
+					?>
+				</div>
 			</div>
 		</div>
-	</div>
 		<?php
 	}
 
