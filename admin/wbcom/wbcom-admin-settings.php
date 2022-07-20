@@ -30,7 +30,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			add_action( 'admin_menu', array( $this, 'wbcom_admin_additional_pages' ), 999 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'wbcom_enqueue_admin_scripts' ) );
 			add_action( 'wp_ajax_wbcom_addons_cards', array( $this, 'wbcom_addons_cards_links' ) );
-			add_action( 'in_admin_header', array( $this, 'wbcom_hide_all_admin_notices_from_setting_page' ) );
 		}
 
 		/**
@@ -45,22 +44,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				$display_extention = isset( $_POST['display_extension'] ) ? sanitize_text_field( wp_unslash( $_POST['display_extension'] ) ) : '';
 				echo esc_html( $display_extention );
 				die;
-			}
-
-		}
-
-		/**
-		 * Hide all notices from the setting page.
-		 *
-		 * @return void
-		 */
-		public function wbcom_hide_all_admin_notices_from_setting_page() {
-			$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'wb-email-customizer-settings' );
-			$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
-
-			if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
-				remove_all_actions( 'admin_notices' );
-				remove_all_actions( 'all_admin_notices' );
 			}
 
 		}
@@ -289,7 +272,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 						<li class="wb_admin_nav_item <?php echo esc_attr( $support_active ); ?>">
 							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcom-support-page'; ?>" id="wb_admin_nav_trigger_support">
 								<i class="fa fa-question-circle"></i>
-								<h4><?php esc_html_e( 'Support', 'email-customizer-for-woocommerce' ); ?></h4>
+								<h4><?php esc_html_e( 'Help & Support', 'email-customizer-for-woocommerce' ); ?></h4>
 							</a>
 						</li>
 						<?php do_action( 'wbcom_add_header_menu' ); ?>
