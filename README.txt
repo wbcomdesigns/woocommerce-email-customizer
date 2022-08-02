@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: https://wbcomdesigns.com/
 Tags: comments, spam
 Requires at least: 3.0.1
-Tested up to: 5.9.2
-Stable tag: 1.1.0
+Tested up to: 6.0.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,10 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+= 1.2.0 =
+Fix: Removed view more extension button
+Fix: Hide admin notices and update extension, support title
+Fix: Uupdated backend UI
 
 = 1.0.0 =
 * Initial Release
