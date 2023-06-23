@@ -296,6 +296,36 @@ class Email_Customizer_For_Woocommerce_Admin {
 			);
 
 			$wp_customize->add_section(
+				'wc_email_templates',
+				array(
+					'title'      => __( 'Email Templates', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 20,
+					'panel'      => 'wc_email_header',
+				)
+			);
+
+			$wp_customize->add_section(
+				'wc_email_text',
+				array(
+					'title'      => __( 'Email Texts', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 30,
+					'panel'      => 'wc_email_header',
+				)
+			);
+
+			$wp_customize->add_section(
+				'wc_email_padding_container',
+				array(
+					'title'      => __( 'Padding Conatiner', 'email-customizer-for-woocommerce' ),
+					'capability' => 'edit_theme_options',
+					'priority'   => 30,
+					'panel'      => 'wc_email_header',
+				)
+				);
+
+			$wp_customize->add_section(
 				'wc_email_header',
 				array(
 					'title'      => __( 'Email Header', 'email-customizer-for-woocommerce' ),
@@ -346,8 +376,146 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_add_controls( $wp_customize ) {
 
 		/**
+		 * email template
+		 */
+		 $wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'wc_email_templates_image_control',
+				array(
+					'label'    => __( 'Upload a Header', 'email-customizer-for-woocommerce' ),
+					'priority' => 10,
+					'section'  => 'wc_email_templates',
+					'settings' => 'woocommerce_email_header_image',
+					'context'  => 'email-customizer-for-woocommerce',
+				)
+			)
+		);
+
+		/**
+		 * Mail texts
+		 */
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_text_heading_control',
+				array(
+					'label'    => __( 'Heading Text', 'email-customizer-for-woocommerce' ),
+					'priority' => 30,
+					'section'  => 'wc_email_text',
+					'settings' => 'woocommerce_email_heading_text',
+					'type'     => 'text',
+				)
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_text_subheading_control',
+				array(
+					'label'    => __( 'Subheading Text', 'email-customizer-for-woocommerce' ),
+					'priority' => 30,
+					'section'  => 'wc_email_text',
+					'settings' => 'woocommerce_email_subheading_text',
+					'type'     => 'text',
+				)
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_text_body_control',
+				array(
+					'label'    => __( 'Body Text', 'email-customizer-for-woocommerce' ),
+					'priority' => 30,
+					'section'  => 'wc_email_text',
+					'settings' => 'woocommerce_email_body_text',
+					'type'     => 'text',
+				)
+			)
+		);
+
+		/**
+		 * container padding
+		 */
+
+		 
+		$wp_customize->add_control(
+			'wc_email_header_padding_container_top_control',
+			array(
+				'type'        => 'range',
+				'priority'    => 50,
+				'section'     => 'wc_email_padding_container',
+				'label'       => __( 'Padding Top', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Padding Top', 'email-customizer-for-woocommerce' ),
+				'settings'    => 'woocommerce_email_padding_container_top',
+				'input_attrs' => array(
+					'min'  => 15,
+					'max'  => 50,
+					'step' => 1,
+				),
+			)
+		);
+		
+		$wp_customize->add_control(
+			'wc_email_header_padding_container_bottom_control',
+			array(
+				'type'        => 'range',
+				'priority'    => 50,
+				'section'     => 'wc_email_padding_container',
+				'label'       => __( 'Padding Bottom', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Padding Bottom', 'email-customizer-for-woocommerce' ),
+				'settings'    => 'woocommerce_email_padding_container_bottom',
+				'input_attrs' => array(
+					'min'  => 15,
+					'max'  => 50,
+					'step' => 1,
+				),
+			)
+		);
+		
+		$wp_customize->add_control(
+			'wc_email_header_padding_container_left_right_control',
+			array(
+				'type'        => 'range',
+				'priority'    => 50,
+				'section'     => 'wc_email_padding_container',
+				'label'       => __( 'Padding Left/Right', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Padding Left/Right', 'email-customizer-for-woocommerce' ),
+				'settings'    => 'woocommerce_email_padding_container_left_right',
+				'input_attrs' => array(
+					'min'  => 15,
+					'max'  => 50,
+					'step' => 1,
+				),
+			)
+		);
+
+		/**
 		 * Email Header.
 		 */
+		
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'wc_email_header_image_placement',				
+				array(
+					'label'    => __( 'Header Image Placement', 'email-customizer-for-woocommerce' ),
+					'priority' => 10,
+					'section'  => 'wc_email_header',
+					'settings' => 'woocommerce_email_header_image_placement',
+					'type'     => 'select',
+					'choices'  => array(
+						'inside' => __( 'Inside the body container', 'email-customizer-for-woocommerce' ),
+						'outside' => __( 'Outside the body container', 'email-customizer-for-woocommerce' ),
+					),
+				)
+			)
+		);
+
 		$wp_customize->add_control(
 			new WP_Customize_Image_Control(
 				$wp_customize,
@@ -602,7 +770,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function control_filter( $active, $control ) {
-		if ( in_array( $control->section, array( 'wc_email_header', 'wc_email_body', 'wc_email_footer', 'wc_email_send' ) ) ) {
+		if ( in_array( $control->section, array( 'wc_email_template', 'wc_email_text', 'wc_email_header', 'wc_email_body', 'wc_email_footer', 'wc_email_send' ) ) ) {
 
 			return true;
 		}
@@ -615,6 +783,71 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
 	public function wb_email_customizer_add_customizer_settings( $wp_customize ) {
+
+		
+		$wp_customize->add_setting(
+			'woocommerce_email_heading_text',
+			array(
+				'type'      => 'option',
+				'default'   => __( 'WooCommece Email Haeding Text', 'email-customizer-for-woocommerce' ),
+				'transport' => 'postMessage',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_subheading_text',
+			array(
+				'type'      => 'option',
+				'default'   => __( 'WooCommece Email Subhaeding Text', 'email-customizer-for-woocommerce' ),
+				'transport' => 'postMessage',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_body_text',
+			array(
+				'type'      => 'option',
+				'default'   => __( 'WooCommece Email Body Text', 'email-customizer-for-woocommerce' ),
+				'transport' => 'postMessage',
+			)
+		);
+
+		
+		$wp_customize->add_setting(
+			'woocommerce_email_header_image_placement',
+			array(
+				'type'      => 'option',
+				'default'   => 'outside',
+				'transport' => 'postMessage',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_padding_container_top',
+			array(
+				'type'      => 'option',
+				'default'   => '30',
+				'transport' => 'postMessage',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_padding_container_bottom',
+			array(
+				'type'      => 'option',
+				'default'   => '30',
+				'transport' => 'postMessage',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_padding_container_left_right',
+			array(
+				'type'      => 'option',
+				'default'   => '30',
+				'transport' => 'postMessage',
+			)
+		);
 
 		$wp_customize->add_setting(
 			'woocommerce_email_background_color',
