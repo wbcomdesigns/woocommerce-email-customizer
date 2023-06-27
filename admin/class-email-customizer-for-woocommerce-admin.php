@@ -366,16 +366,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 			);
 
 			$wp_customize->add_section(
-				'wc_email_footer_customizer',
-				array(
-					'title'      => __( 'Email Footer Customizer', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 50,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
-			$wp_customize->add_section(
 				'wc_email_send',
 				array(
 					'title'      => __( 'Send Test Email', 'email-customizer-for-woocommerce' ),
@@ -901,7 +891,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				array(
 					'label'    => __( 'Footer Address Background Color', 'email-customizer-for-woocommerce' ),
 					'priority' => 10,
-					'section'  => 'wc_email_footer_customizer',
+					'section'  => 'wc_email_footer',
 					'settings' => 'woocommerce_email_footer_address_background_color',
 				)
 			)
@@ -912,7 +902,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			array(
 				'type'        => 'range',
 				'priority'    => 20,
-				'section'     => 'wc_email_footer_customizer',
+				'section'     => 'wc_email_footer',
 				'label'       => __( 'Footer Address Boarder', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Footer Address Boarder', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_footer_address_boarder',
@@ -932,7 +922,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				array(
 					'label'    => __( 'Footer Address Boarder Color', 'email-customizer-for-woocommerce' ),
 					'priority' => 30,
-					'section'  => 'wc_email_footer_customizer',
+					'section'  => 'wc_email_footer',
 					'settings' => 'woocommerce_email_footer_address_boarder_color',
 				)
 			)
@@ -945,7 +935,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				array(
 					'label'    => __( 'Footer Address Boarder Style', 'email-customizer-for-woocommerce' ),
 					'priority' => 130,
-					'section'  => 'wc_email_footer_customizer',
+					'section'  => 'wc_email_footer',
 					'settings' => 'woocommerce_email_footer_address_boarder_style',
 					'type'     => 'select',
 					'choices'  => array(
