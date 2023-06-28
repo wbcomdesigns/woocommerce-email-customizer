@@ -1388,6 +1388,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$padding_conatiner = '#header_wrapper {padding-top: '.get_option( 'woocommerce_email_padding_container_top', '10' ).'px'.' !important; padding-bottom: '.get_option( 'woocommerce_email_padding_container_bottom', '10' ).'px'.' !important; padding-left: '.get_option( 'woocommerce_email_padding_container_left_right', '10' ).'px'.' !important; padding-right: '.get_option( 'woocommerce_email_padding_container_left_right', '10' ).'px'.' !important;}' . PHP_EOL;
 
+		$footer_address = 'table.addresses {background: '.get_option( 'woocommerce_email_footer_address_background_color', '#202020' ).';border: '.get_option( 'woocommerce_email_footer_address_boarder', '2' ).'px'.get_option( 'woocommerce_email_footer_address_boarder_style', 'solid' ).' '.get_option( 'woocommerce_email_footer_address_boarder_color', '#202020' ).' !important;}' . PHP_EOL;
+
 		$styles .= PHP_EOL;
 		$styles .= $template_container_border;
 		$styles .= $bg_color;
@@ -1410,6 +1412,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$styles .= $addresses;
 		$styles .= $apprance_boarder_color;
 		$styles .= $padding_conatiner;
+		$styles .= $footer_address;
 
 		return $styles;
 	}
