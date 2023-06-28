@@ -1346,8 +1346,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$header_font_size = '#template_header h1 { font-size:' . get_option( 'woocommerce_email_header_font_size', '30' ) . 'px' . '; }' . PHP_EOL;
 
-		$header_cell_padding = '#header_wrapper { padding:36px 48px !important; }' . PHP_EOL;
-
 		$header_image = '#template_header_image { margin-left: auto; margin-right: auto; }' . PHP_EOL;
 
 		$template_container_border = 'table, table th, table td { border:none; border-style:none; border-width:0; }' . PHP_EOL;
@@ -1386,9 +1384,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$font_family = '#template_container, #template_header h1, #template_body table div, #template_footer p, #template_footer th, #template_footer td, #template_body table table, #body_content_inner table, #template_footer table { font-family:' . $font_family . '; }' . PHP_EOL;
 
-		$apprance_boarder_color = '#template_container{ border-color: '.get_option( 'woocommerce_email_boarder_color', '#202020' ).' !important; border-top: '.get_option( 'woocommerce_email_boarder_container_top', '1' ).'px'.'solid'.'; border-bottom: '.get_option( 'woocommerce_email_boarder_container_bottom', '1' ).'px'.'solid'.'; border-left: '.get_option( 'woocommerce_email_boarder_container_left', '1' ).'px'.'solid'.'; border-right: '.get_option( 'woocommerce_email_boarder_container_right', '1' ).'px'.'solid'.';}';
+		$apprance_boarder_color = '#template_container{ border-color: '.get_option( 'woocommerce_email_boarder_color', '#202020' ).' !important; border-top: '.get_option( 'woocommerce_email_boarder_container_top', '1' ).'px'.'solid'.'; border-bottom: '.get_option( 'woocommerce_email_boarder_container_bottom', '1' ).'px'.'solid'.'; border-left: '.get_option( 'woocommerce_email_boarder_container_left', '1' ).'px'.'solid'.'; border-right: '.get_option( 'woocommerce_email_boarder_container_right', '1' ).'px'.'solid'.';}' . PHP_EOL;
 
-		//$padding_conatiner = '#template_container {padding-top: '.get_option( 'woocommerce_email_boarder_container_right', '1' ).'px'.'; padding-bottom: '.get_option( 'woocommerce_email_boarder_container_right', '1' ).'px'.'; padding-left: '.get_option( 'woocommerce_email_boarder_container_right', '1' ).'px'.'; padding-right: '.get_option( 'woocommerce_email_boarder_container_right', '1' ).'px'.';}';
+		$padding_conatiner = '#header_wrapper {padding-top: '.get_option( 'woocommerce_email_padding_container_top', '10' ).'px'.' !important; padding-bottom: '.get_option( 'woocommerce_email_padding_container_bottom', '10' ).'px'.' !important; padding-left: '.get_option( 'woocommerce_email_padding_container_left_right', '10' ).'px'.' !important; padding-right: '.get_option( 'woocommerce_email_padding_container_left_right', '10' ).'px'.' !important;}' . PHP_EOL;
 
 		$styles .= PHP_EOL;
 		$styles .= $template_container_border;
@@ -1397,7 +1395,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$styles .= $header_bg_color;
 		$styles .= $header_image;
 		$styles .= $header_font_size;
-		$styles .= $header_cell_padding;
 		$styles .= $header_text_color;
 		$styles .= $body_items_table;
 		$styles .= $body_text_color;
@@ -1412,7 +1409,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$styles .= $template_shadow;
 		$styles .= $addresses;
 		$styles .= $apprance_boarder_color;
-		//$styles .= $padding_conatiner;
+		$styles .= $padding_conatiner;
 
 		return $styles;
 	}
