@@ -1407,8 +1407,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 			include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
 
 			$message = ob_get_clean();
-
-			$email_heading = __( 'HTML Email Template!', 'email-customizer-for-woocommerce' );
+			if(!empty(get_option('woocommerce_email_heading_text')) ){ 
+				$email_heading = __( get_option('woocommerce_email_heading_text'), 'email-customizer-for-woocommerce' );
+			}else{ 
+				$email_heading = __( 'HTML Email Template!', 'email-customizer-for-woocommerce' );
+			}			
 
 			$email = new WC_Email();
 
@@ -1563,4 +1566,5 @@ class Email_Customizer_For_Woocommerce_Admin {
 		global $wp_styles;
 		$wp_styles->queue = array();
 	}
+
 }
