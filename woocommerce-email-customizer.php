@@ -52,7 +52,7 @@ if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_BASENAME' ) ) {
 if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_FILE' ) ) {
 	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_FILE', __FILE__ );
 }
-
+require_once ABSPATH . WPINC . '/class-wp-customize-control.php';
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-email-customizer-for-woocommerce-activator.php
@@ -61,7 +61,7 @@ function activate_email_customizer_for_woocommerce() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-email-customizer-for-woocommerce-activator.php';
 	Email_Customizer_For_Woocommerce_Activator::activate();
 }
-
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-email-customizer-for-woocommerce-radio-image.php';
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-email-customizer-for-woocommerce-deactivator.php

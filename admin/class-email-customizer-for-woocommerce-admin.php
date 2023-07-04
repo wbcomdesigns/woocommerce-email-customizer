@@ -275,7 +275,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since   1.0
 	 */
 	public function wb_email_customizer_admin_page() {
-		require_once 'partials/email-customizer-for-woocommerce-admin-display.php';
+		$template = get_option( 'woocommerce_email_template');
+		
+		if($template == 'template-one'){
+			require_once 'partials/email-customizer-for-woocommerce-admin-display-template.php';
+		}else if($template == 'template-two'){
+			require_once 'partials/email-customizer-for-woocommerce-admin-display-template-two.php';
+		}else{
+			require_once 'partials/email-customizer-for-woocommerce-admin-display.php';
+		}
+		
 	}
 	/**
 	 * Added Customizer Sections.
@@ -389,19 +398,26 @@ class Email_Customizer_For_Woocommerce_Admin {
 		/**
 		 * email template
 		 */
-		 $wp_customize->add_control(
-			new WP_Customize_Image_Control(
-				$wp_customize,
-				'wc_email_templates_image_control',
+		
+		$wp_customize->add_control(
+			new theme_slug_Image_Radio_Control(
+				$wp_customize, 
+				'theme_slug_default_layout', 
 				array(
-					'label'    => __( 'Upload a Header', 'email-customizer-for-woocommerce' ),
-					'priority' => 10,
-					'section'  => 'wc_email_templates',
-					'settings' => 'woocommerce_email_header_image',
-					'context'  => 'email-customizer-for-woocommerce',
+					'type' => 'radio',
+					'label' => esc_html__('Select default layout', 'theme-textdomain'),
+					'section' => 'wc_email_templates',
+					'settings' => 'woocommerce_email_template',
+					'choices' => array(
+						'default' => 'http://bppoll.local/wp-content/uploads/2023/06/Cash-Home-Buying-Companies-in-Tampa-KM-Home-Buyers-400x250-1-1.webp',
+						'template-one' => 'http://bppoll.local/wp-content/uploads/2023/06/Cash-Home-Buying-Companies-in-Tampa-KM-Home-Buyers-400x250-1-1.webp',
+						'template-two' =>  'http://bppoll.local/wp-content/uploads/2023/06/Cash-Home-Buying-Companies-in-Tampa-KM-Home-Buyers-400x250-1-1.webp',
+						'template-two' => get_template_directory_uri() . '/img/no-sidebar-full-width-layout.png',
+						)
 				)
 			)
 		);
+		
 
 		/**
 		 * Mail texts
@@ -1061,6 +1077,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'transport' => 'postMessage',
 			)
 		);
+		
+		$wp_customize->add_setting(
+			'woocommerce_email_template',
+			array(
+				'type'      => 'option',
+				'default'   => '',
+				'transport' => 'postMessage',
+			)
+		);
 
 		
 		$wp_customize->add_setting(
@@ -1404,9 +1429,19 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			ob_start();
 
-			include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
+			$template = get_option( 'woocommerce_email_template');
+		
+			if($template == 'template-one'){
+				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template.php';
+			}else if($template == 'template-two'){
+				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php';
+			}else{
+				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
+			}
+			//include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
 
 			$message = ob_get_clean();
+			
 			if(!empty(get_option('woocommerce_email_heading_text')) ){ 
 				$email_heading = __( get_option('woocommerce_email_heading_text'), 'email-customizer-for-woocommerce' );
 			}else{ 
@@ -1424,6 +1459,19 @@ class Email_Customizer_For_Woocommerce_Admin {
 		return $wp_query;
 	}
 
+	/**
+	 * Hook in email header with access to the email object
+	 *
+	 * @param string $email_heading email heading.
+	 * @param object $email the email object.
+	 * @access public
+	 * @return void
+	 */
+	public function add_email_header( $email_heading, $email = '' ) {
+		wc_get_template( 'emails/email-header.php', array( 'email_heading' => $email_heading, 'email' => $email ) );
+	}
+
+	
 	/**
 	 * Enqueues the customizer JS script.
 	 */
@@ -1536,6 +1584,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_email_footer_text( $text ) {
 		return get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For Woocommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 	}
+
+	// public function wbcom_woocommerce_email_header() {
+	// 	//wc_get_template( 'emails/email-header.php', array( 'email_heading' => $email_heading, 'email' => $email ) );
+	// 	echo "hello";
+	// }
 
 	/**
 	 * Enqueues scripts on the control panel side
