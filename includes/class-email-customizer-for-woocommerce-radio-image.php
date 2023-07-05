@@ -14,9 +14,9 @@ public function render_content() {
         foreach ($this->choices as $value => $label) :
             $class = ($this->value() == $value) ? 'theme-slug-radio-img-selected theme-slug-radio-img-img' : 'theme-slug-radio-img-img';
             ?>
-            <li style="display: inline;">
+            <li style="display: inline; margin: 20px 0px;">
                 <label>
-                    <input <?php $this->link(); ?>style = 'display:none' type="radio" value="<?php echo esc_attr($value); ?>" name="<?php echo esc_attr($name); ?>" <?php
+                    <input <?php $this->link(); ?>style = 'display:block' type="radio" value="<?php echo esc_attr($value); ?>" name="<?php echo esc_attr($name); ?>" <?php
                                                   $this->link();
                                                   checked($this->value(), $value);
                                                   ?> />

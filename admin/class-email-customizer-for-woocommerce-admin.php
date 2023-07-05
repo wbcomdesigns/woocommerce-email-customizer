@@ -408,11 +408,13 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'label' => esc_html__('Select default layout', 'theme-textdomain'),
 					'section' => 'wc_email_templates',
 					'settings' => 'woocommerce_email_template',
+					'type'     => 'text',
 					'choices' => array(
-						'default' => 'http://bppoll.local/wp-content/uploads/2023/06/Cash-Home-Buying-Companies-in-Tampa-KM-Home-Buyers-400x250-1-1.webp',
-						'template-one' => 'http://bppoll.local/wp-content/uploads/2023/06/Cash-Home-Buying-Companies-in-Tampa-KM-Home-Buyers-400x250-1-1.webp',
-						'template-two' =>  'http://bppoll.local/wp-content/uploads/2023/06/Cash-Home-Buying-Companies-in-Tampa-KM-Home-Buyers-400x250-1-1.webp',
-						'template-two' => get_template_directory_uri() . '/img/no-sidebar-full-width-layout.png',
+						'default' => 'http://bppoll.local/wp-content/uploads/2023/07/kt_full_template.jpg',
+						'template-one' => 'http://bppoll.local/wp-content/uploads/2023/07/kt_skinny_template.jpg',
+						'template-two' =>  'http://bppoll.local/wp-content/uploads/2023/07/kt_flat_template.jpg',
+						
+						
 						)
 				)
 			)
