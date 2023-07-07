@@ -325,16 +325,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 			);
 
 			$wp_customize->add_section(
-				'wc_email_padding_container',
-				array(
-					'title'      => __( 'Padding Conatiner', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 30,
-					'panel'      => 'wc_email_header',
-				)
-				);
-
-			$wp_customize->add_section(
 				'wc_email_header',
 				array(
 					'title'      => __( 'Email Header', 'email-customizer-for-woocommerce' ),
@@ -347,7 +337,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$wp_customize->add_section(
 				'wc_email_appearance_customizer',
 				array(
-					'title'      => __( 'Email appearance customizer', 'email-customizer-for-woocommerce' ),
+					'title'      => __( 'Container', 'email-customizer-for-woocommerce' ),
 					'capability' => 'edit_theme_options',
 					'priority'   => 20,
 					'panel'      => 'wc_email_header',
@@ -462,7 +452,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'priority' => 30,
 					'section'  => 'wc_email_text',
 					'settings' => 'woocommerce_email_body_text',
-					'type'     => 'text',
+					'type'     => 'textarea',
 				)
 			)
 		);
@@ -477,7 +467,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			array(
 				'type'        => 'range',
 				'priority'    => 50,
-				'section'     => 'wc_email_padding_container',
+				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Padding Top', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Padding Top', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_padding_container_top',
@@ -494,7 +484,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			array(
 				'type'        => 'range',
 				'priority'    => 50,
-				'section'     => 'wc_email_padding_container',
+				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Padding Bottom', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Padding Bottom', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_padding_container_bottom',
@@ -511,7 +501,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			array(
 				'type'        => 'range',
 				'priority'    => 50,
-				'section'     => 'wc_email_padding_container',
+				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Padding Left/Right', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Padding Left/Right', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_padding_container_left_right',
@@ -720,7 +710,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				array(
 					'label'    => __( 'Background Color', 'email-customizer-for-woocommerce' ),
 					'priority' => 10,
-					'section'  => 'wc_email_body',
+					'section'  => 'wc_email_appearance_customizer',
 					'settings' => 'woocommerce_email_background_color',
 				)
 			)
@@ -789,7 +779,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				array(
 					'label'    => __( 'Email Width', 'email-customizer-for-woocommerce' ),
 					'priority' => 130,
-					'section'  => 'wc_email_body',
+					'section'  => 'wc_email_appearance_customizer',
 					'settings' => 'woocommerce_email_width',
 					'type'     => 'select',
 					'choices'  => array(
@@ -824,7 +814,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			array(
 				'type'        => 'range',
 				'priority'    => 170,
-				'section'     => 'wc_email_body',
+				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Rounded Corners', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Rounded corners', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_rounded_corners',
@@ -841,7 +831,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			array(
 				'type'        => 'range',
 				'priority'    => 190,
-				'section'     => 'wc_email_body',
+				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Shadow Spread', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Amount of shadow behind email', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_box_shadow_spread',
