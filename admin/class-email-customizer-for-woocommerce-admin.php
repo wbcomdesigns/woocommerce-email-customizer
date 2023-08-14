@@ -49,6 +49,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 	private $version;
 
 	/**
+	 * plugin_settings_tabs
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var mixed     $plugin_settings_tabs    The settings Tabs.
+	 */
+	public $plugin_settings_tabs;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
