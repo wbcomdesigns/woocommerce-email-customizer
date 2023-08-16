@@ -160,7 +160,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
 							<?php esc_html_e( 'Email Customizer For Woocommerce', 'email-customizer-for-woocommerce' ); ?>
-							<span><?php printf( __( 'Version %s', 'email-customizer-for-woocommerce' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION ); ?></span>
+							<?php /* translators: %s: */ ?>
+							<span><?php printf(esc_html__( 'Version %s', 'email-customizer-for-woocommerce' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );//phpcs:ignore ?></span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
@@ -1444,7 +1445,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$message = ob_get_clean();
 			
 			if(!empty(get_option('woocommerce_email_heading_text')) ){ 
-				$email_heading = __( get_option('woocommerce_email_heading_text'), 'email-customizer-for-woocommerce' );
+				$email_heading =  get_option('woocommerce_email_heading_text');
 			}else{ 
 				$email_heading = __( 'HTML Email Template!', 'email-customizer-for-woocommerce' );
 			}			

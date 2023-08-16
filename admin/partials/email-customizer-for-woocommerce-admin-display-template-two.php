@@ -12,21 +12,25 @@
  */
 
 ?>
-<?php 
-if(!empty(get_option('woocommerce_email_subheading_text')) ){ ?>
-	<h1 class="sub_heading"><?php echo esc_html__( get_option('woocommerce_email_subheading_text') ); ?></h1>
-<?php }else{ ?>
-	<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading'); ?></h1>
-<?php }
- 
-if(!empty(get_option('woocommerce_email_body_text')) ){ ?>
-	<p><?php echo esc_html__( get_option('woocommerce_email_body_text') ); ?></p>
+<?php
+if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
+	?>
+	<h1 class="sub_heading"><?php echo esc_html__( get_option( 'woocommerce_email_subheading_text' ) ); ?></h1>
+<?php } else { ?>
+	<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading' ); ?></h1>
+	<?php
+}
 
-<?php }else{ ?>
+if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
+	?>
+	<p><?php echo esc_html__( get_option( 'woocommerce_email_body_text' ) ); ?></p>
+
+<?php } else { ?>
 	<p><?php esc_html_e( 'Your order has been received and is now being processed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 
-<?php }
- ?>
+	<?php
+}
+?>
 
 <a href="#"><?php esc_html_e( 'Order templete two', 'email-customizer-for-woocommerce' ); ?> #2020</a>
 
