@@ -123,6 +123,9 @@ class Email_Customizer_For_Woocommerce {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
 
+		/* Enqueue wbcom license file. */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
+		
 		$this->loader = new Email_Customizer_For_Woocommerce_Loader();
 
 	}
