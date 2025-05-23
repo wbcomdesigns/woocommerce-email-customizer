@@ -126,7 +126,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wbcom_hide_all_admin_notices_from_setting_page() {
+	public function wb_email_hide_all_admin_notices_from_setting_page() {
 		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'wb-email-customizer-settings' );
 		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
 

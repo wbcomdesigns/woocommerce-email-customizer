@@ -172,7 +172,7 @@ class Email_Customizer_For_Woocommerce {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_admin_setting_submenu_pages' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_email_customizer_init_plugin_settings' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_views_add_admin_settings' );
-		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
+		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wb_email_hide_all_admin_notices_from_setting_page' );
 	}
 
 	/**
