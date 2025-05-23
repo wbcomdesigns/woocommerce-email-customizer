@@ -159,7 +159,7 @@ add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_setting
  */
 function wb_email_customizer_activation_redirect_settings( $plugin ) {
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'WooCommerce' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_safe_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
 			exit;
 		}

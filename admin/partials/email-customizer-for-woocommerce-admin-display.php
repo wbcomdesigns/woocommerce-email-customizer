@@ -15,15 +15,15 @@
 <?php
 if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 	?>
-	<h1 class="sub_heading"><?php echo esc_html__( get_option( 'woocommerce_email_subheading_text' ) ); ?></h1>
+	<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ) ); ?></h1>
 <?php } else { ?>
-	<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading' ); ?></h1>
+	<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading','email-customizer-for-woocommerce' ); ?></h1>
 	<?php
 }
 
 if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
 	?>
-	<p><?php echo esc_html__( get_option( 'woocommerce_email_body_text' ) ); ?></p>
+	<p><?php echo esc_html( get_option( 'woocommerce_email_body_text' ) ); ?></p>
 
 <?php } else { ?>
 	<p><?php esc_html_e( 'Your order has been received and is now being processed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
