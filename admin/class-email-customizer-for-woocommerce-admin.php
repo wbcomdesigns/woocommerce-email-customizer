@@ -400,7 +400,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		/**
 		 * email template
 		 */
-		
+		$image_base_url = plugin_dir_url(__FILE__) . 'img/';
 		$wp_customize->add_control(
 			new theme_slug_Image_Radio_Control(
 				$wp_customize, 
@@ -412,9 +412,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'settings' => 'woocommerce_email_template',
 					'type'     => 'text',
 					'choices' => array(
-						'default' => 'http://bppoll.local/wp-content/uploads/2023/07/kt_full_template.jpg',
-						'template-one' => 'http://bppoll.local/wp-content/uploads/2023/07/kt_skinny_template.jpg',
-						'template-two' =>  'http://bppoll.local/wp-content/uploads/2023/07/kt_flat_template.jpg',
+						'default' => $image_base_url .'woo_full_template.jpg',
+						'template-one' => $image_base_url .'woo_skinny_template.jpg',
+						'template-two' =>  $image_base_url .'woo_flat_template.jpg',
 						
 						
 						)

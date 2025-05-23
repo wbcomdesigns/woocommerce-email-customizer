@@ -23,7 +23,7 @@ if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 
 if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
 	?>
-	<p><?php get_option( 'woocommerce_email_body_text' ) ); ?></p>
+	<p><?php get_option( 'woocommerce_email_body_text' ); ?></p>
 
 <?php } else { ?>
 	<p><?php esc_html_e( 'Your order has been received and is now being processed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
