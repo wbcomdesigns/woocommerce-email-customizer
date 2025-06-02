@@ -160,21 +160,24 @@ if(!empty($email_heading) && !empty($email)){
 		</tfoot>
 	</table>
 	<br />
+
+	<h3><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 	<table class="addresses">
 		<tr>
-			<td valign="top" width="50%">
-				<h3><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
-
+			<td valign="top" width="100%">
 				<p>
 					John Doe<br />
 					1234 Fake Street<br />
 					WooVille, SA
 				</p>
 			</td>
+		</tr>
+	</table>
 
-			<td valign="top" width="50%">
-				<h3><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
-
+	<h3><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
+	<table class="addresses">
+		<tr>
+			<td valign="top" width="100%">
 				<p>
 					John Doe<br />
 					1234 Fake Street<br />
