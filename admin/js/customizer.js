@@ -111,5 +111,12 @@
 			$( '#template_footer p, #template_footer p a' ).css( 'color', newval );
 		} );
 	} );
+
+	wp.customize.bind( 'ready', function () {
+		wp.customize.bind( 'saved', function () {
+			wp.customize.previewer.refresh(); // Reloads the preview pane
+		});
+	});
+
 	
 } )( jQuery );
