@@ -17,7 +17,7 @@ if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 	?>
 	<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ) ); ?></h1>
 <?php } else { ?>
-	<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading','email-customizer-for-woocommerce' ); ?></h1>
+	<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email Sub Heading', 'email-customizer-for-woocommerce' ); ?></h1>
 	<?php
 }
 

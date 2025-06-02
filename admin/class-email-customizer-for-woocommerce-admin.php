@@ -407,7 +407,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'theme_slug_default_layout', 
 				array(
 					'type' => 'radio',
-					'label' => esc_html__('Select default layout', 'theme-textdomain'),
+					'label' => esc_html__('Select default layout', 'email-customizer-for-woocommerce'),
 					'section' => 'wc_email_templates',
 					'settings' => 'woocommerce_email_template',
 					'type'     => 'text',
@@ -1059,7 +1059,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'woocommerce_email_heading_text',
 			array(
 				'type'      => 'option',
-				'default'   => __( 'WooCommece Email Haeding Text', 'email-customizer-for-woocommerce' ),
+				'default'   => __( 'WooCommece Email Heading Text', 'email-customizer-for-woocommerce' ),
 				'transport' => 'postMessage',
 			)
 		);
@@ -1068,7 +1068,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'woocommerce_email_subheading_text',
 			array(
 				'type'      => 'option',
-				'default'   => __( 'WooCommece Email Subhaeding Text', 'email-customizer-for-woocommerce' ),
+				'default'   => __( 'WooCommece Email Subheading Text', 'email-customizer-for-woocommerce' ),
 				'transport' => 'postMessage',
 			)
 		);
@@ -1433,7 +1433,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			ob_start();
 
-			$template = get_option( 'woocommerce_email_template');
+			$template = get_option( 'woocommerce_email_template'); 
 		
 			if($template == 'template-one'){
 				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template.php';
