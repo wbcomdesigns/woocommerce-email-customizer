@@ -417,7 +417,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 						'template-two' =>  $image_base_url .'woo_flat_template.jpg',
 						
 						
-						)
+					)
 				)
 			)
 		);
@@ -1428,21 +1428,36 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_load_email_template( $wp_query ) {
 
 		if ( get_query_var( $this->email_trigger ) ) {
+			static $alredy_excute = false;
+			if($alredy_excute){
+				return;
+			}
+			
 
 			$mailer = WC()->mailer();
+			
 
 			ob_start();
 
-			$template = get_option( 'woocommerce_email_template'); 
-		
-			if($template == 'template-one'){
-				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template.php';
-			}else if($template == 'template-two'){
-				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php';
-			}else{
-				include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
+			$template = get_option( 'woocommerce_email_template');
+			$template_file = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/';
+
+			switch ( $template ) {
+				case 'template-one':
+					$template_file .= 'email-customizer-for-woocommerce-admin-display-template.php';
+					break;
+				case 'template-two':
+					$template_file .= 'email-customizer-for-woocommerce-admin-display-template-two.php';
+					break;
+				default:
+					$template_file .= 'email-customizer-for-woocommerce-admin-display.php';
+					break;
 			}
-			//include EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
+
+			if ( file_exists( $template_file ) ) {
+				include $template_file;
+				$alredy_excute = true;
+			}
 
 			$message = ob_get_clean();
 			
@@ -1461,6 +1476,49 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 
 		return $wp_query;
+	}
+
+	/**
+	 * Overrides WooCommerce email template path with a custom one.
+	 *
+	 * @param string $template      The path to the template found.
+	 * @param string $template_name The name of the template file.
+	 * @param string $template_path The path to the template directory.
+	 * @return string Modified template path if custom one exists.
+	*/
+
+	public function wb_email_customizer_custom_universal_email_template_override($template, $template_name, $template_path) {
+		$order_email_templates = [
+			'emails/admin-new-order.php',
+			'emails/customer-processing-order.php',
+			'emails/customer-completed-order.php',
+			'emails/customer-on-hold-order.php',
+			'emails/customer-refunded-order.php',
+			'emails/customer-invoice.php',
+			'emails/customer-note.php',
+			'emails/customer-failed-order.php'
+		];
+
+	
+		
+		$selected_template = get_option('woocommerce_email_template');
+
+		if ($selected_template === 'template-one' && in_array($template_name, $order_email_templates)) {
+			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template.php';
+			// $template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/customer-completed-order.php';
+
+		}elseif($selected_template === 'template-two' && in_array($template_name, $order_email_templates)){
+
+			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php';
+			// $template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/customer-completed-order.php';
+
+		}elseif($selected_template === 'default' && in_array($template_name, $order_email_templates)){
+			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
+			// $template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/customer-completed-order.php';
+
+		}
+
+		return $template;
 	}
 
 	/**

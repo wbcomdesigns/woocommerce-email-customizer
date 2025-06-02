@@ -128,6 +128,8 @@ class Email_Customizer_For_Woocommerce {
 		
 		$this->loader = new Email_Customizer_For_Woocommerce_Loader();
 
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/emails/class-custom-wc-emai-template.php';
+
 	}
 
 	/**
@@ -163,7 +165,7 @@ class Email_Customizer_For_Woocommerce {
 		$this->loader->add_filter( 'woocommerce_email_styles', $plugin_admin, 'wb_email_customizer_add_styles' );
 		$this->loader->add_filter( 'query_vars', $plugin_admin, 'wb_email_customizer_add_query_vars' );
 		$this->loader->add_action( 'customize_preview_init', $plugin_admin, 'wb_email_customizer_enqueue_customizer_script' );
-		$this->loader->add_action( 'template_redirect', $plugin_admin, 'wb_email_customizer_load_email_template', 10, 2 );
+		$this->loader->add_action( 'template_redirect', $plugin_admin, 'wb_email_customizer_load_email_template', 10);
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_sections', 40 );
@@ -172,7 +174,9 @@ class Email_Customizer_For_Woocommerce {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_admin_setting_submenu_pages' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_email_customizer_init_plugin_settings' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_views_add_admin_settings' );
-		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wb_email_hide_all_admin_notices_from_setting_page' );
+		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wb_email_hide_all_admin_notices_from_setting_page');
+
+		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_admin, 'wb_email_customizer_custom_universal_email_template_override',20,3 );
 	}
 
 	/**
