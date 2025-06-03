@@ -47,7 +47,13 @@
 
 	wp.customize( 'woocommerce_email_body_font_size', function( value ) {
 		value.bind( function( newval ) {
-			$( '#template_body div, #template_body div p, #template_body h2, #template_body table td, #template_body table th, #template_body table h3' ).css( 'font-size', newval + 'px' );
+			$( '#template_body div, #template_body div p, #template_body table td, #template_body table th' ).css( 'font-size', newval + 'px' );
+		} );
+	} );
+
+	wp.customize( 'woocommerce_email_body_title_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$( '#template_body h2, #template_body h3' ).css( 'font-size', newval + 'px' );
 		} );
 	} );
 
