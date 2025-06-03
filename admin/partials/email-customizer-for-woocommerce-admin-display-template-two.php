@@ -13,8 +13,12 @@
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 ?>
 <?php
+if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) ) {
+	$email_heading = get_option( 'woocommerce_email_heading_text' );
+} else {
+	$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
+}
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
-
 if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	/*
 	* @hooked WC_Emails::email_header() Output the email header
@@ -93,8 +97,6 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 		?>
 		<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ), ); ?></h1>
-	<?php } else { ?>
-		<h1 class="sub_heading"><?php printf( esc_html__( 'Hello from %s', 'email-customizer-for-woocommerce' ), get_bloginfo('name') ) ?></h1>
 		<?php
 	}
 

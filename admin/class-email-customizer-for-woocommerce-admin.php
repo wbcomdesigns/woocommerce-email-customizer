@@ -1528,10 +1528,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			}
 
 			$email = new WC_Email();
-
-			$message = $email->style_inline( $mailer->wrap_message( $email_heading, $message ) );
-
-			echo $message; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			
+			$messages = $email->style_inline( $mailer->wrap_message($email_heading,$message));
+			echo $messages; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			exit;
 		}
 
@@ -1574,6 +1573,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display.php';
 			// $template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/customer-completed-order.php';
 
+		}
+		if ($template_name === 'emails/email-header.php') {
+        	$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/email-header.php';
 		}
 
 		return $template;
