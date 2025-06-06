@@ -10,20 +10,24 @@
  * @package    Email_Customizer_For_Woocommerce
  * @subpackage Email_Customizer_For_Woocommerce/admin/partials
  */
-
- use Automattic\WooCommerce\Utilities\FeaturesUtil;
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
 ?>
 <?php
+if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) ) {
+	$email_heading = get_option( 'woocommerce_email_heading_text' );
+} else {
+	$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
+}
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
-if(!empty($email_heading) && !empty($email)){
+if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	/*
 	* @hooked WC_Emails::email_header() Output the email header
 	*/
-	do_action( 'woocommerce_email_header', $email_heading, $email ); 
+	do_action( 'woocommerce_email_header', $email_heading, $email );
 	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 		?>
 		<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ), ); ?></h1>
-	<?php }?>
+	<?php } ?>
 
 	<?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
 	<p>
@@ -36,19 +40,23 @@ if(!empty($email_heading) && !empty($email)){
 	}
 	?>
 	</p>
-	<?php 
+	<?php
 	if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
 		?>
 		<p><?php echo esc_html( get_option( 'woocommerce_email_body_text' ) ); ?></p>
 
-	<?php } else { 
-		if ( $email_improvements_enabled ) : ?>
+		<?php
+	} elseif ( $email_improvements_enabled ) {
+
+		?>
 		<p><?php esc_html_e( 'We’ve successfully processeddddd your order, and it’s on its way to you.', 'email-customizer-for-woocommerce' ); ?></p>
 		<p><?php esc_html_e( 'Here’s a reminderrrr of what you’ve ordered:', 'email-customizer-for-woocommerce' ); ?></p>
-	<?php else : ?>
+	<?php } else { ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
-	<?php endif; 
-	}?>
+		<?php
+
+	}
+	?>
 	<?php echo $email_improvements_enabled ? '</div>' : ''; ?>
 
 	<?php
@@ -85,27 +93,31 @@ if(!empty($email_heading) && !empty($email)){
 	* @hooked WC_Emails::email_footer() Output the email footer
 	*/
 	do_action( 'woocommerce_email_footer', $email );
-}else{
+} else {
 	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 		?>
-		<h1 class="sub_heading"><?php get_option( 'woocommerce_email_subheading_text' ); ?></h1>
-	<?php } else { ?>
-		<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading', 'email-customizer-for-woocommerce'); ?></h1>
+		<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ), ); ?></h1>
 		<?php
 	}
 
 	if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
 		?>
-		<p><?php get_option( 'woocommerce_email_body_text' ); ?></p>
+		<p><?php echo esc_html( get_option( 'woocommerce_email_body_text' ) ); ?></p>
 
 	<?php } else { ?>
-		<p><?php esc_html_e( 'Your order has been received and is now being processed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
-
+		<p>
+			<?php
+			printf(
+				esc_html__( 'Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ),
+				get_bloginfo( 'name' )
+			);
+			?>
+		</p>
 		<?php
 	}
 	?>
 
-	<h3 class="body-content-title"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order templete one', 'email-customizer-for-woocommerce' ); ?> #2020</a></h3>
+	<h3 class="body-content-title"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order templete two', 'email-customizer-for-woocommerce' ); ?> #2020</a><h3>
 
 	<table>
 		<thead>
@@ -160,6 +172,7 @@ if(!empty($email_heading) && !empty($email)){
 		</tfoot>
 	</table>
 	<br />
+
 	<h3 class="body-content-title"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 	<table class="addresses">
 		<tr>
