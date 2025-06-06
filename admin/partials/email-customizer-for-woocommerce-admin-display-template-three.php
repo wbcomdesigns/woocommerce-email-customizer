@@ -117,7 +117,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	}
 	?>
 
-	<h3 class="body-content-title"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order templete two', 'email-customizer-for-woocommerce' ); ?> #2020</a><h3>
+	<h3 class="body-content-title has-border"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order #1 (May 29, 2025)', 'email-customizer-for-woocommerce' ); ?></a><h3>
 
 	<table>
 		<thead>
@@ -173,7 +173,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	</table>
 	<br />
 
-	<h3 class="body-content-title"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
+	<h3 class="body-content-title has-border"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 	<table class="addresses">
 		<tr>
 			<td valign="top" width="100%">
@@ -186,7 +186,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		</tr>
 	</table>
 
-	<h3 class="body-content-title"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
+	<h3 class="body-content-title has-border"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
 	<table class="addresses">
 		<tr>
 			<td valign="top" width="100%">

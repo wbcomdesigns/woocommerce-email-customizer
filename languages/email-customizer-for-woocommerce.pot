@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 05:55:12+00:00\n"
+"POT-Creation-Date: 2025-06-06 07:28:02+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -318,7 +318,6 @@ msgstr ""
 #: admin/class-email-customizer-for-woocommerce-admin.php:1091
 #: admin/class-email-customizer-for-woocommerce-admin.php:1108
 #: admin/class-email-customizer-for-woocommerce-admin.php:1126
-#: admin/class-email-customizer-for-woocommerce-admin.php:1143
 #: admin/class-email-customizer-for-woocommerce-admin.php:1583
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:20
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:19
@@ -328,7 +327,6 @@ msgstr ""
 
 #: admin/class-email-customizer-for-woocommerce-admin.php:1092
 #: admin/class-email-customizer-for-woocommerce-admin.php:1125
-#: admin/class-email-customizer-for-woocommerce-admin.php:1142
 #: templates/emails/email-header.php:64
 msgid "Hello from %s"
 msgstr ""
@@ -348,23 +346,32 @@ msgstr ""
 msgid "Order complete"
 msgstr ""
 
+#: admin/class-email-customizer-for-woocommerce-admin.php:1142
+#: admin/partials/email-customizer-for-woocommerce-admin-display.php:92
+msgid "HTML Email Sub Heading"
+msgstr ""
+
+#: admin/class-email-customizer-for-woocommerce-admin.php:1143
+msgid "HTML Email Template!"
+msgstr ""
+
 #: admin/class-email-customizer-for-woocommerce-admin.php:1416
 msgid "WooCommece Email Customizer - Powered by WooCommerce and WordPress"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1801
+#: admin/class-email-customizer-for-woocommerce-admin.php:1808
 msgid "Email Customizer For Woocommerce - Powered by WooCommerce and WordPress"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1822
+#: admin/class-email-customizer-for-woocommerce-admin.php:1829
 msgid "Error, Try again!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1823
+#: admin/class-email-customizer-for-woocommerce-admin.php:1830
 msgid "Email Sent!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1824
+#: admin/class-email-customizer-for-woocommerce-admin.php:1831
 msgid "Please click on save/publish before sending the test email"
 msgstr ""
 
@@ -383,43 +390,51 @@ msgstr ""
 msgid "Hi,"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:51
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:53
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:52
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:52
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:45
 msgid "We’ve successfully processeddddd your order, and it’s on its way to you."
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:52
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:54
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:53
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:53
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:46
 msgid "Here’s a reminderrrr of what you’ve ordered:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:54
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:56
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:55
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:55
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:48
 msgid "We have finished processing your order."
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:98
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:102
 msgid "HTML Email sub heading"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:107
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:111
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:101
 msgid ""
 "Your order has been received and is now being processed. Your order details "
 "are shown below for your reference:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:113
-msgid "Order templete one"
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:117
+msgid "Order Details"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:118
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:120
+msgid "Order number: 1"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:121
+msgid "Order Date: May 16, 2025"
+msgstr ""
+
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:126
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:125
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:125
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:112
@@ -429,22 +444,22 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:119
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:127
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:126
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:126
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:113
 msgid "Quantity"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:120
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:128
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:127
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:127
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:114
 msgid "Price"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:129
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:138
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:137
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:146
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:136
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:145
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:136
@@ -454,63 +469,63 @@ msgstr ""
 msgid "(ex. tax)"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:136
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:144
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:143
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:143
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:130
 msgid "Subtotal:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:143
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:151
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:150
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:150
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:137
 msgid "Shipping:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:144
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:152
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:151
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:151
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:138
 msgid "Free Shipping"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:148
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:156
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:155
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:155
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:142
 msgid "Tax:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:155
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:163
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:162
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:162
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:149
 msgid "Payment Method:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:156
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:164
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:163
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:163
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:150
 msgid "Direct Bank Transfer"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:160
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:168
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:167
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:167
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:154
 msgid "Total:"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:168
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:176
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:176
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:176
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:165
 msgid "Billing address"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:181
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:189
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:189
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:189
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:175
@@ -518,12 +533,11 @@ msgid "Shipping address"
 msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:120
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:120
-msgid "Order templete two"
+msgid "Order #1 (May 29, 2025)"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display.php:92
-msgid "HTML Email Sub Heading"
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:120
+msgid "Order #1 (May 15, 2025)"
 msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:107

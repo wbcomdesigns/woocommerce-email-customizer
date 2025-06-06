@@ -1135,12 +1135,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$default_border_container_bottom = '0';
 			$default_border_container_left   = '0';
 			$default_border_container_right  = '0';
-			$default_body_border_color       = '#dddddd';
-			$default_footer_text_color       = '#202020';
-			$default_footer_background_color = '#ffffff';
+			$default_body_border_color       = '#f6f6f6';
+			$default_footer_text_color       = '#ffffff';
+			$default_footer_background_color = '#202020';
 		} else {
-			$default_subheading_text         = sprintf( __( 'Hello from %s', 'email-customizer-for-woocommerce' ), $site_title );
-			$default_heading_text            = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
+			$default_subheading_text         = sprintf( __( 'HTML Email Sub Heading', 'email-customizer-for-woocommerce' ), $site_title );
+			$default_heading_text            = __( 'HTML Email Template!', 'email-customizer-for-woocommerce' );
 			$default_body_text               = sprintf( __( 'Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ), $site_title );
 			$default_header_text_color       = '#ffffff';
 			$default_body_bg                 = '#fdfdfd';
@@ -1689,7 +1689,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$header_text_color = '#template_header h1 { color:' . get_option( 'woocommerce_email_header_text_color', '#ffffff' ) . '; text-shadow:0 1px 0 ' . get_option( 'woocommerce_email_header_text_color', '#ffffff' ) . '; }' . PHP_EOL;
 
-		$header_font_size = '#template_header h1 { font-size:' . get_option( 'woocommerce_email_header_font_size', '30' ) . 'px' . '; }' . PHP_EOL;
+		if ( 'template-one' === $selected_template || 'template-two' === $selected_template ) { 
+			$header_font_size = '#template_header h1 { font-size:' . get_option( 'woocommerce_email_header_font_size', '30' ) . 'px' . '; text-align: center; }' . PHP_EOL;
+		} else {
+			$header_font_size = '#template_header h1 { font-size:' . get_option( 'woocommerce_email_header_font_size', '30' ) . 'px' . '; }' . PHP_EOL;
+		}
 
 		$header_image = '#template_header_image { margin-left: auto; margin-right: auto; }' . PHP_EOL;
 
@@ -1697,7 +1701,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$template_rounded_corners = '#template_container { border-radius:' . get_option( 'woocommerce_email_rounded_corners', '6' ) . 'px !important; } #template_header { border-radius:' . get_option( 'woocommerce_email_rounded_corners', '6' ) . 'px ' . get_option( 'woocommerce_email_rounded_corners', '6' ) . 'px 0 0 !important; } #template_footer { border-radius:0 0 ' . get_option( 'woocommerce_email_rounded_corners', '6' ) . 'px ' . get_option( 'woocommerce_email_rounded_corners', '6' ) . 'px !important; }' . PHP_EOL;
 
-		if ( 'template-two' === $selected_template || 'template-three' === $selected_template ) { 
+		if ( 'template-one' === $selected_template || 'template-two' === $selected_template || 'template-three' === $selected_template ) { 
 			$template_shadow = '#template_container { box-shadow: none !important; }' . PHP_EOL;
 		} else {
 			$template_shadow = '#template_container { box-shadow:0 0 6px ' . get_option( 'woocommerce_email_box_shadow_spread', '1' ) . 'px rgba(0,0,0,0.2) !important; }' . PHP_EOL;
@@ -1710,9 +1714,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 		if ( 'template-three' === $selected_template ) {
 			$body_border_color = '#body_content_inner table td, #body_content_inner table th { border-color:' . get_option( 'woocommerce_email_body_border_color', '#505050' ) . '; border-width: 2px; border-style:solid; text-align:left; }' . PHP_EOL;
 			$addresses         = '.addresses td { border:none !important; line-height:1.5; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; }' . PHP_EOL;
+		} else if ( 'template-one' === $selected_template ) {
+			$body_border_color = '#body_content_inner table td, #body_content_inner table th { border-color:' . get_option( 'woocommerce_email_body_border_color', '#505050' ) . '; border-width: 1px; border-style: solid; text-align:left; border-left: 0; border-right: 0; }' . PHP_EOL;
+			$addresses         = '.addresses td { line-height:1.5; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; } #body_content_inner table.addresses th, #body_content_inner table.addresses td { border-color:' . get_option( 'woocommerce_email_body_border_color', '#505050' ) . '; border-width: 1px; border-style: solid; text-align:center; }' . PHP_EOL;
 		} else if ( 'template-two' === $selected_template ) {
-			$body_border_color = '#body_content_inner table td, #body_content_inner table th { border-color:' . get_option( 'woocommerce_email_body_border_color', '#505050' ) . '; border-width: 1px; border-style: solid; text-align:center; }' . PHP_EOL;
-			$addresses         = '.addresses td { line-height:1.5; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; }' . PHP_EOL;
+			$body_border_color = '#body_content_inner table td, #body_content_inner table th { border-color:' . get_option( 'woocommerce_email_body_border_color', '#505050' ) . '; border-width: 1px; border-style: solid; text-align:left; }' . PHP_EOL;
+			$addresses         = '.addresses td { line-height:1.5; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; } #body_content_inner table.addresses th, #body_content_inner table.addresses td { text-align:center; }' . PHP_EOL;
 		} else {
 			$body_border_color = '#body_content_inner table td, #body_content_inner table th { border-color:' . get_option( 'woocommerce_email_body_border_color', '#505050' ) . '; border-width: 1px; border-style:solid; text-align:left; }' . PHP_EOL;
 			$addresses         = '.addresses td { border:none !important; line-height:1.5; padding-left: 0 !important; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; padding-right: 0 !important; }' . PHP_EOL;
@@ -1740,7 +1747,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$font_family = '#template_container, #template_header h1, #template_body table div, #template_footer p, #template_footer th, #template_footer td, #template_body table table, #body_content_inner table, #template_footer table { font-family:' . $font_family . '; }' . PHP_EOL;
 
-		if ( 'template-two' === $selected_template || 'template-three' === $selected_template ) {
+		if ( 'template-one' === $selected_template || 'template-two' === $selected_template || 'template-three' === $selected_template ) {
 			$apprance_border_color = '#template_container{ border-color: ' . get_option( 'woocommerce_email_border_color', '#202020' ) . ' !important; border-top: ' . get_option( 'woocommerce_email_border_container_top', '0' ) . 'px' . 'solid' . '; border-bottom: ' . get_option( 'woocommerce_email_border_container_bottom', '0' ) . 'px' . 'solid' . '; border-left: ' . get_option( 'woocommerce_email_border_container_left', '0' ) . 'px' . 'solid' . '; border-right: ' . get_option( 'woocommerce_email_border_container_right', '0' ) . 'px' . 'solid' . ';}' . PHP_EOL;
 		} else {
 			$apprance_border_color = '#template_container{ border-color: ' . get_option( 'woocommerce_email_border_color', '#202020' ) . ' !important; border-top: ' . get_option( 'woocommerce_email_border_container_top', '1' ) . 'px' . 'solid' . '; border-bottom: ' . get_option( 'woocommerce_email_border_container_bottom', '1' ) . 'px' . 'solid' . '; border-left: ' . get_option( 'woocommerce_email_border_container_left', '1' ) . 'px' . 'solid' . '; border-right: ' . get_option( 'woocommerce_email_border_container_right', '1' ) . 'px' . 'solid' . ';}' . PHP_EOL;
@@ -1752,7 +1759,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		if ( 'template-three' === $selected_template ) {
 			$body_title_style = '.has-border { text-decoration: none; margin-bottom: 20px; border: 0; border-bottom: ' . get_option( 'woocommerce_email_footer_address_border', '2' ) . 'px' . get_option( 'woocommerce_email_footer_address_border_style', 'solid' ) . ' ' . get_option( 'woocommerce_email_footer_address_border_color', '#202020' ) . ' !important; }' . PHP_EOL;
-		} else if ( 'template-two' === $selected_template ) {
+		} else if ( 'template-one' === $selected_template || 'template-two' === $selected_template ) {
 			$body_title_style = '.body-content-title { text-align: center; margin: 40px 0 30px; }' . PHP_EOL;
 		} else {
 			$body_title_style = '';

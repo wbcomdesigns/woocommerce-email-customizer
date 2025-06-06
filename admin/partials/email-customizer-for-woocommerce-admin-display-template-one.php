@@ -24,11 +24,11 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	/*
 	* @hooked WC_Emails::email_header() Output the email header
 	*/
-	do_action( 'woocommerce_email_header', $email_heading, $email ); 
+	do_action( 'woocommerce_email_header', $email_heading, $email );
 	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 		?>
 		<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ), ); ?></h1>
-	<?php }?>
+	<?php } ?>
 
 	<?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
 	<p>
@@ -41,19 +41,23 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	}
 	?>
 	</p>
-	<?php 
+	<?php
 	if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
 		?>
 		<p><?php echo esc_html( get_option( 'woocommerce_email_body_text' ) ); ?></p>
 
-	<?php } else { 
-		if ( $email_improvements_enabled ) : ?>
+		<?php
+	} elseif ( $email_improvements_enabled ) {
+
+		?>
 		<p><?php esc_html_e( 'We’ve successfully processeddddd your order, and it’s on its way to you.', 'email-customizer-for-woocommerce' ); ?></p>
 		<p><?php esc_html_e( 'Here’s a reminderrrr of what you’ve ordered:', 'email-customizer-for-woocommerce' ); ?></p>
-	<?php else : ?>
+	<?php } else { ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
-	<?php endif; 
-	}?>
+		<?php
+
+	}
+	?>
 	<?php echo $email_improvements_enabled ? '</div>' : ''; ?>
 
 	<?php
@@ -90,12 +94,12 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	* @hooked WC_Emails::email_footer() Output the email footer
 	*/
 	do_action( 'woocommerce_email_footer', $email );
-}else{
+} else {
 	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
 		?>
 		<h1 class="sub_heading"><?php get_option( 'woocommerce_email_subheading_text' ); ?></h1>
 	<?php } else { ?>
-		<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading', 'email-customizer-for-woocommerce'); ?></h1>
+		<h1 class="sub_heading"><?php echo esc_html_e( 'HTML Email sub heading', 'email-customizer-for-woocommerce' ); ?></h1>
 		<?php
 	}
 
@@ -110,22 +114,26 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	}
 	?>
 
-	<h3 class="body-content-title"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order templete one', 'email-customizer-for-woocommerce' ); ?> #2020</a></h3>
+	<h3 class="body-content-title"><?php esc_html_e( 'Order Details', 'email-customizer-for-woocommerce' ); ?></h3>
 
+	<div class="order-details-wrapper" style="display: flex; justify-content: space-between">
+		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order number: 1', 'email-customizer-for-woocommerce' ); ?></div>
+		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order Date: May 16, 2025', 'email-customizer-for-woocommerce' ); ?></div>
+	</div>
 	<table>
 		<thead>
 			<tr>
-				<th><?php esc_html_e( 'Product', 'email-customizer-for-woocommerce' ); ?></th>
-				<th><?php esc_html_e( 'Quantity', 'email-customizer-for-woocommerce' ); ?></th>
-				<th><?php esc_html_e( 'Price', 'email-customizer-for-woocommerce' ); ?></th>
+				<th style="width: 50%;"><?php esc_html_e( 'Product', 'email-customizer-for-woocommerce' ); ?></th>
+				<th style="text-align: center;"><?php esc_html_e( 'Quantity', 'email-customizer-for-woocommerce' ); ?></th>
+				<th style="text-align: right;"><?php esc_html_e( 'Price', 'email-customizer-for-woocommerce' ); ?></th>
 			</tr>
 		</thead>
 
 		<tbody>
 			<tr>
 				<td>Ninja Silhouette<br /></td>
-				<td>1</td>
-				<td>
+				<td style="text-align: center;">1</td>
+				<td style="text-align: right;">
 					<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
@@ -134,31 +142,31 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		<tfoot>
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td>
+				<td style="text-align: right;">
 					<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td><?php esc_html_e( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
+				<td style="text-align: right;"><?php esc_html_e( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td>
+				<td style="text-align: right;">
 					<span>$2.00</span>
 				</td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Payment Method:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td><?php esc_html_e( 'Direct Bank Transfer', 'email-customizer-for-woocommerce' ); ?></td>
+				<td style="text-align: right;"><?php esc_html_e( 'Direct Bank Transfer', 'email-customizer-for-woocommerce' ); ?></td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td>
+				<td style="text-align: right;">
 					<span>$22.00</span>
 				</td>
 			</tr>

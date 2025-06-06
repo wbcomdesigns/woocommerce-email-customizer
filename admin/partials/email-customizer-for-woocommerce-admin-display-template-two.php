@@ -117,7 +117,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	}
 	?>
 
-	<h3 class="body-content-title"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order templete two', 'email-customizer-for-woocommerce' ); ?> #2020</a><h3>
+	<h3 class="body-content-title"><a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order #1 (May 15, 2025)', 'email-customizer-for-woocommerce' ); ?></a><h3>
 
 	<table>
 		<thead>
