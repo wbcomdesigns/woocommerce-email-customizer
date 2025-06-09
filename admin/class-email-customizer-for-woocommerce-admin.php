@@ -1058,6 +1058,24 @@ class Email_Customizer_For_Woocommerce_Admin {
 				)
 			)
 		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'email_customizer_reset',
+				array(
+					'label'    => __( 'Reset', 'email-customizer-for-woocommerce' ),
+					'priority' => 130,
+					'section'  => 'wc_email_templates',
+					'settings' => 'email_customizer_reset_btn',
+					'type'     => 'button',
+					'input_attrs' => array(
+						'class' => 'button button-secondary-reset',
+						'id' => 'ecfw-reset-template-button',
+					),
+				)
+			)
+		);
 	}
 	/**
 	 * Show only our email settings in the preview
@@ -1524,6 +1542,14 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'transport' => 'postMessage',
 			)
 		);
+
+		$wp_customize->add_setting(
+			'email_customizer_reset_btn',
+			array(
+				'default'   => 'Reset',
+				'transport' => 'postMessage',
+			)
+		);
 	}
 	/**
 	 * Add custom variables to the available query vars.
@@ -1832,6 +1858,13 @@ class Email_Customizer_For_Woocommerce_Admin {
 		);
 
 		wp_localize_script( 'woocommerce-email-customizer-controls', 'woocommerce_email_customizer_controls_local', $localized_vars );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/email-customizer-for-woocommerce-admin.js', array( 'jquery', 'customize-preview' ), $this->version, false );
+		$localized_vars_reset = array(
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'wc_email_customizer_email_load_templates' ),
+		);
+		wp_localize_script( $this->plugin_name, 'wc_email_customizer_email_ajx', $localized_vars_reset );
+		
 
 		return true;
 	}
@@ -1842,4 +1875,96 @@ class Email_Customizer_For_Woocommerce_Admin {
 		global $wp_styles;
 		$wp_styles->queue = array();
 	}
+
+	public function wb_email_customizer_load_template_presets_cb(){
+
+		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'wc_email_customizer_email_load_templates')) {
+			wp_send_json_error(array('message' => 'Security check failed'));
+			return;
+    	}
+
+		$selected_template = isset($_POST['template'])?sanitize_text_field($_POST['template']): 'default';
+
+		if ( $selected_template === 'template-one') {
+			update_option( 'woocommerce_email_border_color', '#202020',true );
+			
+			update_option( 'woocommerce_email_header_text_color', '#32373c',true ) ;
+			update_option( 'woocommerce_email_body_background_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_header_background_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_address_background_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_address_border', '1',true ) ;
+			update_option( 'woocommerce_email_rounded_corners', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_top', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_bottom','0',true ) ;
+			update_option( 'woocommerce_email_border_container_left', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_right', '0',true ) ;
+			update_option( 'woocommerce_email_body_border_color', '#f6f6f6',true ) ;
+			update_option( 'woocommerce_email_footer_text_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_background_color', '#202020',true ) ;
+
+			wp_send_json_success(array('message'=> 'Template updated sucessfully.'));
+			
+
+		} elseif ( $selected_template === 'template-two') {
+		
+			update_option( 'woocommerce_email_header_text_color', '#32373c',true ) ;
+			update_option( 'woocommerce_email_body_background_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_header_background_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_address_background_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_address_border', '1',true ) ;
+			update_option( 'woocommerce_email_rounded_corners', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_top', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_bottom', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_left', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_right', '0',true ) ;
+			update_option( 'woocommerce_email_body_border_color','#dddddd',true ) ;
+			update_option( 'woocommerce_email_footer_text_color', '#202020',true ) ;
+			update_option( 'woocommerce_email_footer_background_color', '#ffffff',true ) ;
+
+			wp_send_json_success(array('message'=> 'Template updated sucessfully.'));
+
+			
+
+		} elseif ( $selected_template === 'template-three') {
+
+			update_option( 'woocommerce_email_header_text_color', '#32373c',true ) ;
+			update_option( 'woocommerce_email_body_background_color', '#ffee8c',true ) ;
+			update_option( 'woocommerce_email_header_background_color', '#ffee8c',true ) ;
+			update_option( 'woocommerce_email_footer_address_background_color', '#ffee8c',true ) ;
+			update_option( 'woocommerce_email_footer_address_border', '2',true ) ;
+			update_option( 'woocommerce_email_rounded_corners', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_top', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_bottom', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_left', '0',true ) ;
+			update_option( 'woocommerce_email_border_container_right', '0',true ) ;
+			update_option( 'woocommerce_email_body_border_color', '#505050',true ) ;
+			update_option( 'woocommerce_email_footer_text_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_background_color', '#202020',true ) ;
+
+			wp_send_json_success(array('message'=> 'Template updated sucessfully.'));
+
+
+		} elseif ( $selected_template === 'default') {
+
+			update_option( 'woocommerce_email_header_text_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_body_background_color', '#fdfdfd',true ) ;
+			update_option( 'woocommerce_email_header_background_color', '#557da1',true ) ;
+			update_option( 'woocommerce_email_footer_address_background_color', '#202020',true ) ;
+			update_option( 'woocommerce_email_footer_address_border', '12',true ) ;
+			update_option( 'woocommerce_email_rounded_corners', '6',true ) ;
+			update_option( 'woocommerce_email_border_container_top', '1',true ) ;
+			update_option( 'woocommerce_email_border_container_bottom','1',true ) ;
+			update_option( 'woocommerce_email_border_container_left', '1',true ) ;
+			update_option( 'woocommerce_email_border_container_right', '1',true ) ;
+			update_option( 'woocommerce_email_body_border_color', '#505050',true ) ;
+			update_option( 'woocommerce_email_footer_text_color', '#ffffff',true ) ;
+			update_option( 'woocommerce_email_footer_background_color', '#202020',true ) ;
+
+			wp_send_json_success(array('message'=> 'Template updated sucessfully.'));
+			
+
+		}
+
+	}
+
 }

@@ -45,5 +45,27 @@
         }
       };
     }
+
+    $(document).on('click', '.button-secondary-reset', function () {
+      var selectedTemplate = wp.customize('woocommerce_email_template')();
+      $.ajax({
+      type: "post",
+      url: wc_email_customizer_email_ajx.ajaxurl,
+      data: {
+        'action': 'wb_email_customizer_load_template_presets',
+        'template': selectedTemplate,
+        'nonce':  wc_email_customizer_email_ajx.nonce
+      },
+      success: function (res) {
+        console.log(res);
+        if (true === res.success) {
+          window.location.reload();
+        }
+      },
+    });
+
+    });
+
+
   });
 })(jQuery);

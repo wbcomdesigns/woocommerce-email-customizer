@@ -42,8 +42,8 @@ if(!empty($email_heading) && !empty($email)){
 
 	<?php } else { 
 		if ( $email_improvements_enabled ) : ?>
-		<p><?php esc_html_e( 'We’ve successfully processeddddd your order, and it’s on its way to you.', 'email-customizer-for-woocommerce' ); ?></p>
-		<p><?php esc_html_e( 'Here’s a reminderrrr of what you’ve ordered:', 'email-customizer-for-woocommerce' ); ?></p>
+		<p><?php esc_html_e( 'We’ve successfully processed your order, and it’s on its way to you.', 'email-customizer-for-woocommerce' ); ?></p>
+		<p><?php esc_html_e( 'Here’s a reminder of what you’ve ordered:', 'email-customizer-for-woocommerce' ); ?></p>
 	<?php else : ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
 	<?php endif; 
