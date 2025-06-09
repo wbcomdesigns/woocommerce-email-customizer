@@ -50,8 +50,8 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	} elseif ( $email_improvements_enabled ) {
 
 		?>
-		<p><?php esc_html_e( 'We’ve successfully processeddddd your order, and it’s on its way to you.', 'email-customizer-for-woocommerce' ); ?></p>
-		<p><?php esc_html_e( 'Here’s a reminderrrr of what you’ve ordered:', 'email-customizer-for-woocommerce' ); ?></p>
+		<p><?php esc_html_e( 'Your order has been received and is now being processed.', 'email-customizer-for-woocommerce' ); ?></p>
+		<p><?php esc_html_e( 'Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 	<?php } else { ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
 		<?php
@@ -68,18 +68,86 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	* @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
 	* @since 2.5.0
 	*/
-	do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+	// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+	?>
+	<h3 class="body-content-title"><?php esc_html_e( 'Order Details', 'email-customizer-for-woocommerce' ); ?></h3>
+
+	<div class="order-details-wrapper" style="display: flex; justify-content: space-between">
+		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php echo esc_html__( 'Order number:', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() ); ?></div>
+		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php echo esc_html__( 'Order Date:', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></div>
+	</div>
+
+	<table>
+			<thead>
+				<tr>
+					<th style="width: 50%;"><?php esc_html_e( 'Product', 'email-customizer-for-woocommerce' ); ?></th>
+					<th style="text-align: center;"><?php esc_html_e( 'Quantity', 'email-customizer-for-woocommerce' ); ?></th>
+					<th style="text-align: right;"><?php esc_html_e( 'Price', 'email-customizer-for-woocommerce' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ( $order->get_items() as $item ) : ?>
+					<tr>
+						<td><?php echo esc_html( $item->get_name() ); ?></td>
+						<td style="text-align: center;"><?php echo esc_html( $item->get_quantity() ); ?></td>
+						<td style="text-align: right;"><?php echo wc_price( $item->get_total() ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
+					<td style="text-align: right;"><?php echo wc_price( $order->get_subtotal() ); ?></td>
+				</tr>
+				<tr>
+					<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
+					<td style="text-align: right;"><?php echo $order->get_shipping_total() > 0 ? wc_price( $order->get_shipping_total() ) : esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
+				</tr>
+				<tr>
+					<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
+					<td style="text-align: right;"><?php echo wc_price( $order->get_total_tax() ); ?></td>
+				</tr>
+				<tr>
+					<th colspan="2"><?php esc_html_e( 'Payment Method:', 'email-customizer-for-woocommerce' ); ?></th>
+					<td style="text-align: right;"><?php echo esc_html( $order->get_payment_method_title() ); ?></td>
+				</tr>
+				<tr>
+					<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
+					<td style="text-align: right;"><?php echo wc_price( $order->get_total() ); ?></td>
+				</tr>
+			</tfoot>
+	</table>
+
+	<h3 class="body-content-title"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
+	<table class="addresses">
+		<tr>
+			<td valign="top" width="100%">
+				<p><?php echo wp_kses_post( $order->get_formatted_billing_address() ); ?></p>
+			</td>
+		</tr>
+	</table>
+
+	<h3 class="body-content-title"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
+	<table class="addresses">
+		<tr>
+			<td valign="top" width="100%">
+				<p><?php echo wp_kses_post( $order->get_formatted_shipping_address() ); ?></p>
+			</td>
+		</tr>
+	</table>
+
+	<?php
 
 	/*
 	* @hooked WC_Emails::order_meta() Shows order meta data.
 	*/
-	do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
+	// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 	/*
 	* @hooked WC_Emails::customer_details() Shows customer details
 	* @hooked WC_Emails::email_address() Shows email address
 	*/
-	do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
+	// do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 	/**
 	 * Show user-defined additional content - this is set in each email's settings.
