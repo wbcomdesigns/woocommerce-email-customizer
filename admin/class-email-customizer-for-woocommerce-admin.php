@@ -1693,6 +1693,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_enqueue_customizer_script() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
+		// Enqueue Customizer script.
+		wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css/customizer-styles.css', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
+
 		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js/customizer' . $suffix . '.js', array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 
 		return true;
