@@ -81,6 +81,21 @@ class Email_Customizer_For_Woocommerce_Admin {
 				wp_die( esc_html__( 'Invalid nonce.', 'email-customizer-for-woocommerce' ), 403 );
 			}
 		}
+
+		// Enqueue Customizer script.
+		add_action(
+			'customize_controls_enqueue_scripts',
+			function () {
+				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+					$extension = is_rtl() ? '.rtl.css' : '.css';
+					$path      = is_rtl() ? '/rtl' : '';
+				} else {
+					$extension = is_rtl() ? '.rtl.css' : '.min.css';
+					$path      = is_rtl() ? '/rtl' : '/min';
+				}
+				wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css' . $path . '/customizer-styles' . $extension, EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
+			}
+		);
 	}
 
 	/**
@@ -1752,23 +1767,14 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_enqueue_customizer_script() {
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$css_extension = is_rtl() ? '.rtl.css' : '.css';
-			$css_path      = is_rtl() ? '/rtl' : '';
-
-			$js_extension = '.js';
-			$js_path      = '';
+			$extension = '.js';
+			$path      = '';
 		} else {
-			$css_extension = is_rtl() ? '.rtl.css' : '.min.css';
-			$css_path      = is_rtl() ? '/rtl' : '/min';
-
-			$js_extension = '.min.js';
-			$js_path      = '/min';
+			$extension = '.min.js';
+			$path      = '/min';
 		}
 
-		// Enqueue Customizer script.
-		wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css' . $css_path . '/customizer-styles' . $css_extension, EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
-
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $js_path . '/customizer' . $js_extension, array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer' . $extension, array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 
 		return true;
 	}
