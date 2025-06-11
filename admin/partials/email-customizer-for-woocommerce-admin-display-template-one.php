@@ -199,10 +199,10 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 
 		<tbody>
 			<tr>
-				<td>Ninja Silhouette<br /></td>
-				<td style="text-align: center;">1</td>
+				<td><?php esc_html_e( 'Ninja Silhouette', 'email-customizer-for-woocommerce' ); ?><br /></td>
+				<td style="text-align: center;"><?php esc_html_e( '1', 'email-customizer-for-woocommerce' ); ?></td>
 				<td style="text-align: right;">
-					<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+					<span><?php esc_html_e( '$20.00', 'email-customizer-for-woocommerce' ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
 		</tbody>
@@ -211,7 +211,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td style="text-align: right;">
-					<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+					<span><?php esc_html_e( '$20.00', 'email-customizer-for-woocommerce' ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
 
@@ -223,7 +223,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td style="text-align: right;">
-					<span>$2.00</span>
+					<span><?php esc_html_e( '$2.00', 'email-customizer-for-woocommerce' ); ?></span>
 				</td>
 			</tr>
 
@@ -235,7 +235,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td style="text-align: right;">
-					<span>$22.00</span>
+					<span><?php esc_html_e( '$22.00', 'email-customizer-for-woocommerce' ); ?></span>
 				</td>
 			</tr>
 		</tfoot>
@@ -246,9 +246,9 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		<tr>
 			<td valign="top" width="100%">
 				<p>
-					John Doe<br />
-					1234 Fake Street<br />
-					WooVille, SA
+					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
 				</p>
 			</td>
 		</tr>
@@ -259,9 +259,9 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		<tr>
 			<td valign="top" width="100%">
 				<p>
-					John Doe<br />
-					1234 Fake Street<br />
-					WooVille, SA
+					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
 				</p>
 			</td>
 		</tr>

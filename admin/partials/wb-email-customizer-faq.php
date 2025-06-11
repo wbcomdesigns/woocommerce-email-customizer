@@ -65,13 +65,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'What if I have a question?', 'email-customizer-for-woocommerce' ); ?>
 						</button>
 						<div class="wbcom-faq-panel">
-
-						<?php
-						$contatct_page = '<a href="https://wbcomdesigns.com/contact/">contact page</a>';
-						?>
 							<p> 
 								<?php esc_html_e( 'No problem. Please get in touch with us via our', 'email-customizer-for-woocommerce' ); ?>   
-								<a href="https://wbcomdesigns.com/contact/" target="_blank"><?php echo esc_html( 'contact page.' ); ?></a> 
+								<a href="<?php echo esc_url('https://wbcomdesigns.com/contact/'); ?>" target="_blank"><?php esc_html_e( 'Contact page', 'email-customizer-for-woocommerce' ); ?></a> 
 							</p>
 						</div>
 					</div>

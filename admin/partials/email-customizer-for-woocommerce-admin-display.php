@@ -104,7 +104,7 @@ if(!empty($email_heading) && !empty($email)){
 	}
 	?>
 
-	<a href="#"><?php esc_html_e( 'Order', 'email-customizer-for-woocommerce' ); ?> #2020</a>
+	<a href="#"><?php esc_html_e( 'Order #2020', 'email-customizer-for-woocommerce' ); ?></a>
 
 	<table>
 		<thead>
@@ -117,10 +117,10 @@ if(!empty($email_heading) && !empty($email)){
 
 		<tbody>
 			<tr>
-				<td>Ninja Silhouette<br /></td>
-				<td>1</td>
+				<td><?php esc_html_e( 'Ninja Silhouette', 'email-customizer-for-woocommerce' ); ?><br /></td>
+				<td><?php esc_html_e( '1', 'email-customizer-for-woocommerce' ); ?></td>
 				<td>
-					<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+					<span><?php esc_html_e( '$20.00', 'email-customizer-for-woocommerce' ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
 		</tbody>
@@ -129,7 +129,7 @@ if(!empty($email_heading) && !empty($email)){
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span>$20.00</span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+					<span><?php esc_html_e( '$20.00', 'email-customizer-for-woocommerce' ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
 
@@ -141,7 +141,7 @@ if(!empty($email_heading) && !empty($email)){
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span>$2.00</span>
+					<span><?php esc_html_e( '$2.00', 'email-customizer-for-woocommerce' ); ?></span>
 				</td>
 			</tr>
 
@@ -153,7 +153,7 @@ if(!empty($email_heading) && !empty($email)){
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span>$22.00</span>
+					<span><?php esc_html_e( '$22.00', 'email-customizer-for-woocommerce' ); ?></span>
 				</td>
 			</tr>
 		</tfoot>
@@ -165,9 +165,9 @@ if(!empty($email_heading) && !empty($email)){
 				<h3><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 
 				<p>
-					John Doe<br />
-					1234 Fake Street<br />
-					WooVille, SA
+					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
 				</p>
 			</td>
 
@@ -175,9 +175,9 @@ if(!empty($email_heading) && !empty($email)){
 				<h3><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
 
 				<p>
-					John Doe<br />
-					1234 Fake Street<br />
-					WooVille, SA
+					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
+					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
 				</p>
 			</td>
 		</tr>
