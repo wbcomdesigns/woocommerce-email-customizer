@@ -101,8 +101,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = is_rtl() ? '.rtl.css' : '.css';
+			$path      = is_rtl() ? '/rtl' : '';
+		} else {
+			$extension = is_rtl() ? '.rtl.css' : '.min.css';
+			$path      = is_rtl() ? '/rtl' : '/min';
+		}
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/email-customizer-for-woocommerce-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array(), $this->version, 'all' );
 	}
 
 	/**
@@ -123,8 +130,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = '.js';
+			$path      = '';
+		} else {
+			$extension = '.min.js';
+			$path      = '/min';
+		}
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/email-customizer-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -1708,12 +1722,24 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * Enqueues the customizer JS script.
 	 */
 	public function wb_email_customizer_enqueue_customizer_script() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$css_extension = is_rtl() ? '.rtl.css' : '.css';
+			$css_path      = is_rtl() ? '/rtl' : '';
+
+			$js_extension = '.js';
+			$js_path      = '';
+		} else {
+			$css_extension = is_rtl() ? '.rtl.css' : '.min.css';
+			$css_path      = is_rtl() ? '/rtl' : '/min';
+
+			$js_extension = '.min.js';
+			$js_path      = '/min';
+		}
 
 		// Enqueue Customizer script.
-		wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css/customizer-styles.css', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
+		wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css' . $css_path . '/customizer-styles' . $css_extension, EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
 
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js/customizer' . $suffix . '.js', array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $js_path . '/customizer' . $js_extension, array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 
 		return true;
 	}
@@ -1861,9 +1887,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wb_email_customizer_enqueue_customizer_control_script() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js/customizer' . $suffix . '.js', array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = '.js';
+			$path      = '';
+		} else {
+			$extension = '.min.js';
+			$path      = '/min';
+		}
+
+		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer' . $extension, array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 
 		$localized_vars = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
@@ -1874,7 +1907,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		);
 
 		wp_localize_script( 'woocommerce-email-customizer-controls', 'woocommerce_email_customizer_controls_local', $localized_vars );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/email-customizer-for-woocommerce-admin.js', array( 'jquery', 'customize-preview' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery', 'customize-preview' ), $this->version, false );
 		$localized_vars_reset = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'wc_email_customizer_email_load_templates' ),
