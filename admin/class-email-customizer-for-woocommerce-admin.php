@@ -70,8 +70,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$this->version       = $version;
 		$this->email_trigger = 'email-customizer-for-woocommerce';
 
-		if ( isset( $_GET[ $this->email_trigger ] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			add_action( 'wp_print_styles', array( $this, 'wb_email_customizer_remove_theme_styles' ), 100 );
+		add_action( 'init', [ $this, 'wb_email_customizer_maybe_run_email_customizer' ] );
+	}
+
+	public function wb_email_customizer_maybe_run_email_customizer() {
+		if ( isset( $_GET[ $this->email_trigger ] ) && isset( $_GET['_wpnonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( wp_verify_nonce( $_GET['_wpnonce'], 'preview-mail' ) ) {
+				add_action( 'wp_print_styles', [ $this, 'wb_email_customizer_remove_theme_styles' ], 100 );
+			} else {
+				wp_die( esc_html__( 'Invalid nonce.', 'email-customizer-for-woocommerce' ), 403 );
+			}
 		}
 	}
 
@@ -143,6 +151,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_admin_options_page() {
 		global $allowedposttags;
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
+		if (!current_user_can('manage_woocommerce')) {
+			wp_die(__('You do not have sufficient permissions.', 'email-customizer-for-woocommerce'));
+		}
 		?>
 		<div class="wrap">
 			<div class="wbcom-bb-plugins-offer-wrapper">
@@ -257,7 +268,13 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$url = add_query_arg( 'email-customizer-for-woocommerce', 'true', $url );
 
-		$url = add_query_arg( 'url', wp_nonce_url( site_url() . '/?email-customizer-for-woocommerce=true', 'preview-mail' ), $url );
+		$url = add_query_arg( 'url',  site_url() . '/?email-customizer-for-woocommerce=true' , $url );
+
+		// Generate nonce separately
+		$nonce = wp_create_nonce( 'preview-mail' );
+
+		// Add nonce directly to URL (not inside `url`)
+		$url = add_query_arg( '_wpnonce', $nonce, $url );
 
 		$url = add_query_arg(
 			'return',
@@ -1837,10 +1854,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		return get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For Woocommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 	}
 
-	// public function wbcom_woocommerce_email_header() {
-	// wc_get_template( 'emails/email-header.php', array( 'email_heading' => $email_heading, 'email' => $email ) );
-	// echo "hello";
-	// }
 
 	/**
 	 * Enqueues scripts on the control panel side
