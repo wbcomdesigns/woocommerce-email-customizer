@@ -1170,9 +1170,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$default_subheading_text         = sprintf( __( 'Hello from %s', 'email-customizer-for-woocommerce' ), $formatted_title );
 			$default_body_text               = sprintf( __( 'Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ), $site_title );
 			$default_header_text_color       = '#32373c';
-			$default_body_bg                 = '#ffee8c';
-			$default_header_bg               = '#ffee8c';
-			$default_address_background      = '#ffee8c';
+			$default_body_bg                 = '#ffd2d3';
+			$default_header_bg               = '#ffd2d3';
+			$default_address_background      = '#ffd2d3';
 			$default_address_border          = '2';
 			$default_rounded_corners         = '0';
 			$default_border_container_top    = '0';
@@ -2006,9 +2006,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 		} elseif ( $selected_template === 'template-three') {
 
 			update_option( 'woocommerce_email_header_text_color', '#32373c',true ) ;
-			update_option( 'woocommerce_email_body_background_color', '#ffee8c',true ) ;
-			update_option( 'woocommerce_email_header_background_color', '#ffee8c',true ) ;
-			update_option( 'woocommerce_email_footer_address_background_color', '#ffee8c',true ) ;
+			update_option( 'woocommerce_email_body_background_color', '#ffd2d3',true ) ;
+			update_option( 'woocommerce_email_header_background_color', '#ffd2d3',true ) ;
+			update_option( 'woocommerce_email_footer_address_background_color', '#ffd2d3',true ) ;
 			update_option( 'woocommerce_email_footer_address_border', '2',true ) ;
 			update_option( 'woocommerce_email_rounded_corners', '0',true ) ;
 			update_option( 'woocommerce_email_border_container_top', '0',true ) ;
