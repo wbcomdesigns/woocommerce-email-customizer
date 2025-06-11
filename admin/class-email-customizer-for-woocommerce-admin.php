@@ -88,7 +88,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles($hook) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -101,6 +101,21 @@ class Email_Customizer_For_Woocommerce_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+
+		 // Only load on plugin pages
+		$plugin_pages = array(
+			'wbcomplugins',
+			'wb-email-customizer-settings',
+			'woocommerce_page_wc-settings'
+		);
+
+		if (
+			!in_array(get_current_screen()->id, $plugin_pages) &&
+			strpos($hook, 'email-customizer') === false
+		) {
+			return;
+		}
+
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = is_rtl() ? '.rtl.css' : '.css';
 			$path      = is_rtl() ? '/rtl' : '';
@@ -117,7 +132,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts($hook) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -130,6 +145,20 @@ class Email_Customizer_For_Woocommerce_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		// Only load on plugin pages
+		$plugin_pages = array(
+			'wbcomplugins',
+			'wb-email-customizer-settings',
+			'woocommerce_page_wc-settings'
+		);
+
+		if (
+			!in_array(get_current_screen()->id, $plugin_pages) &&
+			strpos($hook, 'email-customizer') === false
+		) {
+			return;
+		}
+		
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
 			$path      = '';
