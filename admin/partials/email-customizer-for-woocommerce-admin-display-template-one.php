@@ -90,22 +90,22 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 					<tr>
 						<td><?php echo esc_html( $item->get_name() ); ?></td>
 						<td style="text-align: center;"><?php echo esc_html( $item->get_quantity() ); ?></td>
-						<td style="text-align: right;"><?php echo wc_price( $item->get_total() ); ?></td>
+						<td style="text-align: right;"><?php echo wp_kses_post(wc_price( $item->get_total()) ); ?></td>
 					</tr>
 				<?php endforeach; ?>
 			</tbody>
 			<tfoot>
 				<tr>
 					<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
-					<td style="text-align: right;"><?php echo wc_price( $order->get_subtotal() ); ?></td>
+					<td style="text-align: right;"><?php echo wp_kses_post(wc_price( $order->get_subtotal() )); ?></td>
 				</tr>
 				<tr>
 					<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
-					<td style="text-align: right;"><?php echo $order->get_shipping_total() > 0 ? wc_price( $order->get_shipping_total() ) : esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
+					<td style="text-align: right;"><?php echo $order->get_shipping_total() > 0 ? wp_kses_post(wc_price( $order->get_shipping_total()) ) : esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
 				</tr>
 				<tr>
 					<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
-					<td style="text-align: right;"><?php echo wc_price( $order->get_total_tax() ); ?></td>
+					<td style="text-align: right;"><?php echo wp_kses_post(wc_price( $order->get_total_tax()) ); ?></td>
 				</tr>
 				<tr>
 					<th colspan="2"><?php esc_html_e( 'Payment Method:', 'email-customizer-for-woocommerce' ); ?></th>
@@ -113,7 +113,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 				</tr>
 				<tr>
 					<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
-					<td style="text-align: right;"><?php echo wc_price( $order->get_total() ); ?></td>
+					<td style="text-align: right;"><?php echo wp_kses_post(wc_price( $order->get_total() )); ?></td>
 				</tr>
 			</tfoot>
 	</table>

@@ -210,7 +210,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		global $allowedposttags;
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
 		if (!current_user_can('manage_woocommerce')) {
-			wp_die(__('You do not have sufficient permissions.', 'email-customizer-for-woocommerce'));
+			wp_die(esc_html__('You do not have sufficient permissions.', 'email-customizer-for-woocommerce'));
 		}
 		?>
 		<div class="wrap">
