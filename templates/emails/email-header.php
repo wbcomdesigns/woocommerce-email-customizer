@@ -29,7 +29,7 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>" />
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
-		<title><?php echo get_bloginfo( 'name', 'display' ); ?></title>
+		<title><?php echo esc_html(get_bloginfo( 'name', 'display' )); ?></title>
 	</head>
 	<body <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
 		<table width="100%" id="outer_wrapper">
@@ -61,7 +61,7 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 													if ( $img ) {
 														echo '<p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p>';
 													} else {
-														echo '<p class="email-logo-text">' . sprintf( esc_html__( 'Hello from %s', 'email-customizer-for-woocommerce' ), get_bloginfo('name') ) . '</p>';
+														echo '<p class="email-logo-text">' . sprintf( esc_html__( 'Hello from %s', 'email-customizer-for-woocommerce' ), esc_html(get_bloginfo('name') )) . '</p>';
 													}
 													?>
 												</td>
