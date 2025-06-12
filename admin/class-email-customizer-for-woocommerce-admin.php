@@ -1134,23 +1134,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 			)
 		);
 
-		$wp_customize->add_control(
-			new WP_Customize_Control(
-				$wp_customize,
-				'email_customizer_reset',
-				array(
-					'label'    => __( 'Reset', 'email-customizer-for-woocommerce' ),
-					'priority' => 130,
-					'section'  => 'wc_email_templates',
-					'settings' => 'email_customizer_reset_btn',
-					'type'     => 'button',
-					'input_attrs' => array(
-						'class' => 'button button-secondary-reset',
-						'id' => 'ecfw-reset-template-button',
-					),
-				)
-			)
-		);
 	}
 	/**
 	 * Show only our email settings in the preview
@@ -1961,14 +1944,10 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$wp_styles->queue = array();
 	}
 
-	public function wb_email_customizer_load_template_presets_cb(){
+	public function wb_email_customizer_load_template_presets_cb($wp_customize){
+		$posted_values = $wp_customize->unsanitized_post_values();
 
-		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'wc_email_customizer_email_load_templates')) {
-			wp_send_json_error(array('message' => 'Security check failed'));
-			return;
-    	}
-
-		$selected_template = isset($_POST['template'])?sanitize_text_field($_POST['template']): 'default';
+		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field($posted_values['woocommerce_email_template']): 'default';
 
 		if ( $selected_template === 'template-one') {
 			update_option( 'woocommerce_email_border_color', '#202020',true );
@@ -2043,10 +2022,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			update_option( 'woocommerce_email_border_container_right', '1',true ) ;
 			update_option( 'woocommerce_email_body_border_color', '#505050',true ) ;
 			update_option( 'woocommerce_email_footer_text_color', '#ffffff',true ) ;
-			update_option( 'woocommerce_email_footer_background_color', '#202020',true ) ;
-
-			wp_send_json_success(array('message'=> 'Template updated sucessfully.'));
-			
+			update_option( 'woocommerce_email_footer_background_color', '#202020',true ) ;	
 
 		}
 		
