@@ -20,7 +20,13 @@ use Automattic\WooCommerce\Utilities\FeaturesUtil;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-
+$position = get_option( 'woocommerce_email_header_image_placement' );
+$img = get_option( 'woocommerce_email_header_image' );
+if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
+	$img_transient = get_transient( 'woocommerce_email_header_image' );
+	$img           = false !== $img_transient ? $img_transient : $img;
+}
+									
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 	$template      = get_option( 'woocommerce_email_template' );
 ?>
@@ -41,16 +47,14 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 							<tr>
 								<td align="center" valign="top">
 									<?php
-									$img = get_option( 'woocommerce_email_header_image' );
+									
+									
 									/**
 									 * This filter is documented in templates/emails/email-styles.php
 									 *
 									 * @since 9.6.0
 									 */
-									if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
-										$img_transient = get_transient( 'woocommerce_email_header_image' );
-										$img           = false !== $img_transient ? $img_transient : $img;
-									}
+									
 
 									if ( $email_improvements_enabled ) :
 										?>
