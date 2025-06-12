@@ -75,7 +75,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 	public function wb_email_customizer_maybe_run_email_customizer() {
 		if ( isset( $_GET[ $this->email_trigger ] ) && isset( $_GET['_wpnonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( wp_verify_nonce( $_GET['_wpnonce'], 'preview-mail' ) ) {
+			if ( wp_verify_nonce( wp_unslash($_GET['_wpnonce']), 'preview-mail' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 				add_action( 'wp_print_styles', [ $this, 'wb_email_customizer_remove_theme_styles' ], 100 );
 			} else {
 				wp_die( esc_html__( 'Invalid nonce.', 'email-customizer-for-woocommerce' ), 403 );
@@ -1947,7 +1947,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_load_template_presets_cb($wp_customize){
 		$posted_values = $wp_customize->unsanitized_post_values();
 
-		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field($posted_values['woocommerce_email_template']): 'default';
+		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_template'])): 'default';
 
 		if ( $selected_template === 'template-one') {
 			update_option( 'woocommerce_email_border_color', '#202020',true );
