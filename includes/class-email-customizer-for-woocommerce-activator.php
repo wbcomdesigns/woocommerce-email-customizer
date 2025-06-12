@@ -48,6 +48,12 @@ class Email_Customizer_For_Woocommerce_Activator {
 		);
 
 		update_option( 'wc_email_customizer_old_settings', $settings );
+
+
+		$default_array = get_option('wb_email_customizer_old');
+			foreach ($default_array as $key => $value) {
+				update_option( $key, $value ,true ) ;
+			}
 	}
 
 }
