@@ -51,7 +51,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		?>
 		<p><?php printf(
 				esc_html__( 'Hi there. Your recent order on %s has been completed.', 'email-customizer-for-woocommerce' ),
-				get_bloginfo( 'name' )
+				esc_html(get_bloginfo( 'name' ))
 			); ?></p>
 		<p><?php esc_html_e( 'Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 	<?php } else { ?>
@@ -78,8 +78,8 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		<a href="#" style="text-decoration: none; font-size: inherit; font-weight: inherit;">
 			<?php printf(
 				esc_html__( 'Order #%s (%s)', 'email-customizer-for-woocommerce' ),
-				$order->get_order_number(),
-				wc_format_datetime( $order->get_date_created() )
+				esc_html($order->get_order_number()),
+				esc_html(wc_format_datetime( $order->get_date_created()) )
 			); ?>
 		</a>
 	</h3>
@@ -99,7 +99,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 					<td><?php echo esc_html( $item->get_name() ); ?></td>
 					<td><?php echo esc_html( $item->get_quantity() ); ?></td>
 					<td>
-						<span><?php echo wc_price( $item->get_total() ); ?></span>
+						<span><?php echo wp_kses_post(wc_price( $item->get_total() )); ?></span>
 						<small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 					</td>
 				</tr>
@@ -110,7 +110,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span><?php echo wc_price( $order->get_subtotal() ); ?></span>
+					<span><?php echo wp_kses_post(wc_price( $order->get_subtotal() )); ?></span>
 					<small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
@@ -119,14 +119,14 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 				<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
 					<?php echo $order->get_shipping_total() > 0
-						? wc_price( $order->get_shipping_total() )
+						? wp_kses_post(wc_price( $order->get_shipping_total()) )
 						: esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?>
 				</td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td><span><?php echo wc_price( $order->get_total_tax() ); ?></span></td>
+				<td><span><?php echo wp_kses_post(wc_price( $order->get_total_tax() )); ?></span></td>
 			</tr>
 
 			<tr>
@@ -136,7 +136,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td><span><?php echo wc_price( $order->get_total() ); ?></span></td>
+				<td><span><?php echo wp_kses_post(wc_price( $order->get_total() )); ?></span></td>
 			</tr>
 		</tfoot>
 	</table>
@@ -207,7 +207,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 			<?php
 			printf(
 				esc_html__( 'Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ),
-				get_bloginfo( 'name' )
+				esc_html(get_bloginfo( 'name' ))
 			);
 			?>
 		</p>
