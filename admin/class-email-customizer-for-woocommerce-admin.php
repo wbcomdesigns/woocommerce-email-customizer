@@ -1944,7 +1944,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$wp_styles->queue = array();
 	}
 
-	public function wb_email_customizer_load_template_presets_cb($wp_customize){
+	public function wb_email_customizer_load_template_presets_cb($response,$wp_customize){
 		$posted_values = $wp_customize->unsanitized_post_values();
 
 		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_template'])): 'default';
