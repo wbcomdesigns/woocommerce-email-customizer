@@ -173,7 +173,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		) {
 			return;
 		}
-		
+
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
 			$path      = '';
@@ -1714,6 +1714,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'emails/customer-note.php',
 			'emails/customer-failed-order.php',
 		);
+		$order_email_templates = apply_filters('wb_email_customizer_templates_for_preview', $order_email_templates);
 
 		$selected_template = get_option( 'woocommerce_email_template' );
 
@@ -2048,6 +2049,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			
 
 		}
+		
 
 	}
 

@@ -77,7 +77,7 @@ class Email_Customizer_For_Woocommerce {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
+		$this->define_subscription_hooks();
 	}
 
 	/**
@@ -125,6 +125,8 @@ class Email_Customizer_For_Woocommerce {
 
 		/* Enqueue wbcom license file. */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-subscription-handler.php';
 		
 		$this->loader = new Email_Customizer_For_Woocommerce_Loader();
 
@@ -193,6 +195,20 @@ class Email_Customizer_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+	}
+
+
+	/**
+	 * Register all of the hooks related to the subscription plugin functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_subscription_hooks() {
+
+		$plugin_subscription = new Email_Customizer_Subscription_Handler( $this->get_plugin_name(), $this->get_version() );
 
 	}
 

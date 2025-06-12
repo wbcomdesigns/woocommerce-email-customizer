@@ -49,7 +49,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	} elseif ( $email_improvements_enabled ) {
 
 		?>
-		<p><?php printf(esc_html_e( 'Hi there. Your recent order on %s has been completed.', 'email-customizer-for-woocommerce' ), get_bloginfo( 'name' ))?></p>
+		<p><?php printf(esc_html__( 'Hi there. Your recent order on %s has been completed.', 'email-customizer-for-woocommerce' ), get_bloginfo( 'name' ))?></p>
 		<p><?php esc_html_e( 'Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 	<?php } else { ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
