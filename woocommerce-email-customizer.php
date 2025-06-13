@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Wbcom Designs – Woocommerce Email Customizer
  * Plugin URI:        https://wbcomdesigns.com/downloads/email-customizer-for-woocommerce
- * Description:       Email Customizer For WooCommerce plugin allows you to personalize your transactional emails. The plugin allows you to insert various elements into the template, such as text, images, Header, Footer, and much more.
+ * Description:       The Email Customizer For WooCommerce plugin allows you to personalize your transactional emails. You can insert various elements into the template, such as text, images, headers, footers, and much more.
  * Version:           1.2.0
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/
@@ -101,7 +101,7 @@ if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
 	 * @since    1.0.0
 	 */
 	function wb_email_customizer_admin_notice() {
-		$email_customizer_plugin = esc_html__( 'Wbcom Designs – Woocommerce Email Customizer', 'email-customizer-for-woocommerce' );
+		$email_customizer_plugin = esc_html__( 'Wbcom Designs – WooCommerce Email Customizer', 'email-customizer-for-woocommerce' );
 		$woo_plugin              = esc_html__( 'WooCommerce', 'email-customizer-for-woocommerce' );
 		$action                  = 'install-plugin';
 		$slug                    = 'woocommerce';

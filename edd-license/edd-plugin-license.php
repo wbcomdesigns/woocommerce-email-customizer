@@ -330,7 +330,7 @@ function edd_wbcom_woo_email_customizer_admin_notices() {
 				<?php
 				$message = sprintf(
 							/* translators: %1$s: Expire Time*/
-					__( 'Your Woocommerce Email Customizer plugin license key expired on %s.', 'email-customizer-for-woocommerce' ),
+					__( 'Your WooCommerce Email Customizer plugin license key expired on %s.', 'email-customizer-for-woocommerce' ),
 					date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 				);
 				echo esc_html( $message );
@@ -361,7 +361,7 @@ function edd_wbcom_woo_email_customizer_admin_notices() {
 		<div class="notice notice-error is-dismissible">
 			<p>
 			<?php
-			echo esc_html__( 'Please activate your Woocommerce Email Customizer plugin license key.', 'email-customizer-for-woocommerce' );
+			echo esc_html__( 'Please activate your WooCommerce Email Customizer plugin license key.', 'email-customizer-for-woocommerce' );
 			?>
 			</p>			
 		</div>

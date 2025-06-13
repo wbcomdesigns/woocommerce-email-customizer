@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</button>
 						<div class="wbcom-faq-panel">
 							<p> 
-								<?php esc_html_e( 'You can hire our team to assist you.', 'email-customizer-for-woocommerce' ); ?>    
+								<?php esc_html_e( 'You can contact our team for custom development assistance.', 'email-customizer-for-woocommerce' ); ?>    
 							</p>
 						</div>
 					</div>
@@ -68,6 +68,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<p> 
 								<?php esc_html_e( 'No problem. Please get in touch with us via our', 'email-customizer-for-woocommerce' ); ?>   
 								<a href="<?php echo esc_url('https://wbcomdesigns.com/contact/'); ?>" target="_blank"><?php esc_html_e( 'Contact page', 'email-customizer-for-woocommerce' ); ?></a> 
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="wbcom-faq-section-row">
+					<div class="wbcom-faq-admin-row">
+						<button class="wbcom-faq-accordion">
+							<?php esc_html_e( 'What types of emails can be customized with this plugin?', 'email-customizer-for-woocommerce' ); ?>
+						</button>
+						<div class="wbcom-faq-panel">
+							<p> 
+								<?php esc_html_e( 'You can customize all default WooCommerce emails order related.', 'email-customizer-for-woocommerce' ); ?>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="wbcom-faq-section-row">
+					<div class="wbcom-faq-admin-row">
+						<button class="wbcom-faq-accordion">
+							<?php esc_html_e( 'What if I need additional features?', 'email-customizer-for-woocommerce' ); ?>
+						</button>
+						<div class="wbcom-faq-panel">
+							<p> 
+								<?php esc_html_e( 'If you require extra features or custom functionality, our team is available for hire to assist with tailored development.', 'email-customizer-for-woocommerce' ); ?>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="wbcom-faq-section-row">
+					<div class="wbcom-faq-admin-row">
+						<button class="wbcom-faq-accordion">
+							<?php esc_html_e( 'What if I have a question or need support?', 'email-customizer-for-woocommerce' ); ?>
+						</button>
+						<div class="wbcom-faq-panel">
+							<p> 
+								<?php esc_html_e( 'No worries! Feel free to reach out to us anytime via our Contact page. We’re happy to help.', 'email-customizer-for-woocommerce' ); ?>
 							</p>
 						</div>
 					</div>

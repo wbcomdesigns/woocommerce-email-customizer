@@ -210,7 +210,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		global $allowedposttags;
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
 		if (!current_user_can('manage_woocommerce')) {
-			wp_die(esc_html__('You do not have sufficient permissions.', 'email-customizer-for-woocommerce'));
+			wp_die(esc_html__('You do not have sufficient permissions to perform this action.', 'email-customizer-for-woocommerce'));
 		}
 		?>
 		<div class="wrap">
@@ -225,7 +225,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				<div class="blpro-header">
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'Email Customizer For Woocommerce', 'email-customizer-for-woocommerce' ); ?>
+							<?php esc_html_e( 'Email Customizer For WooCommerce', 'email-customizer-for-woocommerce' ); ?>
 							<?php /* translators: %s: */ ?>
 							<span><?php printf(esc_html__( 'Version %s', 'email-customizer-for-woocommerce' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );//phpcs:ignore ?></span>
 						</div>
@@ -349,7 +349,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		);
 		add_submenu_page(
 			'woocommerce',
-			__( 'Woocommerce Email Customizer', 'email-customizer-for-woocommerce' ),
+			__( 'WooCommerce Email Customizer', 'email-customizer-for-woocommerce' ),
 			__( 'Email Customizer', 'email-customizer-for-woocommerce' ),
 			'manage_woocommerce',
 			$this->plugin_name,
@@ -486,7 +486,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'theme_slug_default_layout',
 				array(
 					'type'     => 'radio',
-					'label'    => esc_html__( 'Select default layout', 'email-customizer-for-woocommerce' ),
+					'label'    => esc_html__( 'Select Default Email Layout', 'email-customizer-for-woocommerce' ),
 					'section'  => 'wc_email_templates',
 					'settings' => 'woocommerce_email_template',
 					'type'     => 'text',
@@ -702,7 +702,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'settings' => 'woocommerce_email_header_image_placement',
 					'type'     => 'select',
 					'choices'  => array(
-						''        => __( 'Select the body container', 'email-customizer-for-woocommerce' ),
+						''        => __( 'Select body container placement', 'email-customizer-for-woocommerce' ),
 						'inside'  => __( 'Inside the body container', 'email-customizer-for-woocommerce' ),
 						'outside' => __( 'Outside the body container', 'email-customizer-for-woocommerce' ),
 					),
@@ -715,7 +715,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_header_image_control',
 				array(
-					'label'    => __( 'Upload a Header', 'email-customizer-for-woocommerce' ),
+					'label'    => __( 'Upload Header Image', 'email-customizer-for-woocommerce' ),
 					'priority' => 10,
 					'section'  => 'wc_email_header',
 					'settings' => 'woocommerce_email_header_image',
@@ -893,7 +893,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_width_control',
 				array(
-					'label'    => __( 'Email Width', 'email-customizer-for-woocommerce' ),
+					'label'    => __( 'Email Container Width', 'email-customizer-for-woocommerce' ),
 					'priority' => 130,
 					'section'  => 'wc_email_appearance_customizer',
 					'settings' => 'woocommerce_email_width',
@@ -932,7 +932,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'priority'    => 170,
 				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Rounded Corners', 'email-customizer-for-woocommerce' ),
-				'description' => __( 'Rounded corners', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Enable rounded corners', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_rounded_corners',
 				'input_attrs' => array(
 					'min'  => 0,
@@ -949,7 +949,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'priority'    => 190,
 				'section'     => 'wc_email_appearance_customizer',
 				'label'       => __( 'Shadow Spread', 'email-customizer-for-woocommerce' ),
-				'description' => __( 'Amount of shadow behind email', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Amount of shadow behind the email container', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_box_shadow_spread',
 				'input_attrs' => array(
 					'min'  => -5,
@@ -1939,7 +1939,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $text Email Footer Text.
 	 */
 	public function wb_email_customizer_email_footer_text( $text ) {
-		return get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For Woocommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
+		return get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 	}
 
 
@@ -1960,9 +1960,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$localized_vars = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'ajaxSendEmailNonce' => wp_create_nonce( '_wc_email_customizer_send_email_nonce' ),
-			'error'              => __( 'Error, Try again!', 'email-customizer-for-woocommerce' ),
+			'error'              => __( 'Error occurred. Please try again.', 'email-customizer-for-woocommerce' ),
 			'success'            => __( 'Email Sent!', 'email-customizer-for-woocommerce' ),
-			'saveFirst'          => __( 'Please click on save/publish before sending the test email', 'email-customizer-for-woocommerce' ),
+			'saveFirst'          => __( 'Please save your changes before sending the test email', 'email-customizer-for-woocommerce' ),
 		);
 		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
