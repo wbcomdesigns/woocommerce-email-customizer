@@ -13,6 +13,8 @@
 // // // Or check all settings
 // console.log(Object.keys(wp.customize.settings.controls));
     let argument_obj = {};
+    argument_obj['nonce'] = woocommerce_email_customizer_controls_local.ajaxSendEmailNonce;
+    
 
     // Text Settings - Real-time updates
     wp.customize('woocommerce_email_heading_text', function(value) {

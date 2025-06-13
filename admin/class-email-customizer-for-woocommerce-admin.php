@@ -1769,10 +1769,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param mixed $styles CSS a blob of CSS.
 	 */
 	public function wb_email_customizer_add_styles( $styles ) {
+		// phpcs:disable
 
 		$selected_template = get_option( 'woocommerce_email_template' );
+		 if ( isset($_GET['nonce']) && ! wp_verify_nonce( $_GET['nonce'], '_wc_email_customizer_send_email_nonce' ) ) {
+			return $styles;
+		 }
+		
 
-		$bg_color = 'body, body > div, body > #wrapper > table > tbody > tr > td { background-color:' . get_option( 'woocommerce_email_background_color', '#f5f5f5' ) . '; }' . PHP_EOL;
+		$woocommerce_email_background_color = ( isset( $_GET['woocommerce_email_background_color'] ) ) ? $_GET['woocommerce_email_background_color'] : get_option( 'woocommerce_email_background_color', '#f5f5f5' );
+		$bg_color = 'body, body > div, body > #wrapper > table > tbody > tr > td { background-color:' . $woocommerce_email_background_color . '; }' . PHP_EOL;
 		$woocommerce_email_body_background_color = ( isset( $_GET['woocommerce_email_body_background_color'] ) ) ? $_GET['woocommerce_email_body_background_color'] : get_option( 'woocommerce_email_body_background_color', '#fdfdfd' );
 		$body_bg_color = '#template_container { background-color:' . $woocommerce_email_body_background_color . '; } #template_body, #template_body td, #body_content { background: transparent none; }' . PHP_EOL;
 
@@ -1896,7 +1902,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$woocommerce_email_header_image_alignment = ( isset( $_GET['woocommerce_email_header_image_alignment'] ) ) ? $_GET['woocommerce_email_header_image_alignment'] : get_option( 'woocommerce_email_header_image_alignment', 'center' );
 		$image_alignment = '#template_header_image img {float: ' . $woocommerce_email_header_image_alignment . ';}' . PHP_EOL;
-
+		// phpcs:enable
 		$styles .= PHP_EOL;
 		$styles .= $template_container_border;
 		$styles .= $bg_color;
@@ -1951,10 +1957,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$extension = '.min.js';
 			$path      = '/min';
 		}
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
-
-		wp_enqueue_script( 'woocommerce-email-customizer-live-control', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-control' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
-
 		$localized_vars = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'ajaxSendEmailNonce' => wp_create_nonce( '_wc_email_customizer_send_email_nonce' ),
@@ -1962,6 +1964,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'success'            => __( 'Email Sent!', 'email-customizer-for-woocommerce' ),
 			'saveFirst'          => __( 'Please click on save/publish before sending the test email', 'email-customizer-for-woocommerce' ),
 		);
+		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
+
+		wp_enqueue_script( 'woocommerce-email-customizer-live-control', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-control' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+
 
 		wp_localize_script( 'woocommerce-email-customizer-controls', 'woocommerce_email_customizer_controls_local', $localized_vars );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery', 'customize-preview' ), $this->version, false );
