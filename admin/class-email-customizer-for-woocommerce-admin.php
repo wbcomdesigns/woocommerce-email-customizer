@@ -1951,8 +1951,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$extension = '.min.js';
 			$path      = '/min';
 		}
-		
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer' . $extension, array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+
+		wp_enqueue_script( 'woocommerce-email-customizer-live-control', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-control' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 
 		$localized_vars = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
