@@ -16,8 +16,6 @@ use Automattic\WooCommerce\Utilities\FeaturesUtil;
 <?php
 if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) ) {
 	$email_heading = get_option( 'woocommerce_email_heading_text' );
-} else {
-	$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
 }
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 if ( ! empty( $email_heading ) && ! empty( $email ) ) {
@@ -50,7 +48,11 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	} elseif ( $email_improvements_enabled ) {
 
 		?>
-		<p><?php esc_html_e( 'Your order has been received and is now being processed.', 'email-customizer-for-woocommerce' ); ?></p>
+		<p><?php printf(
+				esc_html__( 'Hi there. Your recent order on %1$s has been %2$s.', 'email-customizer-for-woocommerce' ),
+				esc_html(get_bloginfo( 'name' )),
+				esc_html($order->get_status())
+			); ?></p>
 		<p><?php esc_html_e( 'Your order details are shown below for your reference:', 'email-customizer-for-woocommerce' ); ?></p>
 	<?php } else { ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
