@@ -44,6 +44,7 @@ class Email_Customizer_For_Woocommerce_Deactivator {
 			'woocommerce_email_body_border_color' => '#505050',
 			'woocommerce_email_footer_text_color' => '#ffffff',
 			'woocommerce_email_footer_background_color' => '#202020',
+			'woocommerce_email_header_image' => ''
 
 		);
 			$old_values = [];
