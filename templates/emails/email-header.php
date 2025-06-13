@@ -20,8 +20,8 @@ use Automattic\WooCommerce\Utilities\FeaturesUtil;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-$position = get_option( 'woocommerce_email_header_image_placement' );
-$img = get_option( 'woocommerce_email_header_image' );
+$position = ( isset( $_GET['woocommerce_email_header_image_placement'] ) ) ? $_GET['woocommerce_email_header_image_placement'] : get_option( 'woocommerce_email_header_image_placement' );
+$img = ( isset( $_GET['woocommerce_email_header_image'] ) ) ? $_GET['woocommerce_email_header_image'] : get_option( 'woocommerce_email_header_image' );
 if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
 	$img_transient = get_transient( 'woocommerce_email_header_image' );
 	$img           = false !== $img_transient ? $img_transient : $img;
@@ -56,29 +56,27 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 									 */
 									
 
-									if ( $email_improvements_enabled ) :
+									if ( $email_improvements_enabled && $img && 'outside' === $position ) :
 										?>
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td id="template_header_image">
 													<?php
-													if ( $img ) {
 														echo '<p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p>';
-													} else {
-														echo '<p class="email-logo-text">' . sprintf( esc_html__( 'Hello from %s', 'email-customizer-for-woocommerce' ), esc_html(get_bloginfo('name') )) . '</p>';
-													}
 													?>
 												</td>
 											</tr>
 										</table>
 									<?php else : ?>
-										<div id="template_header_image">
 											<?php
-											if ( $img ) {
-												echo '<p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p>';
+											if ( 'outside' === $position) {
+												if($img){
+													echo '<div id="template_header_image"><p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p></div>';
+												}else{
+													echo esc_html( get_bloginfo( 'name', 'display' ) );
+												}
 											}
 											?>
-										</div>
 									<?php endif; ?>
 									<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_container">
 										<tr>
@@ -87,7 +85,17 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 												<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_header">
 													<tr>
 														<td id="header_wrapper">
-															<h1><?php echo esc_html( $email_heading ); ?></h1>
+															<?php
+															if ( 'inside' === $position) {
+																if($img){
+																	echo '<div id="template_header_image"><p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p></div>';
+																}else{
+																	echo esc_html( get_bloginfo( 'name', 'display' ) );
+																}
+															}else{
+																echo '<h1>'. esc_html( $email_heading ). '</h1>';
+															}
+															?>
 														</td>
 													</tr>
 												</table>
@@ -105,3 +113,8 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 																<tr>
 																	<td valign="top" id="body_content_inner_cell">
 																		<div id="body_content_inner">
+																			<?php
+																			if ( 'inside' === $position) {
+																				echo '<h1>'. esc_html( $email_heading ). '</h1>';
+																			}
+																			?>
