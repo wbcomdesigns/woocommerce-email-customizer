@@ -1886,7 +1886,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		// Handle border styles based on template
 		if ( 'template-three' === $selected_template ) {
 			$body_border_color = sprintf( '#body_content_inner table td, #body_content_inner table th { border-color: %s !important; border-width: 2px !important; border-style: solid !important; text-align: left !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
-			$addresses = sprintf( '.addresses td { border: none !important; line-height: 1.5 !important; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; }%s', PHP_EOL );
+			$addresses = sprintf( '#body_content_inner table .addresses, #body_content_inner table.addresses td { border: 0 !important; line-height: 1.5 !important; padding: 0 !important; } %s', PHP_EOL );
 		} elseif ( 'template-one' === $selected_template ) {
 			$body_border_color = sprintf( '#body_content_inner table td, #body_content_inner table th { border-color: %s !important; border-width: 1px !important; border-style: solid !important; text-align: left !important; border-left: 0 !important; border-right: 0 !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
 			$addresses = sprintf( '.addresses td { line-height: 1.5 !important; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; } #body_content_inner table.addresses th, #body_content_inner table.addresses td { border-color: %s !important; border-width: 1px !important; border-style: solid !important; text-align: center !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
@@ -1916,7 +1916,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		// Border and padding styles - FIXED: Added border-style property
 		$apprance_border_color = sprintf( '#template_container { border-color: %s !important; border-style: solid !important; border-top-width: %dpx !important; border-bottom-width: %dpx !important; border-left-width: %dpx !important; border-right-width: %dpx !important; }%s', esc_attr( $woocommerce_email_border_color ), $woocommerce_email_border_container_top, $woocommerce_email_border_container_bottom, $woocommerce_email_border_container_left, $woocommerce_email_border_container_right, PHP_EOL );
 		$padding_conatiner = sprintf( '#header_wrapper { padding-top: %dpx !important; padding-bottom: %dpx !important; padding-left: %dpx !important; padding-right: %dpx !important; }%s', $woocommerce_email_padding_container_top, $woocommerce_email_padding_container_bottom, $woocommerce_email_padding_container_left_right, $woocommerce_email_padding_container_left_right, PHP_EOL );
-		$footer_address = sprintf( 'table.addresses { background: %s !important; border: %dpx %s %s !important; }%s', esc_attr( $woocommerce_email_footer_address_background_color ), $woocommerce_email_footer_address_border, esc_attr( $woocommerce_email_footer_address_border_style ), esc_attr( $woocommerce_email_footer_address_border_color ), PHP_EOL );
+		$footer_address = sprintf( 'table.addresses { background: %s !important; }%s', esc_attr( $woocommerce_email_footer_address_background_color ), PHP_EOL );
 
 		// Body title styles
 		if ( 'template-three' === $selected_template ) {
