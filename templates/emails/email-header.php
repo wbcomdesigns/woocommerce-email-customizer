@@ -54,7 +54,7 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 				<td><!-- Deliberately empty to support consistent sizing and layout across multiple email clients. --></td>
 				<td width="600">
 					<div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
-						<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="inner_wrapper">
+						<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="inner_wrapper" style="background: transparent">
 							<tr>
 								<td align="center" valign="top">
 									<?php
