@@ -1771,7 +1771,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_add_styles( $styles ) {
 		// phpcs:disable
 
-		$selected_template = get_option( 'woocommerce_email_template' );
+		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? $_GET['woocommerce_email_template'] : get_option( 'woocommerce_email_template' );
 		 if ( isset($_GET['nonce']) && ! wp_verify_nonce( $_GET['nonce'], '_wc_email_customizer_send_email_nonce' ) ) {
 			return $styles;
 		 }

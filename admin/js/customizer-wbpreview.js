@@ -308,6 +308,8 @@
     // Template Selection - Real-time updates (requires page refresh for full effect)
     wp.customize('woocommerce_email_template', function(value) {
         value.bind(function(newval) {
+            argument_obj    = {};
+            argument_obj['nonce'] = woocommerce_email_customizer_controls_local.ajaxSendEmailNonce;
             argument_obj['woocommerce_email_template'] = newval;
             updateEmailPreviewFrame(argument_obj);
             // Add a class to body to indicate template change
