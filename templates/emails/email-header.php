@@ -20,8 +20,20 @@ use Automattic\WooCommerce\Utilities\FeaturesUtil;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-$position = ( isset( $_GET['woocommerce_email_header_image_placement'] ) ) ? $_GET['woocommerce_email_header_image_placement'] : get_option( 'woocommerce_email_header_image_placement' );
-$img = ( isset( $_GET['woocommerce_email_header_image'] ) ) ? $_GET['woocommerce_email_header_image'] : get_option( 'woocommerce_email_header_image' );
+
+if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '_wc_email_customizer_send_email_nonce' ) ) {
+    $position = isset( $_GET['woocommerce_email_header_image_placement'] )
+        ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_header_image_placement'] ) )
+        : get_option( 'woocommerce_email_header_image_placement' );
+
+    $img = isset( $_GET['woocommerce_email_header_image'] )
+        ? esc_url_raw( wp_unslash( $_GET['woocommerce_email_header_image'] ) )
+        : get_option( 'woocommerce_email_header_image' );
+} else {
+    $position = get_option( 'woocommerce_email_header_image_placement' );
+    $img      = get_option( 'woocommerce_email_header_image' );
+}
+
 if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
 	$img_transient = get_transient( 'woocommerce_email_header_image' );
 	$img           = false !== $img_transient ? $img_transient : $img;
