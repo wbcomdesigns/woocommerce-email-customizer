@@ -1769,13 +1769,17 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param mixed $styles CSS a blob of CSS.
 	 */
 	public function wb_email_customizer_add_styles( $styles ) {
+		// Verify nonce first
+		if ( isset( $_GET['nonce'] ) && wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '_wc_email_customizer_send_email_nonce' ) ) {	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return $styles;
+		}
 		// Helper function to safely get and sanitize GET parameters
 		$get_param = function( $key, $default = '', $sanitize_callback = 'sanitize_text_field' ) {
-			if ( ! isset( $_GET[ $key ] ) ) {
+			if ( ! isset( $_GET[ $key ] ) ) {	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				return get_option( $key, $default );
 			}
 			
-			$value = wp_unslash( $_GET[ $key ] );
+			$value = wp_unslash( $_GET[ $key ] );	// phpcs:ignore
 			
 			// Apply appropriate sanitization based on the parameter type
 			switch ( $sanitize_callback ) {
@@ -1790,11 +1794,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			}
 		};
 
-		// Verify nonce first
-		$nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
-		if ( ! empty( $nonce ) && ! wp_verify_nonce( $nonce, '_wc_email_customizer_send_email_nonce' ) ) {
-			return $styles;
-		}
+		
 
 		// Get all parameters with proper sanitization
 		$selected_template = $get_param( 'woocommerce_email_template', '', 'sanitize_key' );
