@@ -2025,7 +2025,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		if ( strpos( $url, 'email-customizer-for-woocommerce' ) === false ) {
 			return $response;
 		}
-		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_template'])): 'default';
+		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_template'])): '';
 
 		if ( $selected_template === 'template-one') {
 			update_option( 'woocommerce_email_border_color', '#202020',true );
