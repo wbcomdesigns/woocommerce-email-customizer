@@ -1929,7 +1929,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		// FIXED: Corrected variable name from 'fottor_botton' to 'footer_bottom'
 		$footer_bottom = sprintf( '#template_footer { background: %s !important; padding-top: %dpx !important; padding-bottom: %dpx !important; padding-left: %dpx !important; padding-right: %dpx !important; }%s', esc_attr( $woocommerce_email_footer_background_color ), $woocommerce_email_footer_top_padding, $woocommerce_email_footer_bottom_padding, $woocommerce_email_footer_left_right_padding, $woocommerce_email_footer_left_right_padding, PHP_EOL );
-		$image_alignment = sprintf( '#template_header_image img { float: %s !important; }%s', esc_attr( $woocommerce_email_header_image_alignment ), PHP_EOL );
+		$image_alignment = sprintf( '#template_header_image, #template_header_image>p, #template_header_image img { text-align: %s !important; }%s', esc_attr( $woocommerce_email_header_image_alignment ), PHP_EOL );
 
 		// Append all styles
 		$styles .= PHP_EOL;
