@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-16T13:54:26+00:00\n"
+"POT-Creation-Date: 2025-06-17T12:50:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: email-customizer-for-woocommerce\n"
@@ -357,7 +357,7 @@ msgstr ""
 #: admin/class-email-customizer-for-woocommerce-admin.php:1203
 #: admin/class-email-customizer-for-woocommerce-admin.php:1220
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:195
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:208
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:209
 #, php-format
 msgid "Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:"
 msgstr ""
@@ -449,7 +449,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:85
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:209
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:89
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:222
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:223
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:69
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:191
 #: admin/wbcom/templates/wbcom-license-page.php:25
@@ -463,7 +463,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:86
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:210
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:90
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:223
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:224
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:70
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:192
 msgid "Quantity"
@@ -474,7 +474,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:87
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:211
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:91
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:224
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:225
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:71
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:193
 msgid "Price"
@@ -485,7 +485,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:106
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:227
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:110
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:240
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:241
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:89
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:209
 msgid "Subtotal:"
@@ -496,7 +496,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:114
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:234
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:118
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:247
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:248
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:96
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:216
 msgid "Shipping:"
@@ -507,7 +507,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:115
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:235
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:122
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:248
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:249
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:97
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:217
 msgid "Free Shipping"
@@ -518,7 +518,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:119
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:239
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:127
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:252
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:253
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:101
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:221
 msgid "Tax:"
@@ -529,7 +529,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:124
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:246
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:132
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:259
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:260
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:108
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:228
 msgid "Payment Method:"
@@ -540,7 +540,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:129
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:251
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:137
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:264
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:265
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:113
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:233
 msgid "Total:"
@@ -550,8 +550,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:246
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:137
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:260
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:159
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:276
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:162
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:277
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:124
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:244
 msgid "Billing address"
@@ -561,8 +561,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:259
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:146
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:273
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:168
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:279
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:165
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:280
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:132
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:254
 msgid "Shipping address"
@@ -587,14 +587,14 @@ msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:204
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:217
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:230
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:231
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:199
 msgid "Ninja Silhouette"
 msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:205
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:218
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:231
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:232
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:200
 msgid "1"
 msgstr ""
@@ -603,8 +603,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:216
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:220
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:229
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:233
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:242
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:234
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:243
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:202
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:211
 msgid "$20.00"
@@ -618,8 +618,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:229
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:102
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:113
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:233
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:242
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:234
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:243
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:81
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:91
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:202
@@ -629,21 +629,21 @@ msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:228
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:241
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:254
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:255
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:223
 msgid "$2.00"
 msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:234
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:247
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:260
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:261
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:229
 msgid "Direct Bank Transfer"
 msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:240
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:253
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:266
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:267
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:235
 msgid "$22.00"
 msgstr ""
@@ -652,8 +652,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:264
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:265
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:278
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:285
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:292
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:286
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:293
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:247
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:257
 msgid "John Doe"
@@ -663,8 +663,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:265
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:266
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:279
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:286
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:293
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:287
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:294
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:248
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:258
 msgid "1234 Fake Street"
@@ -674,8 +674,8 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:266
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:267
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:280
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:287
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:294
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:288
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:295
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:249
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:259
 msgid "WooVille, SA"
@@ -691,7 +691,7 @@ msgstr ""
 msgid "Order #1 (May 29, 2025)"
 msgstr ""
 
-#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:217
+#: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:218
 msgid "Order #1 (May 15, 2025)"
 msgstr ""
 

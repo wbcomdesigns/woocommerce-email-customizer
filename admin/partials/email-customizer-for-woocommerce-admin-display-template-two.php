@@ -156,19 +156,20 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	*/
 	// do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 	?>
-	<h3 class="body-content-title"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
-	<table class="addresses">
+	<table style="border-collapse: separate !important; border-spacing: 10px !important;">
 		<tr>
-			<td valign="top" width="100%">
+			<th style="text-align: center; border: none !important">
+				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
+			</th>
+			<th style="text-align: center; border: none !important">
+				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
+			</th>
+		</tr>
+		<tr>
+			<td valign="top" width="50%" style="padding-right: 10px; text-align: center !important;">
 				<p><?php echo wp_kses_post( $order->get_formatted_billing_address() ); ?></p>
 			</td>
-		</tr>
-	</table>
-
-	<h3 class="body-content-title"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
-	<table class="addresses">
-		<tr>
-			<td valign="top" width="100%">
+			<td valign="top" width="50%" style="padding-left: 10px; text-align: center !important;">
 				<p><?php echo wp_kses_post( $order->get_formatted_shipping_address() ); ?></p>
 			</td>
 		</tr>

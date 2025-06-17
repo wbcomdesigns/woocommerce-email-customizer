@@ -358,8 +358,8 @@
                 argument_obj['woocommerce_email_header_text_color']      = '#ffffff';
                 argument_obj['woocommerce_email_body_background_color']                 = '#fdfdfd';
                 argument_obj['woocommerce_email_header_background_color']               = '#557da1';
-                argument_obj['woocommerce_email_footer_address_background_color']      = '#202020';
-                argument_obj['woocommerce_email_footer_address_border']          = '12';
+                argument_obj['woocommerce_email_footer_address_background_color']      = '#ffffff';
+                argument_obj['woocommerce_email_footer_address_border']          = '1';
                 argument_obj['woocommerce_email_rounded_corners']         = '6';
                 argument_obj['woocommerce_email_border_container_top']    = '1';
                argument_obj['woocommerce_email_border_container_bottom'] = '1';
