@@ -1995,7 +1995,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $text Email Footer Text.
 	 */
 	public function wb_email_customizer_email_footer_text( $text ) {
-		return get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
+
+		return ( $_GET['woocommerce_email_footer_text'] ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
+		
 	}
 
 
