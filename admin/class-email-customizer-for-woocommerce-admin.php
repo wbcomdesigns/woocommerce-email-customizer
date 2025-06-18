@@ -366,8 +366,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since   1.0
 	 */
 	public function wb_email_customizer_admin_page() {
-		$template = get_option( 'woocommerce_email_template' );
-
+		$template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );
 		if ( $template == 'template-one' ) {
 			require_once 'partials/email-customizer-for-woocommerce-admin-display-template-one.php';
 		} elseif ( $template == 'template-two' ) {
@@ -1156,7 +1155,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function wb_email_customizer_add_customizer_settings( $wp_customize ) {
 
 		// Get the selected email template.
-		$selected_template = get_option( 'woocommerce_email_template' );
+		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );
 
 		// Get site title.
 		$site_title = get_bloginfo( 'name' );
@@ -1637,7 +1636,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			ob_start();
 
-			$template      = get_option( 'woocommerce_email_template' );
+			$template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );
 			$template_file = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/';
 
 			switch ( $template ) {
