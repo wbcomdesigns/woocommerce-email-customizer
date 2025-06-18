@@ -1888,10 +1888,37 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$addresses = sprintf( '#body_content_inner table .addresses, #body_content_inner table.addresses td { border: 0 !important; line-height: 1.5 !important; padding: 0 !important; } %s', PHP_EOL );
 		} elseif ( 'template-one' === $selected_template ) {
 			$body_border_color = sprintf( '#body_content_inner table td, #body_content_inner table th { border-color: %s !important; border-width: 1px !important; border-style: solid !important; text-align: left !important; border-left: 0 !important; border-right: 0 !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
-			$addresses = sprintf( '.addresses td { line-height: 1.5 !important; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; } #body_content_inner table.addresses th, #body_content_inner table.addresses td { border-color: %s !important; border-width: 1px !important; border-style: solid !important; text-align: center !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
+			$addresses = sprintf(
+				'.addresses td { line-height: 1.5 !important; padding-right: 12px !important; }
+				.addresses td + td { padding-left: 12px !important; }
+				#body_content_inner table.addresses th, #body_content_inner table.addresses td {
+					border-color: %s !important;
+					border-width: %s !important;
+					border-style: %s !important;
+					text-align: center !important;
+				}%s',
+				esc_attr( $woocommerce_email_footer_address_border_color ),
+				esc_attr( $woocommerce_email_footer_address_border ),
+				esc_attr( $woocommerce_email_footer_address_border_style ),
+				PHP_EOL
+			);
 		} elseif ( 'template-two' === $selected_template ) {
 			$body_border_color = sprintf( '#body_content_inner table td, #body_content_inner table th { border-color: %s !important; border-width: 1px !important; border-style: solid !important; text-align: left !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
-			$addresses = sprintf( '.addresses td { line-height: 1.5 !important; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; } #body_content_inner table.addresses th, #body_content_inner table.addresses td { text-align: center !important; }%s', PHP_EOL );
+			$addresses = sprintf(
+				'.addresses td { line-height: 1.5 !important; padding-right: 12px !important; }
+				.addresses td + td { padding-left: 12px !important; }
+				#body_content_inner table.addresses th, #body_content_inner table.addresses td { text-align: center !important; }
+				#body_content_inner table.addresses td {
+					border-color: %s !important;
+					border-width: %s !important;
+					border-style: %s !important;
+					text-align: center !important;
+				}%s',
+				esc_attr( $woocommerce_email_footer_address_border_color ),
+				esc_attr( $woocommerce_email_footer_address_border ),
+				esc_attr( $woocommerce_email_footer_address_border_style ),
+				PHP_EOL
+			);
 		} else {
 			$body_border_color = sprintf( '#body_content_inner table td, #body_content_inner table th { border-color: %s !important; border-width: 1px !important; border-style: solid !important; text-align: left !important; }%s', esc_attr( $woocommerce_email_body_border_color ), PHP_EOL );
 			$addresses = sprintf( '.addresses td { border: none !important; line-height: 1.5 !important; padding-right: 12px !important; } .addresses td + td { padding-left: 12px !important; padding-right: 0 !important; }%s', PHP_EOL );

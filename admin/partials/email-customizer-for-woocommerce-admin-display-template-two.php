@@ -162,12 +162,12 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	*/
 	// do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 	?>
-	<table style="border-collapse: separate !important; border-spacing: 10px !important;">
+	<table class="addresses" style="border-collapse: separate !important; border-spacing: 10px !important;">
 		<tr>
-			<th style="text-align: center; border: none !important">
+			<th style="text-align: center; border: none !important;">
 				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 			</th>
-			<th style="text-align: center; border: none !important">
+			<th style="text-align: center; border: none !important;">
 				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
 			</th>
 		</tr>
@@ -277,12 +277,12 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	</table>
 	<br />
 
-	<table style="border-collapse: separate !important; border-spacing: 10px !important;">
+	<table class="addresses" style="border-collapse: separate !important; border-spacing: 10px !important;">
 		<tr>
-			<th style="text-align: center; border: none !important">
+			<th style="text-align: center; border: none !important;">
 				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 			</th>
-			<th style="text-align: center; border: none !important">
+			<th style="text-align: center; border: none !important;">
 				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
 			</th>
 		</tr>
