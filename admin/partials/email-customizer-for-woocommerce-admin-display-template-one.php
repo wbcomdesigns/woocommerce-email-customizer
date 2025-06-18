@@ -14,6 +14,7 @@
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 ?>
 <?php
+// phpcs:disable
 if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) || ( isset( $_GET['woocommerce_email_subheading_text'] ) ) ) {
 	$woocommerce_email_subheading_text = ( isset( $_GET['woocommerce_email_subheading_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_subheading_text'] ) ) : get_option( 'woocommerce_email_subheading_text' );
 }
@@ -21,7 +22,7 @@ if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) || ( isset( $_
 if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) || ( isset( $_GET['woocommerce_email_body_text'] ) ) ) {
 	$woocommerce_email_body_text = ( isset( $_GET['woocommerce_email_body_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_body_text'] ) ) : get_option( 'woocommerce_email_body_text' );
 }
-
+// phpcs:enable
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	/*
