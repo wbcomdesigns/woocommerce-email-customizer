@@ -382,7 +382,7 @@
 
     function updateEmailPreviewFrame(args = {}) {
         const iframe = document.querySelector('iframe[title="Site Preview"]');
-        console.log(iframe);
+        console.log(args);
         if (!iframe) return;
 
         let baseUrl = iframe.getAttribute('data-src') || iframe.src;
