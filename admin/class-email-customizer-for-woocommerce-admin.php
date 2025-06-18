@@ -1996,7 +1996,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_email_footer_text( $text ) {
 
-		return ( $_GET['woocommerce_email_footer_text'] ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
+		return ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 		
 	}
 
