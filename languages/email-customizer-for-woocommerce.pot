@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-18T12:54:34+00:00\n"
+"POT-Creation-Date: 2025-06-18T13:15:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: email-customizer-for-woocommerce\n"
@@ -379,19 +379,19 @@ msgstr ""
 msgid "WooCommece Email Customizer - Powered by WooCommerce and WordPress"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1998
+#: admin/class-email-customizer-for-woocommerce-admin.php:1999
 msgid "Email Customizer For WooCommerce - Powered by WooCommerce and WordPress"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2019
+#: admin/class-email-customizer-for-woocommerce-admin.php:2021
 msgid "Error occurred. Please try again."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2020
+#: admin/class-email-customizer-for-woocommerce-admin.php:2022
 msgid "Email Sent!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2021
+#: admin/class-email-customizer-for-woocommerce-admin.php:2023
 msgid "Please save your changes before sending the test email"
 msgstr ""
 

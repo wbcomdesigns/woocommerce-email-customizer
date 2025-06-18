@@ -1893,7 +1893,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				.addresses td + td { padding-left: 12px !important; }
 				#body_content_inner table.addresses th, #body_content_inner table.addresses td {
 					border-color: %s !important;
-					border-width: %s !important;
+					border-width: %spx !important;
 					border-style: %s !important;
 					text-align: center !important;
 				}%s',
@@ -1910,7 +1910,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				#body_content_inner table.addresses th, #body_content_inner table.addresses td { text-align: center !important; }
 				#body_content_inner table.addresses td {
 					border-color: %s !important;
-					border-width: %s !important;
+					border-width: %spx !important;
 					border-style: %s !important;
 					text-align: center !important;
 				}%s',
