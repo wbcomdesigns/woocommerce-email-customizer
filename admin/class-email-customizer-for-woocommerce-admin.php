@@ -1700,8 +1700,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 		);
 		$order_email_templates = apply_filters('wb_email_customizer_templates_for_preview', $order_email_templates);
 
-		$selected_template = get_option( 'woocommerce_email_template' );
-
+		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );
+		
 		if ( $selected_template === 'template-one' && in_array( $template_name, $order_email_templates ) ) {
 			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php';
 			// $template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/customer-completed-order.php';
