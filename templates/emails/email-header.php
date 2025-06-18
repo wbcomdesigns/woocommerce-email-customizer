@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '_wc_email_customizer_send_email_nonce' ) ) {
+if ( isset( $_GET['nonce'] ) && wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '_wc_email_customizer_send_email_nonce' ) ) {
     $position = isset( $_GET['woocommerce_email_header_image_placement'] )
         ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_header_image_placement'] ) )
         : get_option( 'woocommerce_email_header_image_placement' );
@@ -33,7 +33,9 @@ if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( wp_unslash( $_GET['nonce'] ),
     $position = get_option( 'woocommerce_email_header_image_placement' );
     $img      = get_option( 'woocommerce_email_header_image' );
 }
-
+if( !empty( $img ) && empty( $position ) ){
+	$position = 'outside';
+}
 if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
 	$img_transient = get_transient( 'woocommerce_email_header_image' );
 	$img           = false !== $img_transient ? $img_transient : $img;
