@@ -490,7 +490,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'settings' => 'woocommerce_email_template',
 					'type'     => 'text',
 					'choices'  => array(
-						'default'        => $image_base_url . 'woo_full_template.jpg',
+						'default'        => $image_base_url . 'woo_default_template.jpg',
 						'template-one'   => $image_base_url . 'woo_full_template.jpg',
 						'template-two'   => $image_base_url . 'woo_skinny_template.jpg',
 						'template-three' => $image_base_url . 'woo_flat_template.jpg',
