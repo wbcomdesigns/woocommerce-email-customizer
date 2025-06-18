@@ -39,7 +39,11 @@ if( !empty( $img ) && empty( $position ) ){
 if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
 	$img_transient = get_transient( 'woocommerce_email_header_image' );
 	$img           = false !== $img_transient ? $img_transient : $img;
-}							
+}	
+if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) || ( isset( $_GET['woocommerce_email_heading_text'] ) ) ) {
+	$email_heading = ( isset( $_GET['woocommerce_email_heading_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_heading_text'] ) ) : get_option( 'woocommerce_email_heading_text' );
+}
+
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 	$template      = get_option( 'woocommerce_email_template' );
 ?>

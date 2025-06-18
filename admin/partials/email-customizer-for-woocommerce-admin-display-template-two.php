@@ -13,8 +13,12 @@
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 ?>
 <?php
-if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) ) {
-	$email_heading = get_option( 'woocommerce_email_heading_text' );
+if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) || ( isset( $_GET['woocommerce_email_subheading_text'] ) ) ) {
+	$woocommerce_email_subheading_text = ( isset( $_GET['woocommerce_email_subheading_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_subheading_text'] ) ) : get_option( 'woocommerce_email_subheading_text' );
+}
+
+if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) || ( isset( $_GET['woocommerce_email_body_text'] ) ) ) {
+	$woocommerce_email_body_text = ( isset( $_GET['woocommerce_email_body_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_body_text'] ) ) : get_option( 'woocommerce_email_body_text' );
 }
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 if ( ! empty( $email_heading ) && ! empty( $email ) ) {
@@ -22,9 +26,9 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	* @hooked WC_Emails::email_header() Output the email header
 	*/
 	do_action( 'woocommerce_email_header', $email_heading, $email );
-	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
+	if ( ! empty( $woocommerce_email_subheading_text ) ) {
 		?>
-		<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ), ); ?></h1>
+		<h1 class="sub_heading"><?php echo esc_html( $woocommerce_email_subheading_text, ); ?></h1>
 	<?php } ?>
 
 	<?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
@@ -39,9 +43,9 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	?>
 	</p>
 	<?php
-	if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
+	if ( ! empty( $woocommerce_email_body_text ) ) {
 		?>
-		<p><?php echo esc_html( get_option( 'woocommerce_email_body_text' ) ); ?></p>
+		<p><?php echo esc_html( $woocommerce_email_body_text ); ?></p>
 
 		<?php
 	} elseif ( $email_improvements_enabled ) {
@@ -192,15 +196,15 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	*/
 	do_action( 'woocommerce_email_footer', $email );
 } else {
-	if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) ) {
+	if ( ! empty( $woocommerce_email_subheading_text ) ) {
 		?>
-		<h1 class="sub_heading"><?php echo esc_html( get_option( 'woocommerce_email_subheading_text' ), ); ?></h1>
+		<h1 class="sub_heading"><?php echo esc_html( $woocommerce_email_subheading_text, ); ?></h1>
 		<?php
 	}
 
-	if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) ) {
+	if ( ! empty( $woocommerce_email_body_text ) ) {
 		?>
-		<p><?php echo esc_html( get_option( 'woocommerce_email_body_text' ) ); ?></p>
+		<p><?php echo esc_html( $woocommerce_email_body_text ); ?></p>
 
 	<?php } else { ?>
 		<p>
