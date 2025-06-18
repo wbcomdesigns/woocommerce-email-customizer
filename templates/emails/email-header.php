@@ -33,9 +33,6 @@ if ( isset( $_GET['nonce'] ) && wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '
     $position = get_option( 'woocommerce_email_header_image_placement' );
     $img      = get_option( 'woocommerce_email_header_image' );
 }
-if( !empty( $img ) && empty( $position ) ){
-	$position = 'outside';
-}
 if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
 	$img_transient = get_transient( 'woocommerce_email_header_image' );
 	$img           = false !== $img_transient ? $img_transient : $img;

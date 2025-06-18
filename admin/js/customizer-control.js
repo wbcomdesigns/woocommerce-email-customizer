@@ -192,6 +192,25 @@
                 // Handle section visibility logic
             });
         });
+        wp.customize('woocommerce_email_header_image_placement', function(setting) {
+    
+            // Function to toggle controls based on current value
+            function toggleHeaderImageControls(value) {
+                if (!value) {
+                    wp.customize.control('wc_email_header_image_control').deactivate();
+                    wp.customize.control('wc_email_header_image_alignment_control').deactivate();
+                } else {
+                    wp.customize.control('wc_email_header_image_control').activate();
+                    wp.customize.control('wc_email_header_image_alignment_control').activate();
+                }
+            }
+
+            // Run once on load
+            toggleHeaderImageControls(setting.get());
+
+            // Also bind to changes for live behavior
+            setting.bind(toggleHeaderImageControls);
+        });
     });
 
 })(jQuery);
