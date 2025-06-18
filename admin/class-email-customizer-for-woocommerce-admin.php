@@ -1858,7 +1858,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$font_family = in_array( $font_family, $allowed_font_families, true ) ? $font_family : 'sans-serif';
 
 		// Build CSS with sanitized values
-		$bg_color = sprintf( 'body, body > div, body > #wrapper > table > tbody > tr > td { background-color: %s !important; }%s', esc_attr( $woocommerce_email_background_color ), PHP_EOL );
+		$bg_color = sprintf( 'body, body>#outer_wrapper, body > div, body > #wrapper > table > tbody > tr > td { background-color: %s !important; }%s', esc_attr( $woocommerce_email_background_color ), PHP_EOL );
 		$body_bg_color = sprintf( '#template_container { background-color: %s !important; } #template_body, #template_body td, #body_content { background: transparent none !important; }%s', esc_attr( $woocommerce_email_body_background_color ), PHP_EOL );
 		$header_bg_color = sprintf( '#template_header { background-color: %s !important; } #header_wrapper, #header_wrapper h1 { background: transparent none !important; }%s', esc_attr( $woocommerce_email_header_background_color ), PHP_EOL );
 		$header_text_color = sprintf( '#template_header h1 { color: %s !important; text-shadow: 0 1px 0 %s !important; }%s', esc_attr( $woocommerce_email_header_text_color ), esc_attr( $woocommerce_email_header_text_color ), PHP_EOL );
