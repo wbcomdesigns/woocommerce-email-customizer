@@ -560,7 +560,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Padding Top', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_padding_container_top',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -577,7 +577,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Padding Bottom', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_padding_container_bottom',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -594,7 +594,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Padding Left/Right', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_padding_container_left_right',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -615,7 +615,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Border Top', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_border_container_top',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -632,7 +632,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Border Bottom', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_border_container_bottom',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -649,7 +649,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Border Left', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_border_container_left',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -666,7 +666,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Border Right', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_border_container_right',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -746,7 +746,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Font Size', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_header_font_size',
 				'input_attrs' => array(
-					'min'  => 15,
+					'min'  => 10,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -1028,7 +1028,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Footer Top Padding', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_footer_top_padding',
 				'input_attrs' => array(
-					'min'  => 10,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -1045,7 +1045,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Footer Bottom Padding', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_footer_bottom_padding',
 				'input_attrs' => array(
-					'min'  => 10,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -1062,7 +1062,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Footer Left/Right Padding', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_footer_left_right_padding',
 				'input_attrs' => array(
-					'min'  => 10,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
@@ -1095,7 +1095,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Footer Address Border', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_footer_address_border',
 				'input_attrs' => array(
-					'min'  => 10,
+					'min'  => 0,
 					'max'  => 50,
 					'step' => 1,
 				),
