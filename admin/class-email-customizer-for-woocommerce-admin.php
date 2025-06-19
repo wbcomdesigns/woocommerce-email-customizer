@@ -2056,8 +2056,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_template'])): '';
 
 		if ( $selected_template === 'template-one') {
-			update_option( 'woocommerce_email_border_color', '#202020',true );
-			
 			update_option( 'woocommerce_email_header_text_color', '#32373c',true ) ;
 			update_option( 'woocommerce_email_body_background_color', '#ffffff',true ) ;
 			update_option( 'woocommerce_email_header_background_color', '#ffffff',true ) ;
