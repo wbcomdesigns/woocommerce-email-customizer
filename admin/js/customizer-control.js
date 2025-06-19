@@ -99,51 +99,6 @@
     }
 
     /**
-     * Update default values based on template selection
-     */
-    function updateDefaultsBasedOnTemplate(template) {
-        var templateDefaults = {
-            'template-three': {
-                'woocommerce_email_header_text_color': '#32373c',
-                'woocommerce_email_body_background_color': '#ffd2d3',
-                'woocommerce_email_header_background_color': '#ffd2d3',
-                'woocommerce_email_footer_text_color': '#ffffff',
-                'woocommerce_email_footer_background_color': '#202020'
-            },
-            'template-two': {
-                'woocommerce_email_header_text_color': '#32373c',
-                'woocommerce_email_body_background_color': '#ffffff',
-                'woocommerce_email_header_background_color': '#ffffff',
-                'woocommerce_email_footer_text_color': '#202020',
-                'woocommerce_email_footer_background_color': '#ffffff'
-            },
-            'template-one': {
-                'woocommerce_email_header_text_color': '#32373c',
-                'woocommerce_email_body_background_color': '#ffffff',
-                'woocommerce_email_header_background_color': '#ffffff',
-                'woocommerce_email_footer_text_color': '#ffffff',
-                'woocommerce_email_footer_background_color': '#202020'
-            },
-            'default': {
-                'woocommerce_email_header_text_color': '#ffffff',
-                'woocommerce_email_body_background_color': '#fdfdfd',
-                'woocommerce_email_header_background_color': '#557da1',
-                'woocommerce_email_footer_text_color': '#ffffff',
-                'woocommerce_email_footer_background_color': '#202020'
-            }
-        };
-
-        // Apply template defaults
-        if (templateDefaults[template]) {
-            Object.keys(templateDefaults[template]).forEach(function(settingId) {
-                if (wp.customize.has(settingId)) {
-                    wp.customize(settingId).set(templateDefaults[template][settingId]);
-                }
-            });
-        }
-    }
-
-    /**
      * Add section dependencies
      */
     wp.customize.bind('ready', function() {
@@ -151,7 +106,7 @@
       wp.customize.section('wc_email_header', function(section) {
             section.expanded.bind(function(isExpanded) {
                 if (isExpanded) {
-                    console.log('Email Header section opened');
+                    // console.log('Email Header section opened');
 
                     // Now access your setting
                     if (wp.customize.has('woocommerce_email_header_image_placement')) {

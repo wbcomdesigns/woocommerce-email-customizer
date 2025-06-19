@@ -308,13 +308,36 @@
     // Template Selection - Real-time updates with settings synchronization
     wp.customize('woocommerce_email_template', function(value) {
         value.bind(function(newval) {
+            console.log(newval);
             argument_obj = {};
             argument_obj['nonce'] = woocommerce_email_customizer_controls_local.ajaxSendEmailNonce;
             argument_obj['woocommerce_email_template'] = newval;
+            argument_obj['woocommerce_email_padding_container_top'] = '15';
+            argument_obj['woocommerce_email_padding_container_bottom'] = '15';
+            argument_obj['woocommerce_email_padding_container_left_right'] = '20';
+            argument_obj['woocommerce_email_border_color'] = '#cccccc';
+            argument_obj['woocommerce_email_header_image_placement'] = 'inside';
+            argument_obj['woocommerce_email_header_image'] = '';
+            argument_obj['woocommerce_email_header_font_size'] = '18';
+            argument_obj['woocommerce_email_header_image_alignment'] = 'center';
+            argument_obj['woocommerce_email_background_color'] = '#f7f7f7';
+            argument_obj['woocommerce_email_link_color'] = '#0073aa';
+            argument_obj['woocommerce_email_body_text_color'] = '#333333';
+            argument_obj['woocommerce_email_body_font_size'] = '14';
+            argument_obj['woocommerce_email_body_title_font_size'] = '20';
+            argument_obj['woocommerce_email_width'] = '600';
+            argument_obj['woocommerce_email_font_family'] = 'sans-serif';
+            argument_obj['woocommerce_email_box_shadow_spread'] = '0';
+            argument_obj['woocommerce_email_footer_font_size'] = '12';
+            argument_obj['woocommerce_email_footer_top_padding'] = '15';
+            argument_obj['woocommerce_email_footer_bottom_padding'] = '15';
+            argument_obj['woocommerce_email_footer_left_right_padding'] = '20';
+            argument_obj['woocommerce_email_footer_address_border_color'] = '#dddddd';
+            argument_obj['woocommerce_email_footer_address_border_style'] = 'solid';
             
             // Define template configurations
             let templateConfig = {};
-            
+            //  let defaults = {};
             if ('template-three' === newval) {
                 templateConfig = {
                     'woocommerce_email_header_text_color': '#32373c',
@@ -381,43 +404,45 @@
                     'woocommerce_email_footer_background_color': '#202020'
                 };
             }
-            
+           
             // Update argument object with template configuration
             Object.assign(argument_obj, templateConfig);
             
             // Update the email preview frame
             updateEmailPreviewFrame(argument_obj);
             
+            delete argument_obj['woocommerce_email_template'];
+            // console.log(argument_obj);
             // Update WordPress Customizer settings in real-time
-            Object.keys(templateConfig).forEach(function(settingKey) {
-                const setting = wp.customize(settingKey);
-                if (setting) {
-                    // Set the value without triggering the callback to avoid infinite loops
-                    setting.set(templateConfig[settingKey]);
+            // Object.keys(argument_obj).forEach(function(settingKey) {
+            //     const setting = wp.customize(settingKey);
+            //     if (setting) {
+            //         // Set the value without triggering the callback to avoid infinite loops
+            //         setting.set(templateConfig[settingKey]);
                     
-                    // Trigger preview refresh for this specific setting
-                    setting.preview();
-                }
-            });
+            //         // Trigger preview refresh for this specific setting
+            //         setting.preview();
+            //     }
+            // });
             
             // Add template class to body for styling purposes
-            wp.customize.preview.send('template-changed', {
-                template: newval,
-                config: templateConfig
-            });
+            // wp.customize.preview.send('template-changed', {
+            //     template: newval,
+            //     config: templateConfig
+            // });
             
-            // Optional: Add visual feedback that settings are being updated
-            if (typeof console !== 'undefined') {
-                console.log('Template changed to: ' + newval);
-                console.log('Updated settings:', templateConfig);
-            }
+            // // Optional: Add visual feedback that settings are being updated
+            // if (typeof console !== 'undefined') {
+            //     console.log('Template changed to: ' + newval);
+            //     console.log('Updated settings:', templateConfig);
+            // }
         });
     });
 
 
     function updateEmailPreviewFrame(args = {}) {
         const iframe = document.querySelector('iframe[title="Site Preview"]');
-        console.log(args);
+        // console.log(args);
         if (!iframe) return;
 
         let baseUrl = iframe.getAttribute('data-src') || iframe.src;
