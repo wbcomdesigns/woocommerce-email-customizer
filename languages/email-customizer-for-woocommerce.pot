@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-18T13:37:52+00:00\n"
+"POT-Creation-Date: 2025-06-19T10:22:41+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: email-customizer-for-woocommerce\n"
 
 #. Plugin Name of the plugin
@@ -55,7 +55,6 @@ msgstr ""
 #. translators: %s:
 #: admin/class-email-customizer-for-woocommerce-admin.php:230
 #: admin/wbcom/templates/wbcom-license-page.php:14
-#, php-format
 msgid "Version %s"
 msgstr ""
 
@@ -348,7 +347,6 @@ msgstr ""
 
 #: admin/class-email-customizer-for-woocommerce-admin.php:1167
 #: admin/class-email-customizer-for-woocommerce-admin.php:1200
-#, php-format
 msgid "Hello from %s"
 msgstr ""
 
@@ -358,7 +356,6 @@ msgstr ""
 #: admin/class-email-customizer-for-woocommerce-admin.php:1219
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:201
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:215
-#, php-format
 msgid "Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:"
 msgstr ""
 
@@ -400,7 +397,6 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:41
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:41
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:39
-#, php-format
 msgid "Hi %s,"
 msgstr ""
 
@@ -414,7 +410,6 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:58
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:57
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:57
-#, php-format
 msgid "Hi there. Your recent order on %1$s has been %2$s."
 msgstr ""
 
@@ -683,7 +678,6 @@ msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:84
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:85
-#, php-format
 msgid "Order #%s (%s)"
 msgstr ""
 
@@ -1374,7 +1368,6 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:127
-#, php-format
 msgid "Your license key expired on %s."
 msgstr ""
 
@@ -1392,7 +1385,6 @@ msgstr ""
 
 #. translators: %1$s: Item Name
 #: edd-license/edd-plugin-license.php:147
-#, php-format
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
@@ -1402,7 +1394,6 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:333
-#, php-format
 msgid "Your WooCommerce Email Customizer plugin license key expired on %s."
 msgstr ""
 
@@ -1419,22 +1410,18 @@ msgid "Activate License"
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:512
-#, php-format
 msgid " Expires %s."
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:516
-#, php-format
 msgid "You have %1$s/%2$s-sites activated."
 msgstr ""
 
 #: edd-license/EDD_Woo_Email_Customizer_Plugin_Updater.php:261
-#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
 #: edd-license/EDD_Woo_Email_Customizer_Plugin_Updater.php:270
-#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s."
 msgstr ""
 
@@ -1456,6 +1443,5 @@ msgstr ""
 
 #. Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce
 #: woocommerce-email-customizer.php:120
-#, php-format
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""

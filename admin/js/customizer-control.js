@@ -15,7 +15,7 @@
                 toggleControlsBasedOnTemplate(value);
                 
                 // Update default values based on template
-                updateDefaultsBasedOnTemplate(value);
+                // updateDefaultsBasedOnTemplate(value);
             });
         });
 
@@ -64,15 +64,15 @@
                 hide: []
             },
             'template-one': {
-                show: ['wc_email_header_border_container_top_control'],
+                show: [''],
                 hide: ['wc_email_rounded_corners_control']
             },
             'template-two': {
-                show: ['wc_email_body_border_color_control'],
+                show: [''],
                 hide: ['wc_email_rounded_corners_control', 'wc_email_box_shadow_spread_control']
             },
             'template-three': {
-                show: ['wc_email_header_color_control'],
+                show: [''],
                 hide: ['wc_email_rounded_corners_control', 'wc_email_box_shadow_spread_control']
             }
         };
@@ -90,11 +90,11 @@
             }
 
             // Show specified controls
-            if (templateControls[template].show) {
-                templateControls[template].show.forEach(function(controlId) {
-                    wp.customize.control(controlId).activate();
-                });
-            }
+            // if (templateControls[template].show) {
+            //     templateControls[template].show.forEach(function(controlId) {
+            //         wp.customize.control(controlId).activate();
+            //     });
+            // }
         }
     }
 
@@ -144,54 +144,48 @@
     }
 
     /**
-     * Add custom validation for email settings
+     * Add section dependencies
      */
     wp.customize.bind('ready', function() {
-        // Validate email address if there's an email field
-        wp.customize('woocommerce_email_send_to', function(setting) {
-            setting.bind(function(value) {
-                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                var control = wp.customize.control('wc_email_send_to_control');
-                
-                if (value && !emailRegex.test(value)) {
-                    control.container.addClass('customize-control-invalid');
-                    setting.notifications.add('invalid_email', new wp.customize.Notification('invalid_email', {
-                        type: 'error',
-                        message: 'Please enter a valid email address.'
-                    }));
-                } else {
-                    control.container.removeClass('customize-control-invalid');
-                    setting.notifications.remove('invalid_email');
+      
+      wp.customize.section('wc_email_header', function(section) {
+            section.expanded.bind(function(isExpanded) {
+                if (isExpanded) {
+                    console.log('Email Header section opened');
+
+                    // Now access your setting
+                    if (wp.customize.has('woocommerce_email_header_image_placement')) {
+                        var setting = wp.customize('woocommerce_email_header_image_placement');
+
+                        function toggleHeaderImageControls(value) {
+                            if (wp.customize.control.has('wc_email_header_image_control')) {
+                                var control1 = wp.customize.control('wc_email_header_image_control');
+                                var control2 = wp.customize.control('wc_email_header_image_alignment_control');
+
+                                if (!value) {
+                                    control1.container.hide();
+                                    control2.container.hide();
+                                } else {
+                                    control1.container.show();
+                                    control2.container.show();
+                                }
+                            }
+                        }
+
+                        // Run once when section opens
+                        toggleHeaderImageControls(setting.get());
+
+                        // Listen for future value changes
+                        setting.bind(toggleHeaderImageControls);
+                    } else {
+                        console.warn('woocommerce_email_header_image_placement setting not found');
+                    }
                 }
             });
         });
 
-        // Add live preview toggle
-        var previewToggle = $('<button type="button" class="button button-secondary" id="toggle-live-preview">Toggle Live Preview</button>');
-        $('.wp-full-overlay-sidebar-content').prepend(previewToggle);
-        
-        previewToggle.on('click', function() {
-            var $preview = $('#customize-preview');
-            if ($preview.hasClass('live-preview-disabled')) {
-                $preview.removeClass('live-preview-disabled');
-                $(this).text('Disable Live Preview');
-            } else {
-                $preview.addClass('live-preview-disabled');
-                $(this).text('Enable Live Preview');
-            }
-        });
-    });
 
-    /**
-     * Add section dependencies
-     */
-    wp.customize.bind('ready', function() {
-        // Show email template section only when email customizer is enabled
-        wp.customize('woocommerce_email_template', function(setting) {
-            wp.customize.section('wc_email_templates').active.bind(function(isActive) {
-                // Handle section visibility logic
-            });
-        });
+
         wp.customize('woocommerce_email_header_image_placement', function(setting) {
     
             // Function to toggle controls based on current value
