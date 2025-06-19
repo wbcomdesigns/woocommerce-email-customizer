@@ -962,19 +962,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		 * Email footer.
 		 */
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control(
-				$wp_customize,
-				'wc_email_footer_text_color_control',
-				array(
-					'label'    => __( 'Footer Text Color', 'email-customizer-for-woocommerce' ),
-					'priority' => 20,
-					'section'  => 'wc_email_footer',
-					'settings' => 'woocommerce_email_footer_text_color',
-				)
-			)
-		);
-
-		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'wc_email_footer_text_control',
@@ -1014,6 +1001,19 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'priority' => 50,
 					'section'  => 'wc_email_footer',
 					'settings' => 'woocommerce_email_footer_background_color',
+				)
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'wc_email_footer_text_color_control',
+				array(
+					'label'    => __( 'Footer Text Color', 'email-customizer-for-woocommerce' ),
+					'priority' => 50,
+					'section'  => 'wc_email_footer',
+					'settings' => 'woocommerce_email_footer_text_color',
 				)
 			)
 		);
@@ -1108,7 +1108,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'wc_email_footer_address_border_color_control',
 				array(
 					'label'    => __( 'Footer Address Border Color', 'email-customizer-for-woocommerce' ),
-					'priority' => 30,
+					'priority' => 21,
 					'section'  => 'wc_email_footer',
 					'settings' => 'woocommerce_email_footer_address_border_color',
 				)
@@ -1121,7 +1121,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'wc_email_footer_address_border_style_control',
 				array(
 					'label'    => __( 'Footer Address Border Style', 'email-customizer-for-woocommerce' ),
-					'priority' => 130,
+					'priority' => 22,
 					'section'  => 'wc_email_footer',
 					'settings' => 'woocommerce_email_footer_address_border_style',
 					'type'     => 'select',
