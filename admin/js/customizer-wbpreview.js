@@ -305,77 +305,112 @@
         });
     });
 
-    // Template Selection - Real-time updates (requires page refresh for full effect)
+    // Template Selection - Real-time updates with settings synchronization
     wp.customize('woocommerce_email_template', function(value) {
         value.bind(function(newval) {
-            argument_obj    = {};
+            argument_obj = {};
             argument_obj['nonce'] = woocommerce_email_customizer_controls_local.ajaxSendEmailNonce;
             argument_obj['woocommerce_email_template'] = newval;
-            	if ( 'template-three' === newval ) {
-                argument_obj['woocommerce_email_header_text_color'] = '#32373c';
-                argument_obj['woocommerce_email_body_background_color'] = '#ffd2d3';
-                argument_obj['woocommerce_email_header_background_color'] = '#ffd2d3';
-                argument_obj['woocommerce_email_footer_address_background_color'] = '#ffd2d3';
-                argument_obj['woocommerce_email_footer_address_border'] = '2';
-                argument_obj['woocommerce_email_rounded_corners'] = '0';
-
-                argument_obj['woocommerce_email_border_container_top'] = '0';
-                argument_obj['woocommerce_email_border_container_bottom'] = '0';
-                argument_obj['woocommerce_email_border_container_left'] = '0';
-                argument_obj['woocommerce_email_border_container_right'] = '0';
-                argument_obj['woocommerce_email_body_border_color'] = '#505050';
-                argument_obj['woocommerce_email_footer_text_color'] = '#ffffff';
-                argument_obj['woocommerce_email_footer_background_color'] = '#202020';
-            } else if ( 'template-two' === newval ) {
-                argument_obj['woocommerce_email_header_text_color']      = '#32373c';
-                argument_obj['woocommerce_email_body_background_color']                 = '#ffffff';
-                argument_obj['woocommerce_email_header_background_color']               = '#ffffff';
-                argument_obj['woocommerce_email_footer_address_background_color']      = '#ffffff';
-                argument_obj['woocommerce_email_footer_address_border']          = '1';
-                argument_obj['woocommerce_email_rounded_corners']         = '0';
-                argument_obj['woocommerce_email_border_container_top']    = '0';
-               argument_obj['woocommerce_email_border_container_bottom'] = '0';
-                argument_obj['woocommerce_email_border_container_left']   = '0';
-                argument_obj['woocommerce_email_border_container_right']  = '0';
-                argument_obj['woocommerce_email_body_border_color']       = '#dddddd';
-                argument_obj['woocommerce_email_footer_text_color']       = '#202020';
-                argument_obj['woocommerce_email_footer_background_color'] = '#ffffff';
-            } else if ( 'template-one' === newval ) {
-                argument_obj['woocommerce_email_header_text_color']      = '#32373c';
-                argument_obj['woocommerce_email_body_background_color']                 = '#ffffff';
-                argument_obj['woocommerce_email_header_background_color']               = '#ffffff';
-                argument_obj['woocommerce_email_footer_address_background_color']      = '#ffffff';
-                argument_obj['woocommerce_email_footer_address_border']          = '1';
-                argument_obj['woocommerce_email_rounded_corners']         = '0';
-                argument_obj['woocommerce_email_border_container_top']    = '0';
-               argument_obj['woocommerce_email_border_container_bottom'] = '0';
-                argument_obj['woocommerce_email_border_container_left']   = '0';
-                argument_obj['woocommerce_email_border_container_right']  = '0';
-                argument_obj['woocommerce_email_body_border_color']       = '#f6f6f6';
-                argument_obj['woocommerce_email_footer_text_color']       = '#ffffff';
-                argument_obj['woocommerce_email_footer_background_color'] = '#202020';
-            } else {
-                argument_obj['woocommerce_email_header_text_color']      = '#ffffff';
-                argument_obj['woocommerce_email_body_background_color']                 = '#fdfdfd';
-                argument_obj['woocommerce_email_header_background_color']               = '#557da1';
-                argument_obj['woocommerce_email_footer_address_background_color']      = '#ffffff';
-                argument_obj['woocommerce_email_footer_address_border']          = '1';
-                argument_obj['woocommerce_email_rounded_corners']         = '6';
-                argument_obj['woocommerce_email_border_container_top']    = '1';
-               argument_obj['woocommerce_email_border_container_bottom'] = '1';
-                argument_obj['woocommerce_email_border_container_left']   = '1';
-                argument_obj['woocommerce_email_border_container_right']  = '1';
-                argument_obj['woocommerce_email_body_border_color']       = '#505050';
-                argument_obj['woocommerce_email_footer_text_color']       = '#ffffff';
-                argument_obj['woocommerce_email_footer_background_color'] = '#202020';
-            }
-            updateEmailPreviewFrame(argument_obj);
-            // Add a class to body to indicate template change
-            // $('body').removeClass('template-default template-one template-two template-three')
-                    //  .addClass('template-' + newval);
             
-            // You might want to trigger a partial refresh here for complex template changes
-            // wp.customize.preview.send('template-changed', newval);
+            // Define template configurations
+            let templateConfig = {};
+            
+            if ('template-three' === newval) {
+                templateConfig = {
+                    'woocommerce_email_header_text_color': '#32373c',
+                    'woocommerce_email_body_background_color': '#ffd2d3',
+                    'woocommerce_email_header_background_color': '#ffd2d3',
+                    'woocommerce_email_footer_address_background_color': '#ffd2d3',
+                    'woocommerce_email_footer_address_border': '2',
+                    'woocommerce_email_rounded_corners': '0',
+                    'woocommerce_email_border_container_top': '0',
+                    'woocommerce_email_border_container_bottom': '0',
+                    'woocommerce_email_border_container_left': '0',
+                    'woocommerce_email_border_container_right': '0',
+                    'woocommerce_email_body_border_color': '#505050',
+                    'woocommerce_email_footer_text_color': '#ffffff',
+                    'woocommerce_email_footer_background_color': '#202020'
+                };
+            } else if ('template-two' === newval) {
+                templateConfig = {
+                    'woocommerce_email_header_text_color': '#32373c',
+                    'woocommerce_email_body_background_color': '#ffffff',
+                    'woocommerce_email_header_background_color': '#ffffff',
+                    'woocommerce_email_footer_address_background_color': '#ffffff',
+                    'woocommerce_email_footer_address_border': '1',
+                    'woocommerce_email_rounded_corners': '0',
+                    'woocommerce_email_border_container_top': '0',
+                    'woocommerce_email_border_container_bottom': '0',
+                    'woocommerce_email_border_container_left': '0',
+                    'woocommerce_email_border_container_right': '0',
+                    'woocommerce_email_body_border_color': '#dddddd',
+                    'woocommerce_email_footer_text_color': '#202020',
+                    'woocommerce_email_footer_background_color': '#ffffff'
+                };
+            } else if ('template-one' === newval) {
+                templateConfig = {
+                    'woocommerce_email_header_text_color': '#32373c',
+                    'woocommerce_email_body_background_color': '#ffffff',
+                    'woocommerce_email_header_background_color': '#ffffff',
+                    'woocommerce_email_footer_address_background_color': '#ffffff',
+                    'woocommerce_email_footer_address_border': '1',
+                    'woocommerce_email_rounded_corners': '0',
+                    'woocommerce_email_border_container_top': '0',
+                    'woocommerce_email_border_container_bottom': '0',
+                    'woocommerce_email_border_container_left': '0',
+                    'woocommerce_email_border_container_right': '0',
+                    'woocommerce_email_body_border_color': '#f6f6f6',
+                    'woocommerce_email_footer_text_color': '#ffffff',
+                    'woocommerce_email_footer_background_color': '#202020'
+                };
+            } else {
+                // Default template
+                templateConfig = {
+                    'woocommerce_email_header_text_color': '#ffffff',
+                    'woocommerce_email_body_background_color': '#fdfdfd',
+                    'woocommerce_email_header_background_color': '#557da1',
+                    'woocommerce_email_footer_address_background_color': '#ffffff',
+                    'woocommerce_email_footer_address_border': '1',
+                    'woocommerce_email_rounded_corners': '6',
+                    'woocommerce_email_border_container_top': '1',
+                    'woocommerce_email_border_container_bottom': '1',
+                    'woocommerce_email_border_container_left': '1',
+                    'woocommerce_email_border_container_right': '1',
+                    'woocommerce_email_body_border_color': '#505050',
+                    'woocommerce_email_footer_text_color': '#ffffff',
+                    'woocommerce_email_footer_background_color': '#202020'
+                };
+            }
+            
+            // Update argument object with template configuration
+            Object.assign(argument_obj, templateConfig);
+            
+            // Update the email preview frame
+            updateEmailPreviewFrame(argument_obj);
+            
+            // Update WordPress Customizer settings in real-time
+            Object.keys(templateConfig).forEach(function(settingKey) {
+                const setting = wp.customize(settingKey);
+                if (setting) {
+                    // Set the value without triggering the callback to avoid infinite loops
+                    setting.set(templateConfig[settingKey]);
+                    
+                    // Trigger preview refresh for this specific setting
+                    setting.preview();
+                }
+            });
+            
+            // Add template class to body for styling purposes
+            wp.customize.preview.send('template-changed', {
+                template: newval,
+                config: templateConfig
+            });
+            
+            // Optional: Add visual feedback that settings are being updated
+            if (typeof console !== 'undefined') {
+                console.log('Template changed to: ' + newval);
+                console.log('Updated settings:', templateConfig);
+            }
         });
     });
 
