@@ -1873,11 +1873,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$template_container_border = sprintf( 'table, table th, table td { border: none !important; border-style: none !important; border-width: 0 !important; }%s', PHP_EOL );
 		$template_rounded_corners = sprintf( '#template_container { border-radius: %dpx !important; } #template_header { border-radius: %dpx %dpx 0 0 !important; } #template_footer { border-radius: 0 0 %dpx %dpx !important; }%s', $woocommerce_email_rounded_corners, $woocommerce_email_rounded_corners, $woocommerce_email_rounded_corners, $woocommerce_email_rounded_corners, $woocommerce_email_rounded_corners, PHP_EOL );
 
-		if ( 'template-one' === $selected_template || 'template-two' === $selected_template || 'template-three' === $selected_template ) {
-			$template_shadow = sprintf( '#template_container { box-shadow: none !important; }%s', PHP_EOL );
-		} else {
-			$template_shadow = sprintf( '#template_container { box-shadow: 0 0 6px %dpx rgba(0,0,0,0.2) !important; }%s', $woocommerce_email_box_shadow_spread, PHP_EOL );
-		}
+		$template_shadow = sprintf( '#template_container { box-shadow: 0 0 6px %dpx rgba(0,0,0,0.2) !important; }%s', $woocommerce_email_box_shadow_spread, PHP_EOL );
 
 		$body_items_table = sprintf( '#body_content_inner table { border-collapse: collapse !important; width: 100%% !important; }%s', PHP_EOL );
 		$body_text_color = sprintf( '#template_body div, #template_body div p, #template_body h2, #template_body h3, #template_body table td, #template_body table th, #template_body table tr, #template_body table, #template_body table h3, #template_body table .body-content-title a { color: %s !important; }%s', esc_attr( $body_color ), PHP_EOL );
