@@ -104,7 +104,7 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 																if($img){
 																	echo '<div id="template_header_image"><p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p></div>';
 																}else{
-																	echo esc_html( get_bloginfo( 'name', 'display' ) );
+																	echo  '<h1>' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</h1>';
 																}
 															}else{
 																echo '<h1>'. esc_html( $email_heading ). '</h1>';
