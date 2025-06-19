@@ -147,7 +147,22 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	</table>
 	<br />
 
-	
+	<?php if ( ! empty( $order->get_customer_note() ) ) : ?>
+        <table style="margin: 20px 0;">
+            <tr>
+                <th>
+                    <?php esc_html_e( 'The following note has been added to your order:', 'email-customizer-for-woocommerce' ); ?>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <?php 
+                    echo wptexturize( $order->get_customer_note() ) . "\n\n"; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+                    ?>
+                </td>
+            </tr>
+        </table>
+    <?php endif; ?>
 
 	<?php 
 
