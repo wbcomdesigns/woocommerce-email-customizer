@@ -10,6 +10,9 @@
  * @package    Email_Customizer_For_Woocommerce
  * @subpackage Email_Customizer_For_Woocommerce/admin/partials
  */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 // phpcs:disable
 if ( ! empty( get_option( 'woocommerce_email_subheading_text' ) ) || ( isset( $_GET['woocommerce_email_subheading_text'] ) ) ) {
