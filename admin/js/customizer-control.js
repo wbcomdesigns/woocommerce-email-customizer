@@ -47,10 +47,7 @@
         });
 
         // Initialize controls on load
-        var currentTemplate = wp.customize('woocommerce_email_template').get();
-        if (currentTemplate) {
-            toggleControlsBasedOnTemplate(currentTemplate);
-        }
+        // var currentTemplate = wp.customize('woocommerce_email_template').get();
     });
 
     /**
@@ -88,13 +85,6 @@
                     wp.customize.control(controlId).deactivate();
                 });
             }
-
-            // Show specified controls
-            // if (templateControls[template].show) {
-            //     templateControls[template].show.forEach(function(controlId) {
-            //         wp.customize.control(controlId).activate();
-            //     });
-            // }
         }
     }
 
