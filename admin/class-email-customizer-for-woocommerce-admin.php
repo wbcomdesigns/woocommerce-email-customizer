@@ -73,7 +73,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		add_action( 'init', [ $this, 'wb_email_customizer_maybe_run_email_customizer' ] );
 	}
 
-	private function verify_user_permissions(){
+	private function verify_user_permissions(): bool{
 		if (!current_user_can('manage_woocommerce')) {
 			wp_die(
 				esc_html__('You do not have sufficient permissions to access this feature.', 'email-customizer-for-woocommerce'),
@@ -86,7 +86,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 
-	public function wb_email_customizer_maybe_run_email_customizer() {
+	public function wb_email_customizer_maybe_run_email_customizer(): void {
 		if ( isset( $_GET[ $this->email_trigger ] ) && isset( $_GET['_wpnonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( wp_verify_nonce( wp_unslash($_GET['_wpnonce']), 'preview-mail' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 				add_action( 'wp_print_styles', [ $this, 'wb_email_customizer_remove_theme_styles' ], 100 );
@@ -116,7 +116,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles($hook) {
+	public function enqueue_styles($hook): void {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -160,7 +160,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts($hook) {
+	public function enqueue_scripts($hook): void {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -203,7 +203,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wb_email_hide_all_admin_notices_from_setting_page() {
+	public function wb_email_hide_all_admin_notices_from_setting_page(): void {
 		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'wb-email-customizer-settings' );
 		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
 
@@ -219,7 +219,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since    1.0.0
 	 * @access public
 	 */
-	public function wb_email_customizer_admin_options_page() {
+	public function wb_email_customizer_admin_options_page(): void {
 		if (!$this->verify_user_permissions()) {
 			return;
 		}
@@ -267,7 +267,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @access   public
 	 * @author   Wbcom Designs
 	 */
-	public function wb_email_customizer_init_plugin_settings() {
+	public function wb_email_customizer_init_plugin_settings(): void {
 		$this->plugin_settings_tabs['wb-email-customizer-welcome'] = esc_html__( 'Welcome', 'email-customizer-for-woocommerce' );
 		register_setting( 'wb_email_customizer_admin_welcome_options', 'wb_email_customizer_admin_welcome_options' );
 		add_settings_section( 'wb-email-customizer-welcome', ' ', array( $this, 'wb_email_customizer_admin_welcome_content' ), 'wb-email-customizer-welcome' );
@@ -280,7 +280,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	/**
 	 * Actions performed to create tabs on the sub menu page.
 	 */
-	public function wb_email_customizer_plugin_settings_tabs() {
+	public function wb_email_customizer_plugin_settings_tabs(): void {
 		$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
 		// xprofile setup tab.
 		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
@@ -296,7 +296,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wb_email_customizer_admin_welcome_content() {
+	public function wb_email_customizer_admin_welcome_content(): void {
 		include plugin_dir_path( __DIR__ ) . 'admin/partials/wb-email-customizer-welcome-page.php';
 	}
 
@@ -305,7 +305,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wb_email_customizer_faq_options_content() {
+	public function wb_email_customizer_faq_options_content(): void {
 		include plugin_dir_path( __DIR__ ) . 'admin/partials/wb-email-customizer-faq.php';
 	}
 
@@ -317,7 +317,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @access   public
 	 * @author   Wbcom Designs
 	 */
-	public function wb_email_customizer_views_add_admin_settings() {
+	public function wb_email_customizer_views_add_admin_settings(): void {
 		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) && class_exists( 'WooCommerce' ) ) {
 			add_menu_page( esc_html__( 'WB Plugins', 'email-customizer-for-woocommerce' ), esc_html__( 'WB Plugins', 'email-customizer-for-woocommerce' ), 'manage_options', 'wbcomplugins', array( $this, 'wb_email_customizer_admin_options_page' ), 'dashicons-lightbulb', 59 );
 			add_submenu_page( 'wbcomplugins', esc_html__( 'Welcome', 'email-customizer-for-woocommerce' ), esc_html__( 'Welcome', 'email-customizer-for-woocommerce' ), 'manage_options', 'wbcomplugins' );
@@ -334,7 +334,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since   1.0
 	 */
-	public function wb_email_customizer_admin_setting_submenu_pages() {
+	public function wb_email_customizer_admin_setting_submenu_pages(): void {
 		global $menu, $submenu;
 
 		$url = admin_url( 'customize.php' );
@@ -376,29 +376,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Added admin page.
-	 *
-	 * @since   1.0
-	 */
-	public function wb_email_customizer_admin_page() {
-		$template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );	// phpcs:ignore
-		if ( $template == 'template-one' ) {
-			require_once 'partials/email-customizer-for-woocommerce-admin-display-template-one.php';
-		} elseif ( $template == 'template-two' ) {
-			require_once 'partials/email-customizer-for-woocommerce-admin-display-template-two.php';
-		} elseif ( $template == 'template-three' ) {
-			require_once 'partials/email-customizer-for-woocommerce-admin-display-template-three.php';
-		} else {
-			require_once 'partials/email-customizer-for-woocommerce-admin-display.php';
-		}
-	}
-	/**
 	 * Added Customizer Sections.
 	 *
 	 * @since   1.0
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
-	public function wb_email_customizer_add_sections( $wp_customize ) {
+	public function wb_email_customizer_add_sections( $wp_customize ): void {
 		if (!current_user_can('customize')) {
 			return;
 		}
@@ -464,7 +447,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 	}
 
-	private function get_template_section_description() {
+	private function get_template_section_description(): string {
 		return '<div class="wc-template-warning" style="background: #fff3cd; border: 1px solid #ffb900; border-radius: 4px; padding: 15px; margin: 0 0 20px 0;">' .
 			'<div style="display: flex; align-items: flex-start; gap: 10px;">' .
 			'<span style="font-size: 18px; color: #8a6914;">⚠️</span>' .
@@ -481,7 +464,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since   1.0
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
-	public function wb_email_customizer_add_controls( $wp_customize ) {
+	public function wb_email_customizer_add_controls( $wp_customize ): void {
 		if (!current_user_can('customize')) {
 			return;
 		}
@@ -1145,7 +1128,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function control_filter( $active, $control ) {
+	public function control_filter( $active, $control ): bool {
 		if ( in_array( $control->section, array( 'wc_email_template', 'wc_email_text', 'wc_email_header', 'wc_email_body', 'wc_email_footer', 'wc_email_send' ) ) ) {
 
 			return true;
@@ -1158,7 +1141,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
-	public function wb_email_customizer_add_customizer_settings( $wp_customize ) {
+	public function wb_email_customizer_add_customizer_settings( $wp_customize ): void {
 		if (!current_user_can('customize')) {
 			return;
 		}
@@ -1462,7 +1445,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @param  mixed $vars Email Vare.
 	 */
-	public function wb_email_customizer_add_query_vars( $vars ) {
+	public function wb_email_customizer_add_query_vars( $vars ): array {
 		$vars[] = $this->email_trigger;
 
 		return $vars;
@@ -1472,7 +1455,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @param mixed $wp_query Custom Query.
 	 */
-	public function wb_email_customizer_load_email_template($wp_query) {
+	public function wb_email_customizer_load_email_template($wp_query): string {
 		try {
 			if (get_query_var($this->email_trigger)) {
 				static $already_executed = false;
@@ -1531,7 +1514,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $template The selected email template.
 	 * @return string The file path to the email template.
 	 */
-	public function get_template_file_path( $template ){
+	public function get_template_file_path( $template ): string {
 		$template_file = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/';
 
 			switch ( $template ) {
@@ -1561,7 +1544,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @return string Modified template path if custom one exists.
 	 */
 
-	public function wb_email_customizer_custom_universal_email_template_override( $template, $template_name, $template_path ) {
+	public function wb_email_customizer_custom_universal_email_template_override( $template, $template_name, $template_path ): string {
 		$order_email_templates = array(
 			'emails/admin-new-order.php',
 			'emails/customer-processing-order.php',
@@ -1610,7 +1593,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @access public
 	 * @return void
 	 */
-	public function add_email_header( $email_heading, $email = '' ) {
+	public function add_email_header( $email_heading, $email = '' ): void {
 		wc_get_template(
 			'emails/email-header.php',
 			array(
@@ -1624,7 +1607,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	/**
 	 * Enqueues the customizer JS script.
 	 */
-	public function wb_email_customizer_enqueue_customizer_script() {
+	public function wb_email_customizer_enqueue_customizer_script(): void {
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
 			$path      = '';
@@ -1638,7 +1621,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	// Update the parameter retrieval function
-	private function get_validated_param($key, $default = '', $validation_type = 'text') {
+	private function get_validated_param($key, $default = '', $validation_type = 'text'): string {
 		$default_array = $this->get_woocommerce_email_template_options();
 		if( empty( $default ) ){
 			$default = isset($default_array[$key]) ? $default_array[$key] : $default;
@@ -1674,7 +1657,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @param mixed $styles CSS a blob of CSS.
 	 */
-	public function wb_email_customizer_add_styles( $styles ) {
+	public function wb_email_customizer_add_styles( $styles ): string {
 		// Verify nonce first
 		if (is_admin() && isset($_GET['customize_changeset_uuid'])) {
 			if (!isset($_GET['_wpnonce']) || !wp_verify_nonce(wp_unslash($_GET['_wpnonce']), 'preview-mail')) {
@@ -1894,7 +1877,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @param string $text Email Footer Text.
 	 */
-	public function wb_email_customizer_email_footer_text( $text ) {
+	public function wb_email_customizer_email_footer_text( $text ): string {
 
 		return ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 		
@@ -1906,7 +1889,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function wb_email_customizer_enqueue_customizer_control_script() {
+	public function wb_email_customizer_enqueue_customizer_control_script(): void {
 
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
@@ -1939,19 +1922,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'nonce' => wp_create_nonce( 'wc_email_customizer_email_load_templates' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wc_email_customizer_email_ajx', $localized_vars_reset );
-		
-
-		return true;
 	}
 	/**
 	 * Removes enqueued styles in the customiser.
 	 */
-	public function wb_email_customizer_remove_theme_styles() {
+	public function wb_email_customizer_remove_theme_styles(): void {
 		global $wp_styles;
 		$wp_styles->queue = array();
 	}
 
-	public function wb_email_customizer_load_template_presets_cb($wp_customize){
+	public function wb_email_customizer_load_template_presets_cb($wp_customize): void{
 		$posted_values = $wp_customize->unsanitized_post_values();
 		// Clear the cache before updating options
 		WB_Email_Customizer_Cache::clear_cache();
@@ -1978,7 +1958,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param array $custom_defaults Optional. Custom default values to override the predefined ones
 	 * @return bool True on success, false on failure
 	 */
-	public function wb_email_customizer_update_all_defaults( $custom_defaults = array() ) {
+	public function wb_email_customizer_update_all_defaults( $custom_defaults = array() ): bool {
 		
 		// Define all default values for email customizer options
 		$default_options = $this->get_woocommerce_email_template_options();
@@ -2014,8 +1994,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * Reset all email customizer options to defaults
 	 * This is a wrapper function for better semantic meaning
 	 */
-	public function wb_email_customizer_reset_to_defaults() {
-		return wb_email_customizer_update_all_defaults();
+	public function wb_email_customizer_reset_to_defaults(): bool {
+		return $this->wb_email_customizer_update_all_defaults();
 	}
 
 	/**
@@ -2023,7 +2003,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * 
 	 * @return array Array of all current option values
 	 */
-	public function wb_email_customizer_get_all_options() {
+	public function wb_email_customizer_get_all_options(): array {
 		$option_names = array_keys( $this->get_woocommerce_email_template_options());
 		
 		$current_options = array();
@@ -2043,7 +2023,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $formatted_title The formatted site title
 	 * @return array Template-specific text content
 	 */
-	function get_template_specific_texts($selected_template, $site_title, $formatted_title) {
+	function get_template_specific_texts($selected_template, $site_title, $formatted_title): array {
 		$template_texts = array();
 		
 		switch ($selected_template) {
@@ -2090,7 +2070,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $selected_template The selected template name
 	 * @return array Complete array of options with template overrides applied
 	 */
-	public function get_woocommerce_email_template_options($selected_template = 'default') {
+	public function get_woocommerce_email_template_options($selected_template = 'default'): array {
 		
 		// Define default options
 		$default_options = array(
@@ -2166,7 +2146,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $selected_template The selected template name
 	 * @return array Template-specific override options
 	 */
-	public function get_template_specific_overrides($selected_template) {
+	public function get_template_specific_overrides($selected_template): array {
 		
 		$template_overrides = array();
 		
@@ -2261,7 +2241,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * 
 	 * @return array List of available templates
 	 */
-	public function get_available_email_templates() {
+	public function get_available_email_templates(): array {
 		return array(
 			'default' => __('Default Template', 'email-customizer-for-woocommerce'),
 			'template-one' => __('Template One', 'email-customizer-for-woocommerce'),
@@ -2277,7 +2257,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $selected_template The selected template
 	 * @return mixed The option value
 	 */
-	public function get_email_template_option($option_name, $selected_template = 'default') {
+	public function get_email_template_option($option_name, $selected_template = 'default'): string {
 		$options = $this->get_woocommerce_email_template_options($selected_template);
 		return isset($options[$option_name]) ? $options[$option_name] : null;
 	}
