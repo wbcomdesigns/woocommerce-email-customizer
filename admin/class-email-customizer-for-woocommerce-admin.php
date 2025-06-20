@@ -402,97 +402,78 @@ class Email_Customizer_For_Woocommerce_Admin {
 		if (!current_user_can('customize')) {
 			return;
 		}
-		$wb_email_customizer_check_url = isset( $_GET['email-customizer-for-woocommerce'] ) ? sanitize_text_field( wp_unslash( $_GET['email-customizer-for-woocommerce'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( is_user_logged_in() && true == $wb_email_customizer_check_url ) {
+		$email_trigger_check = isset($_GET['email-customizer-for-woocommerce']) ? 
+        sanitize_text_field(wp_unslash($_GET['email-customizer-for-woocommerce'])) : '';
+    
+		if (!is_user_logged_in() || $email_trigger_check !== 'true') {
+			return;
+		}
 			$wp_customize->add_panel(
-				'wc_email_header',
+				'wc_email_customizer_panel',
 				array(
-					'title'      => __( 'Email Customizer', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 10,
+					'title'       => __('WooCommerce Email Customizer', 'email-customizer-for-woocommerce'),
+					'description' => __('Customize the appearance and content of your WooCommerce emails.', 'email-customizer-for-woocommerce'),
+					'capability'  => 'manage_woocommerce',
+					'priority'    => 10,
 				)
 			);
-
 			$wp_customize->add_section(
 				'wc_email_templates',
 				array(
-					'title'       => __( 'Email Templates', 'email-customizer-for-woocommerce' ),
-					'description' => '<div class="wc-template-warning" style="background: #fff3cd; border: 1px solid #ffb900; border-radius: 4px; padding: 15px; margin: 0 0 20px 0;">' .
-									'<div style="display: flex; align-items: flex-start; gap: 10px;">' .
-									'<span style="font-size: 18px; color: #8a6914;">⚠️</span>' .
-									'<div>' .
-									'<strong style="color: #8a6914; font-size: 14px; display: block; margin-bottom: 5px;">' . 
-									__( 'Template Override Warning', 'email-customizer-for-woocommerce' ) . '</strong>' .
-									'<p style="margin: 0; font-size: 13px; line-height: 1.4; color: #6c5b00;">' .
-									__( 'Selecting a template will immediately override all current email styling settings. Your customizations will be replaced with the template\'s default values.', 'email-customizer-for-woocommerce' ) .
-									'</p></div></div></div>',
-					'capability'  => 'edit_theme_options',
-					'priority'    => 20,
-					'panel'       => 'wc_email_header',
+					'title'       => __('Email Templates', 'email-customizer-for-woocommerce'),
+					'description' => $this->get_template_section_description(),
+					'capability'  => 'manage_woocommerce',
+					'priority'    => 10,
+					'panel'       => 'wc_email_customizer_panel',
 				)
 			);
 
-			$wp_customize->add_section(
-				'wc_email_text',
-				array(
-					'title'      => __( 'Email Texts', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 30,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
-			$wp_customize->add_section(
-				'wc_email_header',
-				array(
-					'title'      => __( 'Email Header', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 20,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
-			$wp_customize->add_section(
-				'wc_email_appearance_customizer',
-				array(
-					'title'      => __( 'Container', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 20,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
-			$wp_customize->add_section(
-				'wc_email_body',
-				array(
-					'title'      => __( 'Email Body', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 30,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
-			$wp_customize->add_section(
-				'wc_email_footer',
-				array(
-					'title'      => __( 'Email Footer', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 50,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
-			$wp_customize->add_section(
-				'wc_email_send',
-				array(
-					'title'      => __( 'Send Test Email', 'email-customizer-for-woocommerce' ),
-					'capability' => 'edit_theme_options',
-					'priority'   => 60,
-					'panel'      => 'wc_email_header',
-				)
-			);
-
+			// Add all other sections with proper descriptions
+		$sections = array(
+			'wc_email_text' => array(
+				'title'       => __('Email Content', 'email-customizer-for-woocommerce'),
+				'description' => __('Customize the text content of your emails.', 'email-customizer-for-woocommerce'),
+				'priority'    => 20,
+			),
+			'wc_email_header' => array(
+				'title'       => __('Email Header', 'email-customizer-for-woocommerce'),
+				'description' => __('Customize the header section of your emails including logo and styling.', 'email-customizer-for-woocommerce'),
+				'priority'    => 30,
+			),
+			'wc_email_appearance_customizer' => array(
+				'title'       => __('Container & Layout', 'email-customizer-for-woocommerce'),
+				'description' => __('Adjust the overall layout, spacing, and container styling.', 'email-customizer-for-woocommerce'),
+				'priority'    => 40,
+			),
+			'wc_email_body' => array(
+				'title'       => __('Email Body', 'email-customizer-for-woocommerce'),
+				'description' => __('Customize the main content area styling and typography.', 'email-customizer-for-woocommerce'),
+				'priority'    => 50,
+			),
+			'wc_email_footer' => array(
+				'title'       => __('Email Footer', 'email-customizer-for-woocommerce'),
+				'description' => __('Customize the footer section including text and styling.', 'email-customizer-for-woocommerce'),
+				'priority'    => 60,
+			),
+		);
+		
+		foreach ($sections as $section_id => $section_args) {
+			$section_args['capability'] = 'manage_woocommerce';
+			$section_args['panel'] = 'wc_email_customizer_panel';
+			$wp_customize->add_section($section_id, $section_args);
 		}
+	}
+
+	private function get_template_section_description() {
+		return '<div class="wc-template-warning" style="background: #fff3cd; border: 1px solid #ffb900; border-radius: 4px; padding: 15px; margin: 0 0 20px 0;">' .
+			'<div style="display: flex; align-items: flex-start; gap: 10px;">' .
+			'<span style="font-size: 18px; color: #8a6914;">⚠️</span>' .
+			'<div>' .
+			'<strong style="color: #8a6914; font-size: 14px; display: block; margin-bottom: 5px;">' . 
+			__('Template Override Warning', 'email-customizer-for-woocommerce') . '</strong>' .
+			'<p style="margin: 0; font-size: 13px; line-height: 1.4; color: #6c5b00;">' .
+			__('Selecting a template will immediately override all current email styling settings. Your customizations will be replaced with the template\'s default values.', 'email-customizer-for-woocommerce') .
+			'</p></div></div></div>';
 	}
 	/**
 	 * Added Customizer Controls.
@@ -504,27 +485,21 @@ class Email_Customizer_For_Woocommerce_Admin {
 		if (!current_user_can('customize')) {
 			return;
 		}
-		/**
-		 * email template
-		 */
-		$image_base_url = plugin_dir_url( __FILE__ ) . 'img/';
+
 		$wp_customize->add_control(
-			new theme_slug_Image_Radio_Control(
-				$wp_customize,
-				'theme_slug_default_layout',
-				array(
-					'type'     => 'radio',
-					'label'    => esc_html__( 'Select Default Email Layout', 'email-customizer-for-woocommerce' ),
-					'section'  => 'wc_email_templates',
-					'settings' => 'woocommerce_email_template',
-					'type'     => 'text',
-					'choices'  => array(
-						'default'        => $image_base_url . 'woo_default_template.jpg',
-						'template-one'   => $image_base_url . 'woo_full_template.jpg',
-						'template-two'   => $image_base_url . 'woo_skinny_template.jpg',
-						'template-three' => $image_base_url . 'woo_flat_template.jpg',
-					),
-				)
+			'woocommerce_email_template_control',
+			array(
+				'type'        => 'radio',
+				'label'       => __('Email Template', 'email-customizer-for-woocommerce'),
+				'description' => __('Choose an email template design.', 'email-customizer-for-woocommerce'),
+				'section'     => 'wc_email_templates',
+				'settings'    => 'woocommerce_email_template',
+				'choices'     => array(
+					'default'        => __('Default Template', 'email-customizer-for-woocommerce'),
+					'template-one'   => __('Modern Template', 'email-customizer-for-woocommerce'),
+					'template-two'   => __('Minimal Template', 'email-customizer-for-woocommerce'),
+					'template-three' => __('Bold Template', 'email-customizer-for-woocommerce'),
+				),
 			)
 		);
 
@@ -537,12 +512,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_text_heading_control',
 				array(
-					'label'    => __( 'Heading Text', 'email-customizer-for-woocommerce' ),
-					'priority' => 30,
-					'section'  => 'wc_email_text',
-					'settings' => 'woocommerce_email_heading_text',
-					'type'     => 'text',
-				)
+				'type'        => 'text',
+				'label'       => __('Email Heading', 'email-customizer-for-woocommerce'),
+				'description' => __('Enter the main heading text for emails (max 200 characters).', 'email-customizer-for-woocommerce'),
+				'section'     => 'wc_email_text',
+				'settings'    => 'woocommerce_email_heading_text',
+				'input_attrs' => array(
+					'maxlength' => 200,
+					'placeholder' => __('Enter heading text...', 'email-customizer-for-woocommerce'),
+				),
+			)
 			)
 		);
 
@@ -756,10 +735,10 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_header_color_control',
 				array(
-					'label'    => __( 'Header Background Color', 'email-customizer-for-woocommerce' ),
-					'priority' => 30,
-					'section'  => 'wc_email_header',
-					'settings' => 'woocommerce_email_header_background_color',
+					'label'       => __('Header Background Color', 'email-customizer-for-woocommerce'),
+					'description' => __('Choose the background color for email headers.', 'email-customizer-for-woocommerce'),
+					'section'     => 'wc_email_header',
+					'settings'    => 'woocommerce_email_header_background_color',
 				)
 			)
 		);
@@ -768,10 +747,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'wc_email_header_font_size_control',
 			array(
 				'type'        => 'range',
-				'priority'    => 50,
+				'label'       => __('Header Font Size', 'email-customizer-for-woocommerce'),
+				'description' => __('Set the font size for email headers (10-50px).', 'email-customizer-for-woocommerce'),
 				'section'     => 'wc_email_header',
-				'label'       => __( 'Font Size', 'email-customizer-for-woocommerce' ),
-				'description' => __( 'Font Size', 'email-customizer-for-woocommerce' ),
 				'settings'    => 'woocommerce_email_header_font_size',
 				'input_attrs' => array(
 					'min'  => 10,

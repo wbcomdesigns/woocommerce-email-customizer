@@ -40,3 +40,149 @@
     overflow-y: scroll;
     overflow-x: auto;
 }
+
+/* ===== EMAIL TEMPLATE IMAGE RADIO STYLES ===== */
+
+/* Hide actual radio inputs for template selection */
+.customize-control-radio#customize-control-woocommerce_email_template_control input[type="radio"] {
+    display: none !important;
+}
+
+/* Style labels as image boxes */
+.customize-control-radio#customize-control-woocommerce_email_template_control label {
+    display: inline-block;
+    cursor: pointer;
+    margin: 10px 15px 10px 0;
+    position: relative;
+    vertical-align: top;
+}
+
+/* Image preview boxes */
+.customize-control-radio#customize-control-woocommerce_email_template_control label::before {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 90px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Template image assignments */
+.customize-control-radio#customize-control-woocommerce_email_template_control label[for*="default"]::before {
+    background-image: url('../../img/woo_default_template.jpg');
+}
+
+.customize-control-radio#customize-control-woocommerce_email_template_control label[for*="template-one"]::before {
+    background-image: url('../../img/woo_full_template.jpg');
+}
+
+.customize-control-radio#customize-control-woocommerce_email_template_control label[for*="template-two"]::before {
+    background-image: url('../../img/woo_skinny_template.jpg');
+}
+
+.customize-control-radio#customize-control-woocommerce_email_template_control label[for*="template-three"]::before {
+    background-image: url('../../img/woo_flat_template.jpg');
+}
+
+/* Selected state styling */
+.customize-control-radio#customize-control-woocommerce_email_template_control input[type="radio"]:checked + label::before {
+    border-color: #0073aa;
+    box-shadow: 0 0 0 2px rgba(0,115,170,0.3), 0 4px 8px rgba(0,0,0,0.15);
+    transform: scale(1.02);
+}
+
+/* Hover effects */
+.customize-control-radio#customize-control-woocommerce_email_template_control label:hover::before {
+    border-color: #0073aa;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+
+/* Label text styling */
+.customize-control-radio#customize-control-woocommerce_email_template_control label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Add checkmark for selected state */
+.customize-control-radio#customize-control-woocommerce_email_template_control input[type="radio"]:checked + label::after {
+    content: "✓";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #0073aa;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+    .customize-control-radio#customize-control-woocommerce_email_template_control label::before {
+        width: 100px;
+        height: 75px;
+    }
+    
+    .customize-control-radio#customize-control-woocommerce_email_template_control label {
+        margin: 5px 10px 10px 0;
+    }
+}
+
+/* Loading state */
+.customize-control-radio#customize-control-woocommerce_email_template_control.loading label::before {
+    opacity: 0.5;
+    background-image: none;
+    background-color: #f0f0f0;
+}
+
+.customize-control-radio#customize-control-woocommerce_email_template_control.loading label::after {
+    content: "Loading...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    color: #666;
+}
+
+/* Focus states for accessibility */
+.customize-control-radio#customize-control-woocommerce_email_template_control input[type="radio"]:focus + label::before {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .customize-control-radio#customize-control-woocommerce_email_template_control label::before {
+        border-width: 2px;
+        border-color: #000;
+    }
+    
+    .customize-control-radio#customize-control-woocommerce_email_template_control input[type="radio"]:checked + label::before {
+        border-color: #000;
+        background-color: #fff;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .customize-control-radio#customize-control-woocommerce_email_template_control label::before {
+        border-color: #666;
+    }
+    
+    .customize-control-radio#customize-control-woocommerce_email_template_control label {
+        color: #ccc;
+    }
+}
