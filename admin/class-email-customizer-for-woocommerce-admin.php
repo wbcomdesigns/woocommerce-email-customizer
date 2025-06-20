@@ -1661,7 +1661,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 				return $styles;
 			}
 		}
+		$default_array = $this->get_woocommerce_email_template_options();
+		$cache_params = array_intersect_key($_GET, array_flip( array_keys( $default_array ) ));
 
+		$cache_key = md5(serialize($cache_params));
+		// Try to get cached styles
+		$cached_styles = WB_Email_Customizer_Cache::get_email_styles($cache_key);
+		if ($cached_styles !== false) {
+			return $cached_styles;
+		}
 		// Get all parameters with proper sanitization
 		$selected_template = $this->get_validated_param( 'woocommerce_email_template', '', 'sanitize_key' );
 		
@@ -1848,7 +1856,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$styles .= $footer_bottom; // FIXED: Updated variable name
 		$styles .= $image_alignment;
 		$styles .= $body_title_style;
-		
+
+		 // Cache the generated styles
+		WB_Email_Customizer_Cache::set_email_styles($cache_key, $styles);
 		return $styles;
 	}
 
@@ -1916,7 +1926,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 	public function wb_email_customizer_load_template_presets_cb($wp_customize){
 		$posted_values = $wp_customize->unsanitized_post_values();
-		// 
+		// Clear the cache before updating options
+		WB_Email_Customizer_Cache::clear_cache();
 		$woocommerce_email_body_background_color = isset($posted_values['woocommerce_email_body_background_color'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_body_background_color'])): '';
 		if( !empty( $woocommerce_email_body_background_color ) ){
 			update_option( 'woocommerce_email_body_background_color', $woocommerce_email_body_background_color );
@@ -1932,7 +1943,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$custom_defaults = $this->get_template_specific_overrides( $selected_template );
 			$this->wb_email_customizer_update_all_defaults( $custom_defaults );
 		}
-		
 	}
 
 	/**

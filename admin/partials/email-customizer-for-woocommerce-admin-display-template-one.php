@@ -83,7 +83,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	<h3 class="body-content-title"><?php esc_html_e( 'Order Details', 'email-customizer-for-woocommerce' ); ?></h3>
 
 	<div class="order-details-wrapper" style="display: flex; justify-content: space-between">
-		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php echo esc_html__( 'Order number:', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() ); ?></div>
+		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php echo esc_html__( 'Order : #', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() ); ?></div>
 		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php echo esc_html__( 'Order Date:', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></div>
 	</div>
 
@@ -212,7 +212,14 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	<h3 class="body-content-title"><?php esc_html_e( 'Order Details', 'email-customizer-for-woocommerce' ); ?></h3>
 
 	<div class="order-details-wrapper" style="display: flex; justify-content: space-between">
-		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order number: 1', 'email-customizer-for-woocommerce' ); ?></div>
+		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;">
+			<?php printf(
+					/* translators: %s: Order number */
+					esc_html__('Order #%s', 'email-customizer-for-woocommerce'),
+					esc_html('2020')
+				); 
+			?>
+		</div>
 		<div class="order-details" style="padding-top: 10px; padding-bottom: 10px; font-style: italic; font-size: inherit; font-weight: inherit;"><?php esc_html_e( 'Order Date: May 16, 2025', 'email-customizer-for-woocommerce' ); ?></div>
 	</div>
 	<table>

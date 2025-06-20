@@ -116,6 +116,11 @@ class Email_Customizer_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-email-customizer-validator-woocommerce.php';
 		
+		/**
+		 * The class responsible for handling settings with caching
+		 * of the plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-email-customizer-for-woocommerce-cache.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
