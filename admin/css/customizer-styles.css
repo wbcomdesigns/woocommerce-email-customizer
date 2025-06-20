@@ -113,7 +113,8 @@
 
 /* Add checkmark for selected state */
 .customize-control-radio#customize-control-woocommerce_email_template_control input[type="radio"]:checked + label::after {
-    content: "✓";
+    content: "\f147";
+    font-family: 'Dashicons';
     position: absolute;
     top: 5px;
     right: 5px;
@@ -124,10 +125,10 @@
     height: 20px;
     line-height: 20px;
     text-align: center;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
 }
-
 /* Responsive design */
 @media (max-width: 640px) {
     .customize-control-radio#customize-control-woocommerce_email_template_control label::before {

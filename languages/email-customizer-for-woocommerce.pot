@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-20T18:25:25+05:30\n"
+"POT-Creation-Date: 2025-06-20T13:08:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: email-customizer-for-woocommerce\n"
 
 #. Plugin Name of the plugin
@@ -52,466 +52,469 @@ msgstr ""
 msgid "Invalid nonce."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:221
+#: admin/class-email-customizer-for-woocommerce-admin.php:224
 msgid "You do not have sufficient permissions to perform this action."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:236
+#: admin/class-email-customizer-for-woocommerce-admin.php:239
 msgid "Email Customizer For WooCommerce"
 msgstr ""
 
 #. translators: %s:
-#: admin/class-email-customizer-for-woocommerce-admin.php:238
+#: admin/class-email-customizer-for-woocommerce-admin.php:241
 #: admin/wbcom/templates/wbcom-license-page.php:14
+#, php-format
 msgid "Version %s"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:264
-#: admin/class-email-customizer-for-woocommerce-admin.php:335
+#: admin/class-email-customizer-for-woocommerce-admin.php:267
+#: admin/class-email-customizer-for-woocommerce-admin.php:338
 msgid "Welcome"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:268
+#: admin/class-email-customizer-for-woocommerce-admin.php:271
 msgid "FAQ"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:285
+#: admin/class-email-customizer-for-woocommerce-admin.php:288
 msgid "WooCommerce emails are currently disabled."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:287
+#: admin/class-email-customizer-for-woocommerce-admin.php:290
 msgid "Enable them here"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:334
+#: admin/class-email-customizer-for-woocommerce-admin.php:337
 msgid "WB Plugins"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:338
+#: admin/class-email-customizer-for-woocommerce-admin.php:341
 msgid "WC Email Customizer"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:379
-#: admin/class-email-customizer-for-woocommerce-admin.php:409
+#: admin/class-email-customizer-for-woocommerce-admin.php:382
+#: admin/class-email-customizer-for-woocommerce-admin.php:412
 msgid "WooCommerce Email Customizer"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:380
+#: admin/class-email-customizer-for-woocommerce-admin.php:383
 msgid "Email Customizer"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:410
+#: admin/class-email-customizer-for-woocommerce-admin.php:413
 msgid "Customize the appearance and content of your WooCommerce emails."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:418
+#: admin/class-email-customizer-for-woocommerce-admin.php:421
 msgid "Email Templates"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:429
+#: admin/class-email-customizer-for-woocommerce-admin.php:432
 msgid "Email Content"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:430
+#: admin/class-email-customizer-for-woocommerce-admin.php:433
 msgid "Customize the text content of your emails."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:434
+#: admin/class-email-customizer-for-woocommerce-admin.php:437
 msgid "Email Header"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:435
+#: admin/class-email-customizer-for-woocommerce-admin.php:438
 msgid "Customize the header section of your emails including logo and styling."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:439
+#: admin/class-email-customizer-for-woocommerce-admin.php:442
 msgid "Container & Layout"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:440
+#: admin/class-email-customizer-for-woocommerce-admin.php:443
 msgid "Adjust the overall layout, spacing, and container styling."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:444
+#: admin/class-email-customizer-for-woocommerce-admin.php:447
 msgid "Email Body"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:445
+#: admin/class-email-customizer-for-woocommerce-admin.php:448
 msgid "Customize the main content area styling and typography."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:449
+#: admin/class-email-customizer-for-woocommerce-admin.php:452
 msgid "Email Footer"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:450
+#: admin/class-email-customizer-for-woocommerce-admin.php:453
 msgid "Customize the footer section including text and styling."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:468
+#: admin/class-email-customizer-for-woocommerce-admin.php:471
 msgid "Template Override Warning"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:470
+#: admin/class-email-customizer-for-woocommerce-admin.php:473
 msgid "Selecting a template will immediately override all current email styling settings. Your customizations will be replaced with the template's default values."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:488
+#: admin/class-email-customizer-for-woocommerce-admin.php:491
 msgid "Email Template"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:489
+#: admin/class-email-customizer-for-woocommerce-admin.php:492
 msgid "Choose an email template design."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:493
-#: admin/class-email-customizer-for-woocommerce-admin.php:2258
+#: admin/class-email-customizer-for-woocommerce-admin.php:496
+#: admin/class-email-customizer-for-woocommerce-admin.php:2261
 msgid "Default Template"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:494
+#: admin/class-email-customizer-for-woocommerce-admin.php:497
 msgid "Modern Template"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:495
+#: admin/class-email-customizer-for-woocommerce-admin.php:498
 msgid "Minimal Template"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:496
+#: admin/class-email-customizer-for-woocommerce-admin.php:499
 msgid "Bold Template"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:511
+#: admin/class-email-customizer-for-woocommerce-admin.php:514
 msgid "Email Heading"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:512
+#: admin/class-email-customizer-for-woocommerce-admin.php:515
 msgid "Enter the main heading text for emails (max 200 characters)."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:517
+#: admin/class-email-customizer-for-woocommerce-admin.php:520
 msgid "Enter heading text..."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:528
+#: admin/class-email-customizer-for-woocommerce-admin.php:531
 msgid "Subheading Text"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:542
+#: admin/class-email-customizer-for-woocommerce-admin.php:545
 msgid "Body Text"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:561
-#: admin/class-email-customizer-for-woocommerce-admin.php:562
+#: admin/class-email-customizer-for-woocommerce-admin.php:564
+#: admin/class-email-customizer-for-woocommerce-admin.php:565
 msgid "Padding Top"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:578
-#: admin/class-email-customizer-for-woocommerce-admin.php:579
+#: admin/class-email-customizer-for-woocommerce-admin.php:581
+#: admin/class-email-customizer-for-woocommerce-admin.php:582
 msgid "Padding Bottom"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:595
-#: admin/class-email-customizer-for-woocommerce-admin.php:596
+#: admin/class-email-customizer-for-woocommerce-admin.php:598
+#: admin/class-email-customizer-for-woocommerce-admin.php:599
 msgid "Padding Left/Right"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:616
-#: admin/class-email-customizer-for-woocommerce-admin.php:617
+#: admin/class-email-customizer-for-woocommerce-admin.php:619
+#: admin/class-email-customizer-for-woocommerce-admin.php:620
 msgid "Border Top"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:633
-#: admin/class-email-customizer-for-woocommerce-admin.php:634
+#: admin/class-email-customizer-for-woocommerce-admin.php:636
+#: admin/class-email-customizer-for-woocommerce-admin.php:637
 msgid "Border Bottom"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:650
-#: admin/class-email-customizer-for-woocommerce-admin.php:651
+#: admin/class-email-customizer-for-woocommerce-admin.php:653
+#: admin/class-email-customizer-for-woocommerce-admin.php:654
 msgid "Border Left"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:667
-#: admin/class-email-customizer-for-woocommerce-admin.php:668
+#: admin/class-email-customizer-for-woocommerce-admin.php:670
+#: admin/class-email-customizer-for-woocommerce-admin.php:671
 msgid "Border Right"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:683
-#: admin/class-email-customizer-for-woocommerce-admin.php:849
+#: admin/class-email-customizer-for-woocommerce-admin.php:686
+#: admin/class-email-customizer-for-woocommerce-admin.php:852
 msgid "Border Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:700
+#: admin/class-email-customizer-for-woocommerce-admin.php:703
 msgid "Header Image Placement"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:706
+#: admin/class-email-customizer-for-woocommerce-admin.php:709
 msgid "Select body container placement"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:707
+#: admin/class-email-customizer-for-woocommerce-admin.php:710
 msgid "Inside the body container"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:708
+#: admin/class-email-customizer-for-woocommerce-admin.php:711
 msgid "Outside the body container"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:719
+#: admin/class-email-customizer-for-woocommerce-admin.php:722
 msgid "Upload Header Image"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:733
+#: admin/class-email-customizer-for-woocommerce-admin.php:736
 msgid "Header Background Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:734
+#: admin/class-email-customizer-for-woocommerce-admin.php:737
 msgid "Choose the background color for email headers."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:745
+#: admin/class-email-customizer-for-woocommerce-admin.php:748
 msgid "Header Font Size"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:746
+#: admin/class-email-customizer-for-woocommerce-admin.php:749
 msgid "Set the font size for email headers (10-50px)."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:762
+#: admin/class-email-customizer-for-woocommerce-admin.php:765
 msgid "Header Image Alignment"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:768
+#: admin/class-email-customizer-for-woocommerce-admin.php:771
 msgid "Left"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:769
+#: admin/class-email-customizer-for-woocommerce-admin.php:772
 msgid "Center"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:770
+#: admin/class-email-customizer-for-woocommerce-admin.php:773
 msgid "Right"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:781
+#: admin/class-email-customizer-for-woocommerce-admin.php:784
 msgid "Header Text Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:797
+#: admin/class-email-customizer-for-woocommerce-admin.php:800
 msgid "Background Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:810
+#: admin/class-email-customizer-for-woocommerce-admin.php:813
 msgid "Content Background Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:823
+#: admin/class-email-customizer-for-woocommerce-admin.php:826
 msgid "Link Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:836
+#: admin/class-email-customizer-for-woocommerce-admin.php:839
 msgid "Text Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:863
-#: admin/class-email-customizer-for-woocommerce-admin.php:864
-#: admin/class-email-customizer-for-woocommerce-admin.php:985
-#: admin/class-email-customizer-for-woocommerce-admin.php:986
+#: admin/class-email-customizer-for-woocommerce-admin.php:866
+#: admin/class-email-customizer-for-woocommerce-admin.php:867
+#: admin/class-email-customizer-for-woocommerce-admin.php:988
+#: admin/class-email-customizer-for-woocommerce-admin.php:989
 msgid "Font Size"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:880
-#: admin/class-email-customizer-for-woocommerce-admin.php:881
+#: admin/class-email-customizer-for-woocommerce-admin.php:883
+#: admin/class-email-customizer-for-woocommerce-admin.php:884
 msgid "Title Font Size"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:896
+#: admin/class-email-customizer-for-woocommerce-admin.php:899
 msgid "Email Container Width"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:902
+#: admin/class-email-customizer-for-woocommerce-admin.php:905
 msgid "Narrow"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:903
+#: admin/class-email-customizer-for-woocommerce-admin.php:906
 msgid "Default"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:904
+#: admin/class-email-customizer-for-woocommerce-admin.php:907
 msgid "Wide"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:915
+#: admin/class-email-customizer-for-woocommerce-admin.php:918
 msgid "Font Family"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:921
+#: admin/class-email-customizer-for-woocommerce-admin.php:924
 msgid "Sans Serif"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:922
+#: admin/class-email-customizer-for-woocommerce-admin.php:925
 msgid "Serif"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:934
+#: admin/class-email-customizer-for-woocommerce-admin.php:937
 msgid "Rounded Corners"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:935
+#: admin/class-email-customizer-for-woocommerce-admin.php:938
 msgid "Enable rounded corners"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:951
+#: admin/class-email-customizer-for-woocommerce-admin.php:954
 msgid "Shadow Spread"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:952
+#: admin/class-email-customizer-for-woocommerce-admin.php:955
 msgid "Amount of shadow behind the email container"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:970
+#: admin/class-email-customizer-for-woocommerce-admin.php:973
 msgid "Footer Text"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1001
+#: admin/class-email-customizer-for-woocommerce-admin.php:1004
 msgid "Footer Background Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1014
+#: admin/class-email-customizer-for-woocommerce-admin.php:1017
 msgid "Footer Text Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1028
-#: admin/class-email-customizer-for-woocommerce-admin.php:1029
+#: admin/class-email-customizer-for-woocommerce-admin.php:1031
+#: admin/class-email-customizer-for-woocommerce-admin.php:1032
 msgid "Footer Top Padding"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1045
-#: admin/class-email-customizer-for-woocommerce-admin.php:1046
+#: admin/class-email-customizer-for-woocommerce-admin.php:1048
+#: admin/class-email-customizer-for-woocommerce-admin.php:1049
 msgid "Footer Bottom Padding"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1062
-#: admin/class-email-customizer-for-woocommerce-admin.php:1063
+#: admin/class-email-customizer-for-woocommerce-admin.php:1065
+#: admin/class-email-customizer-for-woocommerce-admin.php:1066
 msgid "Footer Left/Right Padding"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1081
+#: admin/class-email-customizer-for-woocommerce-admin.php:1084
 msgid "Footer Address Background Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1095
-#: admin/class-email-customizer-for-woocommerce-admin.php:1096
+#: admin/class-email-customizer-for-woocommerce-admin.php:1098
+#: admin/class-email-customizer-for-woocommerce-admin.php:1099
 msgid "Footer Address Border"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1111
+#: admin/class-email-customizer-for-woocommerce-admin.php:1114
 msgid "Footer Address Border Color"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1124
+#: admin/class-email-customizer-for-woocommerce-admin.php:1127
 msgid "Footer Address Border Style"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1130
+#: admin/class-email-customizer-for-woocommerce-admin.php:1133
 msgid "Solid"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1131
+#: admin/class-email-customizer-for-woocommerce-admin.php:1134
 msgid "Dotted"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1501
-#: admin/class-email-customizer-for-woocommerce-admin.php:2044
-#: admin/class-email-customizer-for-woocommerce-admin.php:2052
-#: admin/class-email-customizer-for-woocommerce-admin.php:2060
+#: admin/class-email-customizer-for-woocommerce-admin.php:1504
+#: admin/class-email-customizer-for-woocommerce-admin.php:2047
+#: admin/class-email-customizer-for-woocommerce-admin.php:2055
+#: admin/class-email-customizer-for-woocommerce-admin.php:2063
 msgid "Thanks for your order!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1894
+#: admin/class-email-customizer-for-woocommerce-admin.php:1897
 msgid "Email Customizer For WooCommerce - Powered by WooCommerce and WordPress"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1916
+#: admin/class-email-customizer-for-woocommerce-admin.php:1919
 msgid "Error occurred. Please try again."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1917
+#: admin/class-email-customizer-for-woocommerce-admin.php:1920
 msgid "Email Sent!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1918
+#: admin/class-email-customizer-for-woocommerce-admin.php:1921
 msgid "Please save your changes before sending the test email"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1919
+#: admin/class-email-customizer-for-woocommerce-admin.php:1922
 msgid "Template changed to:"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1920
+#: admin/class-email-customizer-for-woocommerce-admin.php:1923
 msgid "Settings updated:"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1921
+#: admin/class-email-customizer-for-woocommerce-admin.php:1924
 msgid "Loading..."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1922
+#: admin/class-email-customizer-for-woocommerce-admin.php:1925
 msgid "An error occurred. Please try again."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2045
-#: admin/class-email-customizer-for-woocommerce-admin.php:2061
+#: admin/class-email-customizer-for-woocommerce-admin.php:2048
+#: admin/class-email-customizer-for-woocommerce-admin.php:2064
+#, php-format
 msgid "Hello from %s"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2046
-#: admin/class-email-customizer-for-woocommerce-admin.php:2054
-#: admin/class-email-customizer-for-woocommerce-admin.php:2062
-#: admin/class-email-customizer-for-woocommerce-admin.php:2071
+#: admin/class-email-customizer-for-woocommerce-admin.php:2049
+#: admin/class-email-customizer-for-woocommerce-admin.php:2057
+#: admin/class-email-customizer-for-woocommerce-admin.php:2065
+#: admin/class-email-customizer-for-woocommerce-admin.php:2074
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:221
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:233
+#, php-format
 msgid "Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2053
+#: admin/class-email-customizer-for-woocommerce-admin.php:2056
 msgid "Order complete"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2069
+#: admin/class-email-customizer-for-woocommerce-admin.php:2072
 msgid "HTML Email Template!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2070
+#: admin/class-email-customizer-for-woocommerce-admin.php:2073
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:197
 msgid "HTML Email Sub Heading"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2093
+#: admin/class-email-customizer-for-woocommerce-admin.php:2096
 msgid "Thank you for your order"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2094
+#: admin/class-email-customizer-for-woocommerce-admin.php:2097
 msgid "Your order details"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2095
+#: admin/class-email-customizer-for-woocommerce-admin.php:2098
 msgid "We have received your order and will process it shortly."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2131
+#: admin/class-email-customizer-for-woocommerce-admin.php:2134
 msgid "Thank you for shopping with us!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2259
+#: admin/class-email-customizer-for-woocommerce-admin.php:2262
 msgid "Template One"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2260
+#: admin/class-email-customizer-for-woocommerce-admin.php:2263
 msgid "Template Two"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2261
+#: admin/class-email-customizer-for-woocommerce-admin.php:2264
 msgid "Template Three"
 msgstr ""
 
@@ -520,6 +523,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:44
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:44
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:42
+#, php-format
 msgid "Hi %s,"
 msgstr ""
 
@@ -533,6 +537,7 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:60
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:60
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:60
+#, php-format
 msgid "Hi there. Your recent order on %1$s has been %2$s."
 msgstr ""
 
@@ -705,6 +710,7 @@ msgstr ""
 #. translators: %s: Order number
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:218
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:215
+#, php-format
 msgid "Order #%s"
 msgstr ""
 
@@ -798,6 +804,7 @@ msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:87
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:88
+#, php-format
 msgid "Order #%s (%s)"
 msgstr ""
 
@@ -1484,6 +1491,7 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:127
+#, php-format
 msgid "Your license key expired on %s."
 msgstr ""
 
@@ -1501,6 +1509,7 @@ msgstr ""
 
 #. translators: %1$s: Item Name
 #: edd-license/edd-plugin-license.php:147
+#, php-format
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
@@ -1510,6 +1519,7 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:333
+#, php-format
 msgid "Your WooCommerce Email Customizer plugin license key expired on %s."
 msgstr ""
 
@@ -1526,18 +1536,22 @@ msgid "Activate License"
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:512
+#, php-format
 msgid " Expires %s."
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:516
+#, php-format
 msgid "You have %1$s/%2$s-sites activated."
 msgstr ""
 
 #: edd-license/EDD_Woo_Email_Customizer_Plugin_Updater.php:261
+#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
 #: edd-license/EDD_Woo_Email_Customizer_Plugin_Updater.php:270
+#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s."
 msgstr ""
 
@@ -1627,5 +1641,6 @@ msgstr ""
 
 #. Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce
 #: woocommerce-email-customizer.php:119
+#, php-format
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
