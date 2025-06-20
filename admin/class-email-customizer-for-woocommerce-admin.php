@@ -1472,20 +1472,67 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 *
 	 * @param mixed $wp_query Custom Query.
 	 */
-	public function wb_email_customizer_load_email_template( $wp_query ) {
+	public function wb_email_customizer_load_email_template($wp_query) {
+		try {
+			if (get_query_var($this->email_trigger)) {
+				static $already_executed = false;
+				if ($already_executed) {
+					return $wp_query;
+				}
 
-		if ( get_query_var( $this->email_trigger ) ) {
-			static $alredy_excute = false;
-			if ( $alredy_excute ) {
-				return;
+				$mailer = WC()->mailer();
+				if (!$mailer) {
+					throw new Exception('WooCommerce mailer not available');
+				}
+
+				ob_start();
+
+				$template = $this->get_validated_param('woocommerce_email_template', 'default', 'template');
+				$template_file = $this->get_template_file_path($template);
+
+				if (!file_exists($template_file)) {
+					throw new Exception('Template file not found: ' . $template_file);
+				}
+
+				include $template_file;
+				$already_executed = true;
+
+				$message = ob_get_clean();
+
+				if (empty($message)) {
+					throw new Exception('Empty email template generated');
+				}
+
+				$email_heading = $this->get_validated_param('woocommerce_email_heading_text', __('Thanks for your order!', 'email-customizer-for-woocommerce'), 'text');
+
+				$email = new WC_Email();
+				$messages = $email->style_inline($mailer->wrap_message($email_heading, $message));
+				
+				echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				exit;
 			}
+		} catch (Exception $e) {
+			WB_Email_Customizer_Logger::log_error('Email template loading failed', array(
+				'error' => $e->getMessage(),
+				'template' => $template ?? 'unknown',
+				'user_id' => get_current_user_id(),
+			));
+			
+			// Return gracefully
+			return $wp_query;
+		}
 
-			$mailer = WC()->mailer();
+		return $wp_query;
+	}
 
-			ob_start();
-
-			$template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );	// phpcs:ignore
-			$template_file = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/';
+	/**
+	 * Get the file path for the email template based on the selected template.
+	 *
+	 * @param string $template The selected email template.
+	 * @return string The file path to the email template.
+	 */
+	public function get_template_file_path( $template ){
+		$template_file = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/';
 
 			switch ( $template ) {
 				case 'template-one':
@@ -1502,27 +1549,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					break;
 			}
 
-			if ( file_exists( $template_file ) ) {
-				include $template_file;
-				$alredy_excute = true;
-			}
-
-			$message = ob_get_clean();
-
-			if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) ) {
-				$email_heading = get_option( 'woocommerce_email_heading_text' );
-			} else {
-				$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
-			}
-
-			$email = new WC_Email();
-			
-			$messages = $email->style_inline( $mailer->wrap_message($email_heading,$message));
-			echo $messages; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			exit;
-		}
-
-		return $wp_query;
+			return $template_file;
 	}
 
 	/**
