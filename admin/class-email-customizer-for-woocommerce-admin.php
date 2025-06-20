@@ -268,6 +268,25 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$this->plugin_settings_tabs['wb-email-customizer-faq'] = esc_html__( 'FAQ', 'email-customizer-for-woocommerce' );
 		register_setting( 'wb_email_customizer_faq_options', 'wb_email_customizer_faq_options' );
 		add_settings_section( 'wb-email-customizer-faq', ' ', array( $this, 'wb_email_customizer_faq_options_content' ), 'wb-email-customizer-faq' );
+		
+		add_action('admin_notices', array($this, 'show_customizer_notices'));
+	}
+
+	public function show_customizer_notices(): void {
+		$screen = get_current_screen();
+		if (!$screen || strpos($screen->id, 'email-customizer') === false) {
+			return;
+		}
+
+		// Show warning if WooCommerce emails are disabled
+		if (get_option('woocommerce_email_enabled') !== 'yes') {
+			printf(
+				'<div class="notice notice-warning"><p>%s <a href="%s">%s</a></p></div>',
+				esc_html__('WooCommerce emails are currently disabled.', 'email-customizer-for-woocommerce'),
+				esc_url(admin_url('admin.php?page=wc-settings&tab=email')),
+				esc_html__('Enable them here', 'email-customizer-for-woocommerce')
+			);
+		}
 	}
 
 	/**
