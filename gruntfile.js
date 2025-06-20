@@ -58,7 +58,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'admin/css/', // Source directory for admin CSS files
           src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
-          dest: 'admin/css/min/', // Destination directory for minified admin CSS
+          dest: 'admin/css/', // Destination directory for minified admin CSS
           ext: '.min.css', // Extension for minified files
         }],
       },
@@ -165,8 +165,8 @@ module.exports = function (grunt) {
             expand: true,
             cwd: 'admin/css/', // Source directory for admin CSS
             src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
-            dest: 'admin/css/rtl/', // Destination directory for admin RTL CSS
-            ext: '.rtl.css', // Extension for RTL files
+            dest: 'admin/css/', // Destination directory for admin RTL CSS
+            ext: '-rtl.css', // Extension for RTL files
             flatten: true // Prevents creating subdirectories
           },
           {
