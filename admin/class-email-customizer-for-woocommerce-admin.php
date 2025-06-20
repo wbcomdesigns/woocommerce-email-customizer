@@ -501,7 +501,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
 	public function wb_email_customizer_add_controls( $wp_customize ) {
-
+		if (!current_user_can('customize')) {
+			return;
+		}
 		/**
 		 * email template
 		 */
@@ -1179,7 +1181,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
 	public function wb_email_customizer_add_customizer_settings( $wp_customize ) {
-
+		if (!current_user_can('customize')) {
+			return;
+		}
 		// Get the selected email template.
 		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );	// phpcs:ignore
 
