@@ -61,9 +61,9 @@
 .customize-control-radio#customize-control-woocommerce_email_template_control label::before {
     content: "";
     display: block;
-    width: 120px;
-    height: 90px;
-    background-size: cover;
+    width: 220px;
+    height: 220px;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     border: 3px solid #ddd;
@@ -74,19 +74,19 @@
 
 /* Template image assignments */
 .customize-control-radio#customize-control-woocommerce_email_template_control label[for*="default"]::before {
-    background-image: url('../../img/woo_default_template.jpg');
+    background-image: url('../img/woo_default_template.jpg');
 }
 
 .customize-control-radio#customize-control-woocommerce_email_template_control label[for*="template-one"]::before {
-    background-image: url('../../img/woo_full_template.jpg');
+    background-image: url('../img/woo_full_template.jpg');
 }
 
 .customize-control-radio#customize-control-woocommerce_email_template_control label[for*="template-two"]::before {
-    background-image: url('../../img/woo_skinny_template.jpg');
+    background-image: url('../img/woo_skinny_template.jpg');
 }
 
 .customize-control-radio#customize-control-woocommerce_email_template_control label[for*="template-three"]::before {
-    background-image: url('../../img/woo_flat_template.jpg');
+    background-image: url('../img/woo_flat_template.jpg');
 }
 
 /* Selected state styling */

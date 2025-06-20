@@ -99,14 +99,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		add_action(
 			'customize_controls_enqueue_scripts',
 			function () {
-				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-					$extension = is_rtl() ? '.rtl.css' : '.css';
-					$path      = is_rtl() ? '/rtl' : '';
-				} else {
-					$extension = is_rtl() ? '.rtl.css' : '.min.css';
-					$path      = is_rtl() ? '/rtl' : '/min';
-				}
-				wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css' . $path . '/customizer-styles' . $extension, EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
+				wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css/customizer-styles.css', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
 			}
 		);
 	}
