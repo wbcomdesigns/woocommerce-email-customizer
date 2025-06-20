@@ -296,6 +296,13 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	<br />
 
 	<table class="addresses" style="border-collapse: separate !important; border-spacing: 10px !important;">
+		<?php
+			$demo_address = array(
+				'name'    => __('John Doe', 'email-customizer-for-woocommerce'),
+				'street'  => __('1234 Fake Street', 'email-customizer-for-woocommerce'),
+				'city'    => __('WooVille, SA', 'email-customizer-for-woocommerce'),
+			);
+		?>
 		<tr>
 			<th style="text-align: center; border: none !important;">
 				<h3 class="body-content-title" style="margin: 0 0 10px;"><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
@@ -307,16 +314,20 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		<tr>
 			<td valign="top" width="50%" style="padding-right: 10px; text-align: center !important;">
 				<p>
-					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
+					<?php
+						foreach ($demo_address as $line) {
+							echo esc_html($line) . '<br />';
+						}
+					?>
 				</p>
 			</td>
 			<td valign="top" width="50%" style="padding-left: 10px; text-align: center !important;">
 				<p>
-					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
+					<?php
+						foreach ($demo_address as $line) {
+							echo esc_html($line) . '<br />';
+						}
+					?>
 				</p>
 			</td>
 		</tr>

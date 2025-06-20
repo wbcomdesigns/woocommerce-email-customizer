@@ -71,7 +71,7 @@ if(!empty($email_heading) && !empty($email)){
 	// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 	?>
-	<a href="#"><?php echo esc_html__( 'Order#', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() );  ?></a>
+	<a href="#"><?php echo esc_html__( 'Order #', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() );  ?></a>
 
 	<table>
 		<thead>
@@ -209,7 +209,13 @@ if(!empty($email_heading) && !empty($email)){
 	}
 	?>
 
-	<a href="#"><?php esc_html_e( 'Order #2020', 'email-customizer-for-woocommerce' ); ?></a>
+	<a href="#"><?php 
+	printf(
+		/* translators: %s: Order number */
+		esc_html__('Order #%s', 'email-customizer-for-woocommerce'),
+		esc_html('2020')
+	);
+ 	?></a>
 
 	<table>
 		<thead>
@@ -265,14 +271,23 @@ if(!empty($email_heading) && !empty($email)){
 	</table>
 	<br />
 	<table class="addresses">
+		<?php
+		$demo_address = array(
+			'name'    => __('John Doe', 'email-customizer-for-woocommerce'),
+			'street'  => __('1234 Fake Street', 'email-customizer-for-woocommerce'),
+			'city'    => __('WooVille, SA', 'email-customizer-for-woocommerce'),
+		);
+		?>
 		<tr>
 			<td valign="top" width="50%">
 				<h3><?php esc_html_e( 'Billing address', 'email-customizer-for-woocommerce' ); ?></h3>
 
 				<p>
-					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
+					<?php
+						foreach ($demo_address as $line) {
+							echo esc_html($line) . '<br />';
+						}
+					?>
 				</p>
 			</td>
 
@@ -280,9 +295,11 @@ if(!empty($email_heading) && !empty($email)){
 				<h3><?php esc_html_e( 'Shipping address', 'email-customizer-for-woocommerce' ); ?></h3>
 
 				<p>
-					<?php esc_html_e( 'John Doe', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( '1234 Fake Street', 'email-customizer-for-woocommerce' ); ?><br />
-					<?php esc_html_e( 'WooVille, SA', 'email-customizer-for-woocommerce' ); ?>
+					<?php
+						foreach ($demo_address as $line) {
+							echo esc_html($line) . '<br />';
+						}
+					?>
 				</p>
 			</td>
 		</tr>
