@@ -1884,6 +1884,10 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'error'              => __( 'Error occurred. Please try again.', 'email-customizer-for-woocommerce' ),
 			'success'            => __( 'Email Sent!', 'email-customizer-for-woocommerce' ),
 			'saveFirst'          => __( 'Please save your changes before sending the test email', 'email-customizer-for-woocommerce' ),
+			'template_changed' => __('Template changed to:', 'email-customizer-for-woocommerce'),
+			'settings_updated' => __('Settings updated:', 'email-customizer-for-woocommerce'),
+			'loading'         => __('Loading...', 'email-customizer-for-woocommerce'),
+			'error_occurred'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
 		);
 		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
