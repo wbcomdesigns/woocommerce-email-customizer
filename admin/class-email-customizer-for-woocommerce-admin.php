@@ -73,6 +73,19 @@ class Email_Customizer_For_Woocommerce_Admin {
 		add_action( 'init', [ $this, 'wb_email_customizer_maybe_run_email_customizer' ] );
 	}
 
+	private function verify_user_permissions(){
+		if (!current_user_can('manage_woocommerce')) {
+			wp_die(
+				esc_html__('You do not have sufficient permissions to access this feature.', 'email-customizer-for-woocommerce'),
+				esc_html__('Access Denied', 'email-customizer-for-woocommerce'),
+				array('response' => 403)
+			);
+			return false;
+		}
+		return true;
+	}
+
+
 	public function wb_email_customizer_maybe_run_email_customizer() {
 		if ( isset( $_GET[ $this->email_trigger ] ) && isset( $_GET['_wpnonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( wp_verify_nonce( wp_unslash($_GET['_wpnonce']), 'preview-mail' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
@@ -207,7 +220,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @access public
 	 */
 	public function wb_email_customizer_admin_options_page() {
-		global $allowedposttags;
+		if (!$this->verify_user_permissions()) {
+			return;
+		}
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-email-customizer-welcome';
 		if (!current_user_can('manage_woocommerce')) {
 			wp_die(esc_html__('You do not have sufficient permissions to perform this action.', 'email-customizer-for-woocommerce'));
@@ -384,6 +399,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $wp_customize Get a Customizer Section.
 	 */
 	public function wb_email_customizer_add_sections( $wp_customize ) {
+		if (!current_user_can('customize')) {
+			return;
+		}
 		$wb_email_customizer_check_url = isset( $_GET['email-customizer-for-woocommerce'] ) ? sanitize_text_field( wp_unslash( $_GET['email-customizer-for-woocommerce'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( is_user_logged_in() && true == $wb_email_customizer_check_url ) {
 			$wp_customize->add_panel(
