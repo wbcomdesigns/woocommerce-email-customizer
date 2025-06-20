@@ -1777,8 +1777,17 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_add_styles( $styles ) {
 		// Verify nonce first
-		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '_wc_email_customizer_send_email_nonce' ) ) {	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			return $styles;
+		if (is_admin() && isset($_GET['customize_changeset_uuid'])) {
+			if (!isset($_GET['_wpnonce']) || !wp_verify_nonce(wp_unslash($_GET['_wpnonce']), 'preview-mail')) {
+				return $styles;
+			}
+		}
+		
+		// If it's a preview email with nonce parameter
+		if (isset($_GET['nonce'])) {
+			if (!wp_verify_nonce(wp_unslash($_GET['nonce']), '_wc_email_customizer_send_email_nonce')) {
+				return $styles;
+			}
 		}
 		// Helper function to safely get and sanitize GET parameters
 		$get_param = function( $key, $default = '', $sanitize_callback = 'sanitize_text_field' ) {
