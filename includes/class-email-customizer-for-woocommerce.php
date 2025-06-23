@@ -199,7 +199,7 @@ class Email_Customizer_For_Woocommerce {
 
 		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_admin, 'wb_email_customizer_custom_universal_email_template_override',20,3 );
 
-		$this->loader->add_filter( 'customize_save_after', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
+		// $this->loader->add_action( 'customize_save_after', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
 		
 	}
 

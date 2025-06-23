@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-20T13:08:57+00:00\n"
+"POT-Creation-Date: 2025-06-23T15:49:19+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: email-customizer-for-woocommerce\n"
 
 #. Plugin Name of the plugin
@@ -63,7 +63,6 @@ msgstr ""
 #. translators: %s:
 #: admin/class-email-customizer-for-woocommerce-admin.php:241
 #: admin/wbcom/templates/wbcom-license-page.php:14
-#, php-format
 msgid "Version %s"
 msgstr ""
 
@@ -166,7 +165,7 @@ msgid "Choose an email template design."
 msgstr ""
 
 #: admin/class-email-customizer-for-woocommerce-admin.php:496
-#: admin/class-email-customizer-for-woocommerce-admin.php:2261
+#: admin/class-email-customizer-for-woocommerce-admin.php:2283
 msgid "Default Template"
 msgstr ""
 
@@ -422,99 +421,97 @@ msgstr ""
 msgid "Dotted"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1504
-#: admin/class-email-customizer-for-woocommerce-admin.php:2047
-#: admin/class-email-customizer-for-woocommerce-admin.php:2055
-#: admin/class-email-customizer-for-woocommerce-admin.php:2063
+#: admin/class-email-customizer-for-woocommerce-admin.php:1503
+#: admin/class-email-customizer-for-woocommerce-admin.php:2069
+#: admin/class-email-customizer-for-woocommerce-admin.php:2077
+#: admin/class-email-customizer-for-woocommerce-admin.php:2085
 msgid "Thanks for your order!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1897
+#: admin/class-email-customizer-for-woocommerce-admin.php:1896
 msgid "Email Customizer For WooCommerce - Powered by WooCommerce and WordPress"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1919
+#: admin/class-email-customizer-for-woocommerce-admin.php:1918
 msgid "Error occurred. Please try again."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1920
+#: admin/class-email-customizer-for-woocommerce-admin.php:1919
 msgid "Email Sent!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1921
+#: admin/class-email-customizer-for-woocommerce-admin.php:1920
 msgid "Please save your changes before sending the test email"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1922
+#: admin/class-email-customizer-for-woocommerce-admin.php:1921
 msgid "Template changed to:"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1923
+#: admin/class-email-customizer-for-woocommerce-admin.php:1922
 msgid "Settings updated:"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1924
+#: admin/class-email-customizer-for-woocommerce-admin.php:1923
 msgid "Loading..."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:1925
+#: admin/class-email-customizer-for-woocommerce-admin.php:1924
 msgid "An error occurred. Please try again."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2048
-#: admin/class-email-customizer-for-woocommerce-admin.php:2064
-#, php-format
+#: admin/class-email-customizer-for-woocommerce-admin.php:2070
+#: admin/class-email-customizer-for-woocommerce-admin.php:2086
 msgid "Hello from %s"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2049
-#: admin/class-email-customizer-for-woocommerce-admin.php:2057
-#: admin/class-email-customizer-for-woocommerce-admin.php:2065
-#: admin/class-email-customizer-for-woocommerce-admin.php:2074
+#: admin/class-email-customizer-for-woocommerce-admin.php:2071
+#: admin/class-email-customizer-for-woocommerce-admin.php:2079
+#: admin/class-email-customizer-for-woocommerce-admin.php:2087
+#: admin/class-email-customizer-for-woocommerce-admin.php:2096
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:221
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:233
-#, php-format
 msgid "Hi there. Your recent order on %s has been completed. Your order details are shown below for your reference:"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2056
+#: admin/class-email-customizer-for-woocommerce-admin.php:2078
 msgid "Order complete"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2072
+#: admin/class-email-customizer-for-woocommerce-admin.php:2094
 msgid "HTML Email Template!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2073
+#: admin/class-email-customizer-for-woocommerce-admin.php:2095
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:197
 msgid "HTML Email Sub Heading"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2096
+#: admin/class-email-customizer-for-woocommerce-admin.php:2118
 msgid "Thank you for your order"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2097
+#: admin/class-email-customizer-for-woocommerce-admin.php:2119
 msgid "Your order details"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2098
+#: admin/class-email-customizer-for-woocommerce-admin.php:2120
 msgid "We have received your order and will process it shortly."
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2134
+#: admin/class-email-customizer-for-woocommerce-admin.php:2156
 msgid "Thank you for shopping with us!"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2262
+#: admin/class-email-customizer-for-woocommerce-admin.php:2284
 msgid "Template One"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2263
+#: admin/class-email-customizer-for-woocommerce-admin.php:2285
 msgid "Template Two"
 msgstr ""
 
-#: admin/class-email-customizer-for-woocommerce-admin.php:2264
+#: admin/class-email-customizer-for-woocommerce-admin.php:2286
 msgid "Template Three"
 msgstr ""
 
@@ -523,7 +520,6 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:44
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:44
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:42
-#, php-format
 msgid "Hi %s,"
 msgstr ""
 
@@ -537,7 +533,6 @@ msgstr ""
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:60
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:60
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:60
-#, php-format
 msgid "Hi there. Your recent order on %1$s has been %2$s."
 msgstr ""
 
@@ -710,7 +705,6 @@ msgstr ""
 #. translators: %s: Order number
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php:218
 #: admin/partials/email-customizer-for-woocommerce-admin-display.php:215
-#, php-format
 msgid "Order #%s"
 msgstr ""
 
@@ -804,7 +798,6 @@ msgstr ""
 
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-three.php:87
 #: admin/partials/email-customizer-for-woocommerce-admin-display-template-two.php:88
-#, php-format
 msgid "Order #%s (%s)"
 msgstr ""
 
@@ -1491,7 +1484,6 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:127
-#, php-format
 msgid "Your license key expired on %s."
 msgstr ""
 
@@ -1509,7 +1501,6 @@ msgstr ""
 
 #. translators: %1$s: Item Name
 #: edd-license/edd-plugin-license.php:147
-#, php-format
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
@@ -1519,7 +1510,6 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:333
-#, php-format
 msgid "Your WooCommerce Email Customizer plugin license key expired on %s."
 msgstr ""
 
@@ -1536,22 +1526,18 @@ msgid "Activate License"
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:512
-#, php-format
 msgid " Expires %s."
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:516
-#, php-format
 msgid "You have %1$s/%2$s-sites activated."
 msgstr ""
 
 #: edd-license/EDD_Woo_Email_Customizer_Plugin_Updater.php:261
-#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
 #: edd-license/EDD_Woo_Email_Customizer_Plugin_Updater.php:270
-#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s."
 msgstr ""
 
@@ -1607,27 +1593,27 @@ msgstr ""
 msgid "Shadow spread must be between 0 and 30 pixels."
 msgstr ""
 
-#: includes/class-email-customizer-validator-woocommerce.php:295
+#: includes/class-email-customizer-validator-woocommerce.php:279
 msgid "Please select a valid font family."
 msgstr ""
 
-#: includes/class-email-customizer-validator-woocommerce.php:314
+#: includes/class-email-customizer-validator-woocommerce.php:298
 msgid "Invalid image placement selection."
 msgstr ""
 
-#: includes/class-email-customizer-validator-woocommerce.php:333
+#: includes/class-email-customizer-validator-woocommerce.php:317
 msgid "Invalid alignment selection."
 msgstr ""
 
-#: includes/class-email-customizer-validator-woocommerce.php:343
+#: includes/class-email-customizer-validator-woocommerce.php:327
 msgid "Please enter a valid image URL."
 msgstr ""
 
-#: includes/class-email-customizer-validator-woocommerce.php:362
+#: includes/class-email-customizer-validator-woocommerce.php:346
 msgid "Email width must be between 300 and 800 pixels."
 msgstr ""
 
-#: includes/class-email-customizer-validator-woocommerce.php:381
+#: includes/class-email-customizer-validator-woocommerce.php:365
 msgid "Invalid border style selection."
 msgstr ""
 
@@ -1641,6 +1627,5 @@ msgstr ""
 
 #. Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce
 #: woocommerce-email-customizer.php:119
-#, php-format
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""

@@ -25,12 +25,8 @@ class WB_Email_Customizer_Cache {
         }
         
         // Get from WordPress options
-        //   var_dump($option_name);
-        // var_dump($default);
         $value = get_option($option_name, $default);
          
-            // var_dump($value);
-            // die();
         // Store in memory cache
         self::$option_cache[$option_name] = $value;
         

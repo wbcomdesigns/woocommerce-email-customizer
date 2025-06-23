@@ -266,15 +266,7 @@ class WB_Email_Customizer_Validator {
      * Sanitize font family
      */
     public function sanitize_font_family($value) {
-        $allowed_fonts = [
-            'Arial, sans-serif',
-            'Helvetica, sans-serif',
-            'Georgia, serif',
-            'Times New Roman, serif',
-            'Courier New, monospace',
-            'Verdana, sans-serif',
-            'Trebuchet MS, sans-serif'
-        ];
+       $allowed_fonts = ['sans-serif', 'serif'];
         return in_array($value, $allowed_fonts, true) ? $value : 'Arial, sans-serif';
     }
 
@@ -282,15 +274,7 @@ class WB_Email_Customizer_Validator {
      * Validate font family
      */
     public function validate_font_family($validity, $value) {
-        $allowed_fonts = [
-            'Arial, sans-serif',
-            'Helvetica, sans-serif',
-            'Georgia, serif',
-            'Times New Roman, serif',
-            'Courier New, monospace',
-            'Verdana, sans-serif',
-            'Trebuchet MS, sans-serif'
-        ];
+       $allowed_fonts = ['sans-serif', 'serif'];
         if (!in_array($value, $allowed_fonts, true)) {
             $validity->add('invalid_font', __('Please select a valid font family.', 'email-customizer-for-woocommerce'));
         }

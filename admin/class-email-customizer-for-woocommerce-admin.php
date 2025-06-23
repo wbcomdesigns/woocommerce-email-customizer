@@ -1169,14 +1169,13 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$formatted_title = ucwords(strtolower(str_replace('-', ' ', $site_title)));
 
 		// Get template options with defaults and overrides
-		$template_options = $this->get_woocommerce_email_template_options($selected_template);
-		
+		$template_options = $this->wb_email_customizer_get_all_options();
 		// Define template-specific text content
 		$template_texts = $this->get_template_specific_texts($selected_template, $site_title, $formatted_title);
 		
 		// Merge template options with dynamic texts
 		$final_options = array_merge($template_options, $template_texts);
-		
+
 		$validator = new WB_Email_Customizer_Validator();
 		// Enhanced settings configuration with validation and sanitization
 		$settings_config = array(
@@ -1946,24 +1945,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$wp_styles->queue = array();
 	}
 
-	public function wb_email_customizer_load_template_presets_cb($wp_customize): void{
-		$posted_values = $wp_customize->unsanitized_post_values();
-		// Clear the cache before updating options
+	public function wb_email_customizer_load_template_presets_cb( $wp_customize ): void{
 		WB_Email_Customizer_Cache::clear_cache();
-		$woocommerce_email_body_background_color = isset($posted_values['woocommerce_email_body_background_color'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_body_background_color'])): '';
-		if( !empty( $woocommerce_email_body_background_color ) ){
-			update_option( 'woocommerce_email_body_background_color', $woocommerce_email_body_background_color );
-		}
-		
-		$url = ( isset( $_SERVER['HTTP_REFERER'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
-		if ( strpos( $url, 'email-customizer-for-woocommerce' ) === false ) {
-			return;
-		}
-		$selected_template = isset($posted_values['woocommerce_email_template'])?sanitize_text_field(wp_unslash($posted_values['woocommerce_email_template'])): '';
+		$post_values = json_decode( wp_unslash( $_POST['customized'] ), true );
+		if( isset( $post_values['woocommerce_email_template'] ) && ! empty( $post_values['woocommerce_email_template'] ) ){
+			$selected_template = isset( $post_values['woocommerce_email_template'] )?sanitize_text_field( wp_unslash( $post_values['woocommerce_email_template'] ) ): '';
 
-		if( !empty( $selected_template ) ){
-			$custom_defaults = $this->get_template_specific_overrides( $selected_template );
-			$this->wb_email_customizer_update_all_defaults( $custom_defaults );
+			if( ! empty( $selected_template ) ){
+				$custom_defaults = $this->get_template_specific_overrides( $selected_template );
+				$this->wb_email_customizer_update_all_defaults( $custom_defaults );
+			}
 		}
 	}
 
@@ -2045,12 +2036,17 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @return array Array of all current option values
 	 */
 	public function wb_email_customizer_get_all_options(): array {
-		$option_names = array_keys( $this->get_woocommerce_email_template_options());
+		$defaults = $this->get_woocommerce_email_template_options();
+		$option_names = array_keys( $defaults );
 		
 		$current_options = array();
 		
 		foreach ( $option_names as $option_name ) {
-			$current_options[ $option_name ] = get_option( $option_name );
+			if( get_option( $option_name ) ){
+				$current_options[ $option_name ] = get_option( $option_name );
+			}else{
+				$current_options[ $option_name ] = $defaults[ $option_name ];
+			}
 		}
 		
 		return $current_options;
