@@ -100,9 +100,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'customize_controls_enqueue_scripts',
 			function () {
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-					$extension = is_rtl() ? '-rtl.css' : '.css';
+					$extension = is_rtl() ? '.rtl.css' : '.css';
 				} else {
-					$extension = is_rtl() ? '-rtl.css' : '.min.css';
+					$extension = is_rtl() ? '.rtl.css' : '.min.css';
 				}
 				wp_enqueue_style( 'wb-email-customizer-styles', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/css/customizer-styles'.$extension, EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
 			}
@@ -143,9 +143,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$extension = is_rtl() ? '-rtl.css' : '.css';
+			$extension = is_rtl() ? '.rtl.css' : '.css';
 		} else {
-			$extension = is_rtl() ? '-rtl.css' : '.min.css';
+			$extension = is_rtl() ? '.rtl.css' : '.min.css';
 		}
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/email-customizer-for-woocommerce-admin' . $extension, array(), $this->version, 'all' );
@@ -1162,7 +1162,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 		
 		// Get the selected email template.
-		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );	// phpcs:ignore
+		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : $this->get_param_with_cache( 'woocommerce_email_template' );	// phpcs:ignore
 
 		// Get site title for dynamic text.
 		$site_title = get_bloginfo( 'name' );
@@ -1572,7 +1572,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		);
 		$order_email_templates = apply_filters('wb_email_customizer_templates_for_preview', $order_email_templates);
 
-		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : get_option( 'woocommerce_email_template' );	// phpcs:ignore
+		$selected_template = ( isset( $_GET['woocommerce_email_template'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_template'] ) ) : $this->get_param_with_cache( 'woocommerce_email_template' );	// phpcs:ignore
 		
 		if ( $selected_template === 'template-one' && in_array( $template_name, $order_email_templates ) ) {
 			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/admin/partials/email-customizer-for-woocommerce-admin-display-template-one.php';
@@ -1642,7 +1642,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$default = isset($default_array[$key]) ? $default_array[$key] : $default;
 		}
 		if (!isset($_GET[$key])) {
-			return get_option($key, $default);
+			return $this->get_param_with_cache($key, $default);
 		}
 		
 		$value = wp_unslash($_GET[$key]);
@@ -1894,7 +1894,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_email_footer_text( $text ): string {
 
-		return ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
+		return ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : $this->get_param_with_cache( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) );
 		
 	}
 
@@ -1967,6 +1967,32 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 	}
 
+	private function get_all_email_options() {
+		static $all_options = null;
+		
+		if ($all_options === null) {
+			$default_option = $this->get_woocommerce_email_template_options();
+			
+			// Get all options in a single query using wp_cache
+			$all_options = array();
+			foreach ($default_option as $option_name => $default_value) {
+				$all_options[$option_name] = WB_Email_Customizer_Cache::get_option( $option_name, $default_value);
+			}
+		}
+		
+		return $all_options;
+	}
+
+	// Update the parameter retrieval to use cached options
+	private function get_param_with_cache($key, $default = '', $validation_type = 'text') {
+		if (isset($_GET[$key])) {
+			return $this->get_validated_param($key, $default, $validation_type);
+		}
+		
+		$all_options = $this->get_all_email_options();
+		return isset($all_options[$key]) ? $all_options[$key] : $default;
+	}
+
 	/**
 	 * Update all default email customizer options at once
 	 * 
@@ -1988,7 +2014,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			$result = update_option( $option_name, $option_value );
 			
 			// If any update fails, mark as failure but continue updating others
-			if ( ! $result && get_option( $option_name ) !== $option_value ) {
+			if ( ! $result && $this->get_param_with_cache( $option_name ) !== $option_value ) {
 				$success = false;
 				error_log( "Failed to update option: {$option_name}" );
 			}

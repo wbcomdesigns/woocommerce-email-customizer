@@ -1,26 +1,47 @@
 <?php
 /**
- * Class for caching options and email styles in WooCommerce Email Customizer
- * with improved transient management
+ * Enhanced caching class for WooCommerce Email Customizer
+ * with persistent tracking of all cached options and transients
  */
 class WB_Email_Customizer_Cache {
-    private static $option_cache = array();
-    
+    const MASTER_OPTION_KEY = 'wb_email_customizer_cached_options';
     const MASTER_TRANSIENT_KEY = 'wc_email_customizer_transient_keys';
     const TRANSIENT_PREFIX = 'wc_email_styles_';
     
+    private static $option_cache = array();
+    
     /**
-     * Get cached option or retrieve and cache it
+     * Get option with caching
      *
      * @param string $option_name
      * @param mixed $default
      * @return mixed
      */
     public static function get_option($option_name, $default = false) {
-        if (!isset(self::$option_cache[$option_name])) {
-            self::$option_cache[$option_name] = get_option($option_name, $default);
+        // Check memory cache first
+       
+        if (isset(self::$option_cache[$option_name])) {
+            return self::$option_cache[$option_name];
         }
-        return self::$option_cache[$option_name];
+        
+        // Get from WordPress options
+        //   var_dump($option_name);
+        // var_dump($default);
+        $value = get_option($option_name, $default);
+         
+            // var_dump($value);
+            // die();
+        // Store in memory cache
+        self::$option_cache[$option_name] = $value;
+        
+        // Track this option in persistent storage
+        $tracked_options = get_option(self::MASTER_OPTION_KEY, array());
+        if (!in_array($option_name, $tracked_options)) {
+            $tracked_options[] = $option_name;
+            update_option(self::MASTER_OPTION_KEY, $tracked_options, false);
+        }
+      
+        return $value;
     }
     
     /**
@@ -59,10 +80,8 @@ class WB_Email_Customizer_Cache {
         
         if (!in_array($transient_name, $tracked_keys)) {
             $tracked_keys[] = $transient_name;
-            // Set longer expiration for the master list
             if (!set_transient(self::MASTER_TRANSIENT_KEY, $tracked_keys, $expiration + 86400)) {
                 error_log('Failed to update master transient keys list');
-                return false;
             }
         }
         
@@ -70,27 +89,49 @@ class WB_Email_Customizer_Cache {
     }
     
     /**
-     * Clear all cached data including options and transients
+     * Clear all cached data (options and transients)
+     *
+     * @return array Summary of cleared items
      */
     public static function clear_cache() {
-        // Clear option cache
+        $result = array(
+            'options' => 0,
+            'transients' => 0
+        );
+        
+        // Clear in-memory option cache
         self::$option_cache = array();
         
-        // Get all tracked transient keys
-        $tracked_keys = get_transient(self::MASTER_TRANSIENT_KEY);
-        
-        if (is_array($tracked_keys)) {
-            foreach ($tracked_keys as $transient_name) {
-                if (!delete_transient($transient_name)) {
-                    error_log('Failed to delete transient: ' . $transient_name);
-                }
+        // Clear tracked persistent options
+        $tracked_options = get_option(self::MASTER_OPTION_KEY, array());
+        if (!empty($tracked_options)) {
+            $result['options'] = count($tracked_options);
+            foreach ($tracked_options as $option_name) {
+                delete_option($option_name);
             }
+            delete_option(self::MASTER_OPTION_KEY);
         }
         
-        // Clear the master tracking transient
-        if (!delete_transient(self::MASTER_TRANSIENT_KEY)) {
-            error_log('Failed to delete master transient keys list');
+        // Clear tracked transients
+        $tracked_keys = get_transient(self::MASTER_TRANSIENT_KEY);
+        if (is_array($tracked_keys)) {
+            $result['transients'] = count($tracked_keys);
+            foreach ($tracked_keys as $transient_name) {
+                delete_transient($transient_name);
+            }
+            delete_transient(self::MASTER_TRANSIENT_KEY);
         }
+        
+        return $result;
+    }
+    
+    /**
+     * Get list of all cached option names
+     *
+     * @return array
+     */
+    public static function get_cached_options() {
+        return get_option(self::MASTER_OPTION_KEY, array());
     }
     
     /**
@@ -101,6 +142,27 @@ class WB_Email_Customizer_Cache {
     public static function get_active_transient_keys() {
         $keys = get_transient(self::MASTER_TRANSIENT_KEY);
         return is_array($keys) ? $keys : array();
+    }
+    
+    /**
+     * Delete specific cached option
+     *
+     * @param string $option_name
+     * @return bool
+     */
+    public static function delete_cached_option($option_name) {
+        // Remove from memory cache
+        unset(self::$option_cache[$option_name]);
+        
+        // Remove from persistent storage
+        $tracked_options = get_option(self::MASTER_OPTION_KEY, array());
+        if (($key = array_search($option_name, $tracked_options)) !== false) {
+            unset($tracked_options[$key]);
+            update_option(self::MASTER_OPTION_KEY, $tracked_options, false);
+        }
+        
+        // Delete the actual option
+        return delete_option($option_name);
     }
     
     /**

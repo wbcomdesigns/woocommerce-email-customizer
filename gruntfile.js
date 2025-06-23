@@ -166,7 +166,7 @@ module.exports = function (grunt) {
             cwd: 'admin/css/', // Source directory for admin CSS
             src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
             dest: 'admin/css/', // Destination directory for admin RTL CSS
-            ext: '-rtl.css', // Extension for RTL files
+            ext: '.rtl.css', // Extension for RTL files
             flatten: true // Prevents creating subdirectories
           },
           {
