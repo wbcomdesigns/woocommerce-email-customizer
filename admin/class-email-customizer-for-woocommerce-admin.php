@@ -701,7 +701,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'wc_email_header_image_placement_control',
 				array(
 					'label'    => __( 'Header Image Placement', 'email-customizer-for-woocommerce' ),
-					'priority' => 1,
+					'priority' => 2,
 					'section'  => 'wc_email_header',
 					'settings' => 'woocommerce_email_header_image_placement',
 					'type'     => 'select',
@@ -1132,6 +1132,31 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'choices'  => array(
 						'solid'  => __( 'Solid', 'email-customizer-for-woocommerce' ),
 						'dotted' => __( 'Dotted', 'email-customizer-for-woocommerce' ),
+					),
+				)
+			)
+		);
+
+
+		// Add a setting (even though we don't use it)
+		$wp_customize->add_setting('wb_email_customizer_save_button', array(
+			'default' => __('Save Template', 'email-customizer-for-woocommerce'),
+			'sanitize_callback' => 'sanitize_text_field',
+		));
+		
+		// Add control using existing control type
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wb_email_customizer_save_button',
+				array(
+				// 'label' => __('Save Email Settings', 'email-customizer-for-woocommerce'),
+					'section'     => 'wc_email_templates',
+					'type' => 'button', // Use hidden type to avoid default rendering
+					'priority' => 1,
+					'default' => __('Save Email Settings', 'email-customizer-for-woocommerce'),
+					'input_attrs' => array(
+						'class' => 'button button-primary wb-email-customizer-save-btn',
 					),
 				)
 			)
@@ -1922,14 +1947,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'settings_updated' => __('Settings updated:', 'email-customizer-for-woocommerce'),
 			'loading'         => __('Loading...', 'email-customizer-for-woocommerce'),
 			'error_occurred'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
+			'saving_text'  => __('Saving...', 'email-customizer-for-woocommerce'),
+			'saved_text'  => __('Saved', 'email-customizer-for-woocommerce'),
+			'error_text'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
 		);
 		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
 
 		wp_enqueue_script( 'woocommerce-email-customizer-live-control', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-control' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
-
-
-		wp_localize_script( 'woocommerce-email-customizer-controls', 'woocommerce_email_customizer_controls_local', $localized_vars );
+		wp_localize_script( 'woocommerce-email-customizer-live-control', 'woocommerce_email_customizer_controls_local', $localized_vars );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery', 'customize-preview' ), $this->version, false );
 		$localized_vars_reset = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
@@ -1945,17 +1971,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$wp_styles->queue = array();
 	}
 
-	public function wb_email_customizer_load_template_presets_cb( $wp_customize ): void{
+	public function wb_email_customizer_load_template_presets_cb( ): void{
 		WB_Email_Customizer_Cache::clear_cache();
-		$post_values = json_decode( wp_unslash( $_POST['customized'] ), true );
-		if( isset( $post_values['woocommerce_email_template'] ) && ! empty( $post_values['woocommerce_email_template'] ) ){
-			$selected_template = isset( $post_values['woocommerce_email_template'] )?sanitize_text_field( wp_unslash( $post_values['woocommerce_email_template'] ) ): '';
-
-			if( ! empty( $selected_template ) ){
-				$custom_defaults = $this->get_template_specific_overrides( $selected_template );
-				$this->wb_email_customizer_update_all_defaults( $custom_defaults );
-			}
-		}
 	}
 
 	private function get_all_email_options() {
@@ -1991,6 +2008,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @return bool True on success, false on failure
 	 */
 	public function wb_email_customizer_update_all_defaults( $custom_defaults = array() ): bool {
+		global $wpdb;
 		
 		// Define all default values for email customizer options
 		$default_options = $this->get_woocommerce_email_template_options();
@@ -1999,16 +2017,104 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$options_to_update = wp_parse_args( $custom_defaults, $default_options );
 		
 		$success = true;
+		$updated_count = 0;
 		
-		// Update each option
+		// Update each option using custom queries
 		foreach ( $options_to_update as $option_name => $option_value ) {
-			$result = update_option( $option_name, $option_value );
 			
-			// If any update fails, mark as failure but continue updating others
-			if ( ! $result && $this->get_param_with_cache( $option_name ) !== $option_value ) {
-				$success = false;
-				error_log( "Failed to update option: {$option_name}" );
+			// Debug: Log what we're trying to update
+			error_log( "Attempting to update option: {$option_name} with value: " . print_r($option_value, true) );
+			
+			// Serialize the value if it's an array or object
+			$serialized_value = maybe_serialize( $option_value );
+			
+			// Get current value using custom query
+			$current_row = $wpdb->get_row( 
+				$wpdb->prepare( 
+					"SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", 
+					$option_name 
+				) 
+			);
+			
+			$current_value = null;
+			if ( $current_row ) {
+				$current_value = maybe_unserialize( $current_row->option_value );
 			}
+			
+			// Skip if value is already the same (optimization)
+			if ( $current_value === $option_value ) {
+				error_log( "Option {$option_name} already has the correct value, skipping..." );
+				continue;
+			}
+			
+			$result = false;
+			
+			if ( $current_row ) {
+				// Update existing option
+				$result = $wpdb->update(
+					$wpdb->options,
+					array( 
+						'option_value' => $serialized_value 
+					),
+					array( 
+						'option_name' => $option_name 
+					),
+					array( '%s' ), // option_value format
+					array( '%s' )  // where format
+				);
+				
+				error_log( "UPDATE query result for {$option_name}: " . print_r($result, true) );
+				
+			} else {
+				// Insert new option
+				$result = $wpdb->insert(
+					$wpdb->options,
+					array(
+						'option_name' => $option_name,
+						'option_value' => $serialized_value,
+						'autoload' => 'yes'
+					),
+					array( '%s', '%s', '%s' )
+				);
+				
+				error_log( "INSERT query result for {$option_name}: " . print_r($result, true) );
+			}
+			
+			// Check if query was successful
+			if ( $result !== false && $result > 0 ) {
+				$updated_count++;
+				error_log( "Successfully updated option: {$option_name}" );
+				
+				// Verify the update by fetching the value again
+				$verify_row = $wpdb->get_row( 
+					$wpdb->prepare( 
+						"SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", 
+						$option_name 
+					) 
+				);
+				
+				if ( $verify_row ) {
+					$verified_value = maybe_unserialize( $verify_row->option_value );
+					if ( $verified_value === $option_value ) {
+						error_log( "Verification successful for option: {$option_name}" );
+					} else {
+						error_log( "Verification failed for option: {$option_name}. Got: " . print_r($verified_value, true) );
+					}
+				}
+				
+			} else {
+				$success = false;
+				$wpdb_error = $wpdb->last_error;
+				error_log( "Failed to update option: {$option_name}. WPDB Error: {$wpdb_error}" );
+				error_log( "WPDB Last Query: " . $wpdb->last_query );
+			}
+		}
+		
+		error_log( "Total options processed: " . count($options_to_update) . " | Successfully updated: {$updated_count}" );
+		
+		// Clear WordPress option cache
+		foreach ( array_keys( $options_to_update ) as $option_name ) {
+			wp_cache_delete( $option_name, 'options' );
 		}
 		
 		// Clear any caches that might be storing these values
@@ -2021,6 +2127,113 @@ class Email_Customizer_For_Woocommerce_Admin {
 		
 		return $success;
 	}
+
+	// Alternative version with batch processing for better performance
+	public function wb_email_customizer_update_all_defaults_batch( $custom_defaults = array() ): bool {
+		global $wpdb;
+		
+		// Define all default values for email customizer options
+		$default_options = $this->get_woocommerce_email_template_options();
+		
+		// Merge custom defaults with predefined defaults
+		$options_to_update = wp_parse_args( $custom_defaults, $default_options );
+		
+		$success = true;
+		$updated_count = 0;
+		
+		// Get all existing options in one query
+		$option_names = array_keys( $options_to_update );
+		$placeholders = implode( ',', array_fill( 0, count( $option_names ), '%s' ) );
+		
+		$existing_options = $wpdb->get_results( 
+			$wpdb->prepare( 
+				"SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name IN ({$placeholders})", 
+				...$option_names 
+			),
+			OBJECT_K
+		);
+		
+		error_log( "Found " . count($existing_options) . " existing options out of " . count($option_names) );
+		
+		// Prepare batch updates and inserts
+		$updates = array();
+		$inserts = array();
+		
+		foreach ( $options_to_update as $option_name => $option_value ) {
+			$serialized_value = maybe_serialize( $option_value );
+			
+			if ( isset( $existing_options[$option_name] ) ) {
+				$current_value = maybe_unserialize( $existing_options[$option_name]->option_value );
+				
+				// Only update if different
+				if ( $current_value !== $option_value ) {
+					$updates[] = $wpdb->prepare( 
+						"(%s, %s)", 
+						$option_name, 
+						$serialized_value 
+					);
+				}
+			} else {
+				// New option to insert
+				$inserts[] = $wpdb->prepare( 
+					"(%s, %s, 'yes')", 
+					$option_name, 
+					$serialized_value 
+				);
+			}
+		}
+		
+		// Execute batch updates
+		if ( ! empty( $updates ) ) {
+			$update_sql = "INSERT INTO {$wpdb->options} (option_name, option_value) VALUES " . 
+						implode( ',', $updates ) . 
+						" ON DUPLICATE KEY UPDATE option_value = VALUES(option_value)";
+			
+			$update_result = $wpdb->query( $update_sql );
+			
+			if ( $update_result !== false ) {
+				$updated_count += count( $updates );
+				error_log( "Batch update successful. Updated " . count($updates) . " options." );
+			} else {
+				$success = false;
+				error_log( "Batch update failed. Error: " . $wpdb->last_error );
+			}
+		}
+		
+		// Execute batch inserts
+		if ( ! empty( $inserts ) ) {
+			$insert_sql = "INSERT IGNORE INTO {$wpdb->options} (option_name, option_value, autoload) VALUES " . 
+						implode( ',', $inserts );
+			
+			$insert_result = $wpdb->query( $insert_sql );
+			
+			if ( $insert_result !== false ) {
+				$updated_count += $insert_result;
+				error_log( "Batch insert successful. Inserted {$insert_result} options." );
+			} else {
+				$success = false;
+				error_log( "Batch insert failed. Error: " . $wpdb->last_error );
+			}
+		}
+		
+		error_log( "Total options processed: " . count($options_to_update) . " | Successfully updated: {$updated_count}" );
+		
+		// Clear WordPress option cache
+		foreach ( array_keys( $options_to_update ) as $option_name ) {
+			wp_cache_delete( $option_name, 'options' );
+		}
+		
+		// Clear any caches that might be storing these values
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
+		
+		// Trigger action hook for other plugins/themes to react to defaults update
+		do_action( 'wb_email_customizer_defaults_updated', $options_to_update, $success );
+		
+		return $success;
+	}
+
 
 	/**
 	 * Reset all email customizer options to defaults
@@ -2319,4 +2532,40 @@ class Email_Customizer_For_Woocommerce_Admin {
 	public function get_template_overrides_only($selected_template) {
 		return $this->get_template_specific_overrides($selected_template);
 	}
+
+	/**
+     * Handle custom save via AJAX
+     */
+    public function handle_custom_save() {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['nonce'], '_wc_email_customizer_send_email_nonce')) {
+            wp_die('Security check failed');
+        }
+
+        // Check user capabilities
+        if (!current_user_can('customize')) {
+            wp_die('Insufficient permissions');
+        }
+
+        // Get the customizer data
+        $customizer_data = json_decode(stripslashes($_POST['customizer_data']), true);
+
+        if (!$customizer_data) {
+            wp_send_json_error('Invalid data');
+        }
+		
+		if( isset( $customizer_data['woocommerce_email_template'] ) && ! empty( $customizer_data['woocommerce_email_template'] ) ){
+			$selected_template = isset( $customizer_data['woocommerce_email_template'] )?sanitize_text_field( wp_unslash( $customizer_data['woocommerce_email_template'] ) ): '';
+
+			if( ! empty( $selected_template ) ){
+				$custom_defaults = $this->get_template_specific_overrides( $selected_template );
+				$this->wb_email_customizer_update_all_defaults( $custom_defaults );
+			}
+		}
+
+        // Optional: Add custom logic here (like sending test emails, clearing cache, etc.)
+        do_action('wb_email_customizer_after_save', $customizer_data);
+
+        wp_send_json_success('Settings saved successfully');
+    }
 }

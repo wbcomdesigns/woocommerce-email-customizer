@@ -7,6 +7,19 @@
     'use strict';
 
     wp.customize.bind('ready', function() {
+
+        // Add custom save button functionality
+
+        wp.customize.section('wc_email_templates', function(section) {
+                section.expanded.bind(function(isExpanded) {
+                    if (isExpanded) {
+                        $('#customize-save-button-wrapper').hide();
+                        setupCustomSaveButton();
+                    } else {
+                        $('#customize-save-button-wrapper').show();
+                    }
+                });
+            });
         
         // Handle template selection changes
         wp.customize('woocommerce_email_template', function(setting) {
@@ -150,6 +163,126 @@
             // Also bind to changes for live behavior
             setting.bind(toggleHeaderImageControls);
         });
+    });
+
+    /*
+    * Check if current section is an email customizer section
+    */
+    function isEmailCustomizerSection(sectionId) {
+        var emailSections = [
+            'wc_email_templates',
+            'wc_email_text', 
+            'wc_email_appearance_customizer',
+            'wc_email_header',
+            'wc_email_body',
+            'wc_email_footer'
+        ];
+        
+        return emailSections.indexOf(sectionId) !== -1;
+    }
+
+    /**
+     * Setup custom save button functionality
+     */
+    function setupCustomSaveButton() {
+        $(document).on('click', '.wb-email-customizer-save-btn', function(e) {
+            e.preventDefault();
+            
+            var $button = $(this);
+            var $status = $('.wb-save-status');
+            
+            // Disable button and show loading state
+            $button.prop('disabled', true);
+            $button.text(woocommerce_email_customizer_controls_local.saving_text);
+            $status.hide();
+            
+            // Collect all email customizer settings
+            var customizerData = {};
+            
+            wp.customize.each(function(setting) {
+                var settingId = setting.id;
+                
+                // Only include email customizer settings
+                if (settingId.indexOf('woocommerce_email_') === 0 || 
+                    settingId === 'email_customizer_reset_btn') {
+                    customizerData[settingId] = setting.get();
+                }
+            });
+            // Send AJAX request
+            $.ajax({
+                url: woocommerce_email_customizer_controls_local.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'wb_email_customizer_save',
+                    nonce: woocommerce_email_customizer_controls_local.ajaxSendEmailNonce,
+                    customizer_data: JSON.stringify(customizerData)
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $status.removeClass('error').addClass('success')
+                              .text(woocommerce_email_customizer_controls_local.saved_text)
+                              .show().fadeOut(3000);
+                        
+                        // Mark settings as saved to prevent "unsaved changes" warning
+                        wp.customize.each(function(setting) {
+                            if (setting.id.indexOf('woocommerce_email_') === 0) {
+                                setting._dirty = false;
+                            }
+                        });
+                        
+                        // Trigger custom event
+                        $(document).trigger('wb-email-customizer-saved', [customizerData]);
+                        window.location.reload(); // Reload to apply changes
+                    } else {
+                        $status.removeClass('success').addClass('error')
+                              .text(woocommerce_email_customizer_controls_local.error_text)
+                              .show();
+                    }
+                },
+                error: function() {
+                    $status.removeClass('success').addClass('error')
+                          .text(woocommerce_email_customizer_controls_local.error_text)
+                          .show();
+                },
+                complete: function() {
+                    // Re-enable button
+                    $button.prop('disabled', false);
+                    $button.text($button.data('original-text') || 'Save Email Settings');
+                }
+            });
+        });
+        
+        // Store original button text
+        $('.wb-email-customizer-save-btn').each(function() {
+            $(this).data('original-text', $(this).text());
+        });
+    }
+
+    /**
+     * Handle unsaved changes warning
+     */
+    wp.customize.bind('saved', function() {
+        // This prevents the "unsaved changes" warning when leaving
+        wp.customize.each(function(setting) {
+            if (setting.id.indexOf('woocommerce_email_') === 0) {
+                setting._dirty = false;
+            }
+        });
+    });
+
+    /**
+     * Optional: Add keyboard shortcut for saving (Ctrl+S)
+     */
+    $(document).on('keydown', function(e) {
+        if (e.ctrlKey && e.which === 83) { // Ctrl+S
+            var currentSection = wp.customize.section.each(function(section) {
+                if (section.expanded() && isEmailCustomizerSection(section.id)) {
+                    e.preventDefault();
+                    $('.wb-email-customizer-save-btn').trigger('click');
+                    return false;
+                }
+            });
+        }
     });
 
 })(jQuery);
