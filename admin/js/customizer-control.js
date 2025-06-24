@@ -15,29 +15,32 @@
         var iframe_url = '';
         
         wp.customize.panel(panel_id).expanded.bind(function(isExpanded) {
-             const iframe = document.querySelector('iframe[title="Site Preview"]');
+            const iframe = document.querySelector('iframe[title="Site Preview"]');
             if (!iframe) {
                 throw new Error('Preview iframe not found');
             }
+
             let baseUrl = iframe.getAttribute('data-src') || iframe.src;
             if (!baseUrl) {
                 throw new Error('Invalid iframe source');
             }
+
             let url = new URL(baseUrl);
             iframe_url = url.toString();
             console.log(get_preview_url);
-                if (isExpanded) {
-                    // Switch preview URL to email preview
-                    wp.customize.previewer.previewUrl.set(get_preview_url);
-                   
-                    iframe.src = get_preview_url;
-                }else{
-                    // Switch preview URL to email preview
-                    wp.customize.previewer.previewUrl.set(iframe_url);
-                   
-                    iframe.src = iframe_url;
-                }
-            });
+
+            if (isExpanded) {
+                // Switch preview URL to email preview
+                wp.customize.previewer.previewUrl.set(get_preview_url);
+                iframe.src = get_preview_url;
+                iframe.setAttribute('data-src', get_preview_url); // <-- Add this if needed
+            } else {
+                // Revert to original preview
+                wp.customize.previewer.previewUrl.set(iframe_url);
+                iframe.src = iframe_url;
+                iframe.setAttribute('data-src', iframe_url); // <-- Properly sets it
+            }
+        });
             
             // Live preview for postMessage transport
             wp.customize('wc_email_templates', function(value) {
