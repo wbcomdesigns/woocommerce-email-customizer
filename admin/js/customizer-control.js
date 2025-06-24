@@ -9,6 +9,84 @@
     wp.customize.bind('ready', function() {
 
         // Add custom save button functionality
+        var get_preview_url = woocommerce_email_customizer_controls_local.previewUrl;
+        var email_trigger = woocommerce_email_customizer_controls_local.email_trigger;
+        var panel_id = woocommerce_email_customizer_controls_local.panel_id;
+        var iframe_url = '';
+        
+        wp.customize.panel(panel_id).expanded.bind(function(isExpanded) {
+             const iframe = document.querySelector('iframe[title="Site Preview"]');
+            if (!iframe) {
+                throw new Error('Preview iframe not found');
+            }
+            let baseUrl = iframe.getAttribute('data-src') || iframe.src;
+            if (!baseUrl) {
+                throw new Error('Invalid iframe source');
+            }
+            let url = new URL(baseUrl);
+            iframe_url = url.toString();
+            console.log(get_preview_url);
+                if (isExpanded) {
+                    // Switch preview URL to email preview
+                    wp.customize.previewer.previewUrl.set(get_preview_url);
+                   
+                    iframe.src = get_preview_url;
+                }else{
+                    // Switch preview URL to email preview
+                    wp.customize.previewer.previewUrl.set(iframe_url);
+                   
+                    iframe.src = iframe_url;
+                }
+            });
+            
+            // Live preview for postMessage transport
+            wp.customize('wc_email_templates', function(value) {
+                value.bind(function(newVal) {
+                    if (wp.customize.previewer.previewUrl().indexOf(email_trigger) !== -1) {
+                        wp.customize.previewer.refresh();
+                    }
+                });
+            });
+            wp.customize('wc_email_text', function(value) {
+                value.bind(function(newVal) {
+                    if (wp.customize.previewer.previewUrl().indexOf(email_trigger) !== -1) {
+                        wp.customize.previewer.refresh();
+                    }
+                });
+            });
+            
+            wp.customize('wc_email_header', function(value) {
+                value.bind(function(newVal) {
+                    if (wp.customize.previewer.previewUrl().indexOf(email_trigger) !== -1) {
+                        wp.customize.previewer.refresh();
+                    }
+                });
+            });
+            
+            wp.customize('wc_email_appearance_customizer', function(value) {
+                value.bind(function(newVal) {
+                    if (wp.customize.previewer.previewUrl().indexOf(email_trigger) !== -1) {
+                        wp.customize.previewer.refresh();
+                    }
+                });
+            });
+            
+            wp.customize('wc_email_body', function(value) {
+                value.bind(function(newVal) {
+                    if (wp.customize.previewer.previewUrl().indexOf(email_trigger) !== -1) {
+                        wp.customize.previewer.refresh();
+                    }
+                });
+            });
+
+            wp.customize('wc_email_footer', function(value) {
+                value.bind(function(newVal) {
+                    if (wp.customize.previewer.previewUrl().indexOf(email_trigger) !== -1) {
+                        wp.customize.previewer.refresh();
+                    }
+                });
+            });
+            
 
         wp.customize.section('wc_email_templates', function(section) {
                 section.expanded.bind(function(isExpanded) {
@@ -232,7 +310,7 @@
                         
                         // Trigger custom event
                         $(document).trigger('wb-email-customizer-saved', [customizerData]);
-                        window.location.reload(); // Reload to apply changes
+                        //window.location.reload(); // Reload to apply changes
                     } else {
                         $status.removeClass('success').addClass('error')
                               .text(woocommerce_email_customizer_controls_local.error_text)

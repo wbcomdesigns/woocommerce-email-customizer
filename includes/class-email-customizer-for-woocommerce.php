@@ -198,11 +198,13 @@ class Email_Customizer_For_Woocommerce {
 		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wb_email_hide_all_admin_notices_from_setting_page');
 
 		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_admin, 'wb_email_customizer_custom_universal_email_template_override',20,3 );
-
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
+		
+		$this->loader->add_action( 'init', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
 
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_save', $plugin_admin, 'handle_custom_save');
 		
+
+
 	}
 
 	/**

@@ -99,14 +99,14 @@ class WB_Email_Customizer_Cache {
         self::$option_cache = array();
         
         // Clear tracked persistent options
-        $tracked_options = get_option(self::MASTER_OPTION_KEY, array());
-        if (!empty($tracked_options)) {
-            $result['options'] = count($tracked_options);
-            foreach ($tracked_options as $option_name) {
-                delete_option($option_name);
-            }
-            delete_option(self::MASTER_OPTION_KEY);
-        }
+        // $tracked_options = get_option(self::MASTER_OPTION_KEY, array());
+        // if (!empty($tracked_options)) {
+        //     $result['options'] = count($tracked_options);
+        //     foreach ($tracked_options as $option_name) {
+        //         delete_option($option_name);
+        //     }
+        //     delete_option(self::MASTER_OPTION_KEY);
+        // }
         
         // Clear tracked transients
         $tracked_keys = get_transient(self::MASTER_TRANSIENT_KEY);

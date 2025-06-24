@@ -40,6 +40,15 @@ class Email_Customizer_For_Woocommerce_Admin {
 	private $email_trigger;
 
 	/**
+	 * The panel id of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $panel_id    The panel id of the customizer
+	 */
+	private $panel_id;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -69,6 +78,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$this->plugin_name   = $plugin_name;
 		$this->version       = $version;
 		$this->email_trigger = 'email-customizer-for-woocommerce';
+		$this->panel_id = 'wc_email_customizer_panel';
+		
 
 		add_action( 'init', [ $this, 'wb_email_customizer_maybe_run_email_customizer' ] );
 	}
@@ -192,6 +203,58 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery' ), $this->version, false );
+	}
+
+		/**
+	 * Enqueues scripts on the control panel side
+	 *
+	 * @since 1.0.0
+	 */
+	public function wb_email_customizer_enqueue_customizer_control_script(): void {
+
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = '.js';
+			$path      = '';
+		} else {
+			$extension = '.min.js';
+			$path      = '/min';
+		}
+		$localized_vars = array(
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+			'ajaxSendEmailNonce' => wp_create_nonce( '_wc_email_customizer_send_email_nonce' ),
+			'error'              => __( 'Error occurred. Please try again.', 'email-customizer-for-woocommerce' ),
+			'success'            => __( 'Email Sent!', 'email-customizer-for-woocommerce' ),
+			'saveFirst'          => __( 'Please save your changes before sending the test email', 'email-customizer-for-woocommerce' ),
+			'template_changed' => __('Template changed to:', 'email-customizer-for-woocommerce'),
+			'settings_updated' => __('Settings updated:', 'email-customizer-for-woocommerce'),
+			'loading'         => __('Loading...', 'email-customizer-for-woocommerce'),
+			'error_occurred'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
+			'saving_text'  => __('Saving...', 'email-customizer-for-woocommerce'),
+			'saved_text'  => __('Saved', 'email-customizer-for-woocommerce'),
+			'error_text'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
+			'previewUrl' => $this->get_preview_url(),
+			'email_trigger' => $this->email_trigger,
+			'panel_id' => $this->panel_id
+		);
+		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
+
+		wp_enqueue_script( 'woocommerce-email-customizer-live-control', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-control' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
+		wp_localize_script( 'woocommerce-email-customizer-live-control', 'woocommerce_email_customizer_controls_local', $localized_vars );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery', 'customize-preview' ), $this->version, false );
+		$localized_vars_reset = array(
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'wc_email_customizer_email_load_templates' ),
+		);
+		wp_localize_script( $this->plugin_name, 'wc_email_customizer_email_ajx', $localized_vars_reset );
+	}
+
+	/**
+	 * Removes enqueued styles in the customiser.
+	 */
+	public function wb_email_customizer_remove_theme_styles(): void {
+		global $wp_styles;
+		$wp_styles->queue = array();
 	}
 
 	/**
@@ -342,7 +405,22 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 
-
+   /**
+     * Get preview URL
+     */
+    private function get_preview_url() {
+		// Generate nonce for security
+		$nonce = wp_create_nonce('preview-mail');
+       // Generate the email preview URL (not the customizer URL)
+		$preview_url = home_url('/');
+		$preview_url = add_query_arg( $this->email_trigger , 'true', $preview_url);
+		$preview_url = add_query_arg('_wpnonce', $nonce, $preview_url);
+		
+		// Debug: Log the generated URL
+		error_log('Email preview URL generated: ' . $preview_url);
+		
+		return $preview_url;
+    }
 
 	/**
 	 * Add a submenu item to the WooCommerce menu.
@@ -350,45 +428,123 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @since   1.0
 	 */
 	public function wb_email_customizer_admin_setting_submenu_pages(): void {
-		global $menu, $submenu;
+		$url = admin_url('customize.php');
+		// Add the preview URL to the customizer
+		$url = add_query_arg('url', urlencode($this->get_preview_url()), $url);
+		// Add our identifier to know we're in email customizer mode
+		$url = add_query_arg( $this->email_trigger , 'true', $url);
 
-		$url = admin_url( 'customize.php' );
-
-		$url = add_query_arg( 'email-customizer-for-woocommerce', 'true', $url );
-
-		$url = add_query_arg( 'url',  site_url() . '/?email-customizer-for-woocommerce=true' , $url );
-
-		// Generate nonce separately
-		$nonce = wp_create_nonce( 'preview-mail' );
-
-		// Add nonce directly to URL (not inside `url`)
-		$url = add_query_arg( '_wpnonce', $nonce, $url );
-
-		$url = add_query_arg(
-			'return',
-			urlencode(
-				add_query_arg(
-					array(
-						'page' => 'wc-settings',
-						'tab'  => 'email',
-					),
-					admin_url( 'admin.php' )
-				)
-			),
-			$url
-		);
 		add_submenu_page(
 			'woocommerce',
-			__( 'WooCommerce Email Customizer', 'email-customizer-for-woocommerce' ),
-			__( 'Email Customizer', 'email-customizer-for-woocommerce' ),
+			__('WooCommerce Email Customizer', 'email-customizer-for-woocommerce'),
+			__('Email Customizer', 'email-customizer-for-woocommerce'),
 			'manage_woocommerce',
 			$this->plugin_name,
-			function () use ( $url ) {
-				wp_redirect( $url );
+			function () use ($url) {
+				wp_redirect($url);
 				exit;
 			}
 		);
 	}
+
+
+		/**
+	 * Add custom variables to the available query vars.
+	 *
+	 * @param  mixed $vars Email Vare.
+	 */
+	public function wb_email_customizer_add_query_vars( $vars ): array {
+
+		$vars[] = $this->email_trigger;
+
+		return $vars;
+	}
+	/**
+	 * If the right query var is present load the email template.
+	 *
+	 * @param mixed $wp_query Custom Query.
+	 */
+	public function wb_email_customizer_load_email_template($wp_query) {
+		// Only process if this is the main query and we're not in admin
+		if (!is_main_query() || is_admin()) {
+			return $wp_query;
+		}
+		
+		try {
+			if ( isset( $_GET[ $this->email_trigger ] ) && 'true' === $_GET[ $this->email_trigger ] ) {
+				// Use a more specific check to prevent multiple executions
+				if (defined('WC_EMAIL_PREVIEW_LOADED')) {
+					return $wp_query;
+				}
+				define('WC_EMAIL_PREVIEW_LOADED', true);
+
+				// Verify nonce for security
+				if (!wp_verify_nonce($_GET['_wpnonce'] ?? '', 'preview-mail')) {
+					wp_die(__('Security check failed', 'email-customizer-for-woocommerce'));
+				}
+
+				$mailer = WC()->mailer();
+				if (!$mailer) {
+					throw new Exception('WooCommerce mailer not available');
+				}
+
+				ob_start();
+
+				$template = $this->get_validated_param('woocommerce_email_template', 'default', 'template');
+
+				$template_file = $this->get_template_file_path($template);
+
+				if (!file_exists($template_file)) {
+					throw new Exception('Template file not found: ' . $template_file);
+				}
+
+				include $template_file;
+
+				$message = ob_get_clean();
+
+				if (empty($message)) {
+					throw new Exception('Empty email template generated');
+				}
+
+				$email_heading = $this->get_validated_param(
+					'woocommerce_email_heading_text', 
+					__('Thanks for your order!', 'email-customizer-for-woocommerce'), 
+					'text'
+				);
+
+				$email = new WC_Email();
+				$messages = $email->style_inline($mailer->wrap_message($email_heading, $message));
+				
+				// Set proper content type header
+				header('Content-Type: text/html; charset=utf-8');
+				
+				echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				exit;
+			}
+		} catch (Exception $e) {
+			WB_Email_Customizer_Logger::log_error('Email template loading failed', array(
+				'error' => $e->getMessage(),
+				'template' => $template ?? 'unknown',
+				'user_id' => get_current_user_id(),
+			));
+			
+			// Show user-friendly error in preview mode
+			if (current_user_can('manage_woocommerce')) {
+				wp_die(
+					sprintf(
+						__('Email template preview failed: %s', 'email-customizer-for-woocommerce'),
+						$e->getMessage()
+					)
+				);
+			}
+			
+			// Return gracefully for non-admin users
+			return $wp_query;
+		}
+
+		return $wp_query;
+	}
+
 
 	/**
 	 * Added Customizer Sections.
@@ -400,14 +556,14 @@ class Email_Customizer_For_Woocommerce_Admin {
 		if (!current_user_can('customize')) {
 			return;
 		}
-		$email_trigger_check = isset($_GET['email-customizer-for-woocommerce']) ? 
-        sanitize_text_field(wp_unslash($_GET['email-customizer-for-woocommerce'])) : '';
+		// $email_trigger_check = isset($_GET['email-customizer-for-woocommerce']) ? 
+        // sanitize_text_field(wp_unslash($_GET['email-customizer-for-woocommerce'])) : '';
     
-		if (!is_user_logged_in() || $email_trigger_check !== 'true') {
+		if (!is_user_logged_in() || !current_user_can('manage_woocommerce') ) {
 			return;
 		}
 			$wp_customize->add_panel(
-				'wc_email_customizer_panel',
+				$this->panel_id,
 				array(
 					'title'       => __('WooCommerce Email Customizer', 'email-customizer-for-woocommerce'),
 					'description' => __('Customize the appearance and content of your WooCommerce emails.', 'email-customizer-for-woocommerce'),
@@ -422,7 +578,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'description' => $this->get_template_section_description(),
 					'capability'  => 'manage_woocommerce',
 					'priority'    => 10,
-					'panel'       => 'wc_email_customizer_panel',
+					'panel'       => $this->panel_id,
 				)
 			);
 
@@ -457,7 +613,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		
 		foreach ($sections as $section_id => $section_args) {
 			$section_args['capability'] = 'manage_woocommerce';
-			$section_args['panel'] = 'wc_email_customizer_panel';
+			$section_args['panel'] = $this->panel_id;
 			$wp_customize->add_section($section_id, $section_args);
 		}
 	}
@@ -1480,74 +1636,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Add custom variables to the available query vars.
-	 *
-	 * @param  mixed $vars Email Vare.
-	 */
-	public function wb_email_customizer_add_query_vars( $vars ): array {
-		$vars[] = $this->email_trigger;
-
-		return $vars;
-	}
-	/**
-	 * If the right query var is present load the email template.
-	 *
-	 * @param mixed $wp_query Custom Query.
-	 */
-	public function wb_email_customizer_load_email_template($wp_query): string {
-		try {
-			if (get_query_var($this->email_trigger)) {
-				static $already_executed = false;
-				if ($already_executed) {
-					return $wp_query;
-				}
-
-				$mailer = WC()->mailer();
-				if (!$mailer) {
-					throw new Exception('WooCommerce mailer not available');
-				}
-
-				ob_start();
-
-				$template = $this->get_validated_param('woocommerce_email_template', 'default', 'template');
-				$template_file = $this->get_template_file_path($template);
-
-				if (!file_exists($template_file)) {
-					throw new Exception('Template file not found: ' . $template_file);
-				}
-
-				include $template_file;
-				$already_executed = true;
-
-				$message = ob_get_clean();
-
-				if (empty($message)) {
-					throw new Exception('Empty email template generated');
-				}
-
-				$email_heading = $this->get_validated_param('woocommerce_email_heading_text', __('Thanks for your order!', 'email-customizer-for-woocommerce'), 'text');
-
-				$email = new WC_Email();
-				$messages = $email->style_inline($mailer->wrap_message($email_heading, $message));
-				
-				echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				exit;
-			}
-		} catch (Exception $e) {
-			WB_Email_Customizer_Logger::log_error('Email template loading failed', array(
-				'error' => $e->getMessage(),
-				'template' => $template ?? 'unknown',
-				'user_id' => get_current_user_id(),
-			));
-			
-			// Return gracefully
-			return $wp_query;
-		}
-
-		return $wp_query;
-	}
-
-	/**
 	 * Get the file path for the email template based on the selected template.
 	 *
 	 * @param string $template The selected email template.
@@ -1922,54 +2010,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		
 	}
 
-
-	/**
-	 * Enqueues scripts on the control panel side
-	 *
-	 * @since 1.0.0
-	 */
-	public function wb_email_customizer_enqueue_customizer_control_script(): void {
-
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$extension = '.js';
-			$path      = '';
-		} else {
-			$extension = '.min.js';
-			$path      = '/min';
-		}
-		$localized_vars = array(
-			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-			'ajaxSendEmailNonce' => wp_create_nonce( '_wc_email_customizer_send_email_nonce' ),
-			'error'              => __( 'Error occurred. Please try again.', 'email-customizer-for-woocommerce' ),
-			'success'            => __( 'Email Sent!', 'email-customizer-for-woocommerce' ),
-			'saveFirst'          => __( 'Please save your changes before sending the test email', 'email-customizer-for-woocommerce' ),
-			'template_changed' => __('Template changed to:', 'email-customizer-for-woocommerce'),
-			'settings_updated' => __('Settings updated:', 'email-customizer-for-woocommerce'),
-			'loading'         => __('Loading...', 'email-customizer-for-woocommerce'),
-			'error_occurred'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
-			'saving_text'  => __('Saving...', 'email-customizer-for-woocommerce'),
-			'saved_text'  => __('Saved', 'email-customizer-for-woocommerce'),
-			'error_text'  => __('An error occurred. Please try again.', 'email-customizer-for-woocommerce'),
-		);
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery'), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
-		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
-
-		wp_enqueue_script( 'woocommerce-email-customizer-live-control', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-control' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
-		wp_localize_script( 'woocommerce-email-customizer-live-control', 'woocommerce_email_customizer_controls_local', $localized_vars );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-admin' . $extension, array( 'jquery', 'customize-preview' ), $this->version, false );
-		$localized_vars_reset = array(
-			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'wc_email_customizer_email_load_templates' ),
-		);
-		wp_localize_script( $this->plugin_name, 'wc_email_customizer_email_ajx', $localized_vars_reset );
-	}
-	/**
-	 * Removes enqueued styles in the customiser.
-	 */
-	public function wb_email_customizer_remove_theme_styles(): void {
-		global $wp_styles;
-		$wp_styles->queue = array();
-	}
 
 	public function wb_email_customizer_load_template_presets_cb( ): void{
 		WB_Email_Customizer_Cache::clear_cache();
