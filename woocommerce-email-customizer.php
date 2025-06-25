@@ -88,7 +88,9 @@ if ( ! function_exists( 'wb_email_customizer_check_woocomerce' ) ) {
 		} else {
 			run_email_customizer_for_woocommerce();
 		}
-
+		if(isset($_GET['activate'])){
+			unset($_GET['activate']);
+		}
 	}
 }
 
