@@ -285,7 +285,7 @@ class WB_Email_Customizer_Validator {
      * Sanitize placement choice
      */
     public function sanitize_placement_choice($value) {
-        $allowed_placements = ['above', 'below', 'none'];
+        $allowed_placements = ['inside', 'outside', ''];
         return in_array($value, $allowed_placements, true) ? $value : 'above';
     }
 
@@ -293,7 +293,7 @@ class WB_Email_Customizer_Validator {
      * Validate placement choice
      */
     public function validate_placement_choice($validity, $value) {
-        $allowed_placements = ['above', 'below', 'none'];
+        $allowed_placements = ['inside', 'outside', ''];
         if (!in_array($value, $allowed_placements, true)) {
             $validity->add('invalid_placement', __('Invalid image placement selection.', 'email-customizer-for-woocommerce'));
         }
