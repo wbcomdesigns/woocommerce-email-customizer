@@ -201,7 +201,7 @@ class Email_Customizer_For_Woocommerce {
 		
 		$this->loader->add_action( 'init', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
 
-		$this->loader->add_action( 'wp_ajax_wb_email_customizer_save', $plugin_admin, 'handle_custom_save');
+		$this->loader->add_action( 'customize_save_after', $plugin_admin, 'wb_email_customizer_handle_custom_save');
 		
 
 

@@ -572,7 +572,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'wc_email_templates',
 				array(
 					'title'       => __('Email Templates', 'email-customizer-for-woocommerce'),
-					'description' => $this->get_template_section_description(),
+					'description' => __('Selecting a template will immediately override all current email styling settings. Your customizations will be replaced with the template\'s default values.', 'email-customizer-for-woocommerce'),
 					'capability'  => 'manage_woocommerce',
 					'priority'    => 10,
 					'panel'       => $this->panel_id,
@@ -615,17 +615,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 	}
 
-	private function get_template_section_description(): string {
-		return '<div class="wc-template-warning" style="background: #fff3cd; border: 1px solid #ffb900; border-radius: 4px; padding: 15px; margin: 0 0 20px 0;">' .
-			'<div style="display: flex; align-items: flex-start; gap: 10px;">' .
-			'<span style="font-size: 18px; color: #8a6914;">⚠️</span>' .
-			'<div>' .
-			'<strong style="color: #8a6914; font-size: 14px; display: block; margin-bottom: 5px;">' . 
-			__('Template Override Warning', 'email-customizer-for-woocommerce') . '</strong>' .
-			'<p style="margin: 0; font-size: 13px; line-height: 1.4; color: #6c5b00;">' .
-			__('Selecting a template will immediately override all current email styling settings. Your customizations will be replaced with the template\'s default values.', 'email-customizer-for-woocommerce') .
-			'</p></div></div></div>';
-	}
 	/**
 	 * Added Customizer Controls.
 	 *
@@ -1289,32 +1278,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 				)
 			)
 		);
-
-
-		// Add a setting (even though we don't use it)
-		$wp_customize->add_setting('wb_email_customizer_save_button', array(
-			'default' => __('Save Template', 'email-customizer-for-woocommerce'),
-			'sanitize_callback' => 'sanitize_text_field',
-		));
-		
-		// Add control using existing control type
-		$wp_customize->add_control(
-			new WP_Customize_Control(
-				$wp_customize,
-				'wb_email_customizer_save_button',
-				array(
-				// 'label' => __('Save Email Settings', 'email-customizer-for-woocommerce'),
-					'section'     => 'wc_email_templates',
-					'type' => 'button', // Use hidden type to avoid default rendering
-					'priority' => 1,
-					'default' => __('Save Email Settings', 'email-customizer-for-woocommerce'),
-					'input_attrs' => array(
-						'class' => 'button button-primary wb-email-customizer-save-btn',
-					),
-				)
-			)
-		);
-
 	}
 	/**
 	 * Show only our email settings in the preview
@@ -1350,7 +1313,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$template_options = $this->wb_email_customizer_get_all_options();
 		// Define template-specific text content
 		$template_texts = $this->get_template_specific_texts($selected_template, $site_title, $formatted_title);
-		
 		// Merge template options with dynamic texts
 		$final_options = array_merge($template_options, $template_texts);
 
@@ -2573,26 +2535,16 @@ class Email_Customizer_For_Woocommerce_Admin {
 	/**
      * Handle custom save via AJAX
      */
-    public function handle_custom_save() {
-        // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], '_wc_email_customizer_send_email_nonce')) {
-            wp_die('Security check failed');
-        }
+    public function wb_email_customizer_handle_custom_save($wp_customize) {
+		$posted_values = $wp_customize->unsanitized_post_values();
 
         // Check user capabilities
         if (!current_user_can('customize')) {
             wp_die('Insufficient permissions');
         }
 
-        // Get the customizer data
-        $customizer_data = json_decode(stripslashes($_POST['customizer_data']), true);
-
-        if (!$customizer_data) {
-            wp_send_json_error('Invalid data');
-        }
-		
-		if( isset( $customizer_data['woocommerce_email_template'] ) && ! empty( $customizer_data['woocommerce_email_template'] ) ){
-			$selected_template = isset( $customizer_data['woocommerce_email_template'] )?sanitize_text_field( wp_unslash( $customizer_data['woocommerce_email_template'] ) ): '';
+		if( isset( $posted_values['woocommerce_email_template'] ) && ! empty( $posted_values['woocommerce_email_template'] ) ){
+			$selected_template = isset( $posted_values['woocommerce_email_template'] )?sanitize_text_field( wp_unslash( $posted_values['woocommerce_email_template'] ) ): '';
 
 			if( ! empty( $selected_template ) ){
 				$custom_defaults = $this->get_template_specific_overrides( $selected_template );
@@ -2600,9 +2552,18 @@ class Email_Customizer_For_Woocommerce_Admin {
 			}
 		}
 
-        // Optional: Add custom logic here (like sending test emails, clearing cache, etc.)
-        do_action('wb_email_customizer_after_save', $customizer_data);
+		if( isset( $posted_values['woocommerce_email_body_background_color'] ) && ! empty( $posted_values['woocommerce_email_body_background_color'] ) ){
+			$woocommerce_email_body_background_color = isset( $posted_values['woocommerce_email_body_background_color'] )?sanitize_text_field( wp_unslash( $posted_values['woocommerce_email_body_background_color'] ) ): '#fffff';
+			update_option('woocommerce_email_body_background_color',$woocommerce_email_body_background_color);
+		}
 
-        wp_send_json_success('Settings saved successfully');
+		if( isset( $posted_values['woocommerce_email_background_color'] ) && ! empty( $posted_values['woocommerce_email_background_color'] ) ){
+			$woocommerce_email_background_color = isset( $posted_values['woocommerce_email_background_color'] )?sanitize_text_field( wp_unslash( $posted_values['woocommerce_email_background_color'] ) ): '#fffff';
+			update_option('woocommerce_email_background_color',$woocommerce_email_background_color);
+		}
+
+        // Optional: Add custom logic here (like sending test emails, clearing cache, etc.)
+        do_action('wb_email_customizer_after_save', $posted_values);
+
     }
 }
