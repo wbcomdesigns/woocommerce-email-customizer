@@ -167,3 +167,22 @@ function wb_email_customizer_activation_redirect_settings( $plugin ) {
 	}
 
 }
+
+// Add this to your main plugin file
+function your_plugin_add_settings_link($links) {
+		$url = admin_url('customize.php');
+		// Add the preview URL to the customizer
+		$nonce = wp_create_nonce('preview-mail');
+       // Generate the email preview URL (not the customizer URL)
+		$preview_url = home_url('/');
+		$preview_url = add_query_arg( 'email-customizer-for-woocommerce' , 'true', $preview_url);
+		$preview_url = add_query_arg('_wpnonce', $nonce, $preview_url);
+
+		$url = add_query_arg('url', urlencode( $preview_url ), $url);
+		// Add our identifier to know we're in email customizer mode
+		$url = add_query_arg( 'email-customizer-for-woocommerce' , 'true', $url);
+    $settings_link = '<a href="' . $url . '">Settings</a>';
+    array_unshift($links, $settings_link);
+    return $links;
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'your_plugin_add_settings_link');
