@@ -234,7 +234,6 @@
             value.bind(function (newval) {
                 argument_obj = {};
                 argument_obj['nonce'] = woocommerce_email_customizer_controls_local.ajaxSendEmailNonce;
-                argument_obj['woocommerce_email_template'] = newval;
                 argument_obj['woocommerce_email_padding_container_top'] = '15';
                 argument_obj['woocommerce_email_padding_container_bottom'] = '15';
                 argument_obj['woocommerce_email_padding_container_left_right'] = '20';
@@ -331,23 +330,17 @@
                 // Update argument object with template configuration
                 Object.assign(argument_obj, templateConfig);
 
+                Object.keys(argument_obj).forEach(function (settingKey) {
+                    const setting = wp.customize(settingKey);
+                    if (setting) {
+                        // Set the value without triggering the callback to avoid infinite loops
+                        setting.set(argument_obj[settingKey]);
+
+                    }
+                });
+                argument_obj['woocommerce_email_template'] = newval;
                 // Update the email preview frame
                 var iframe = updateEmailPreviewFrame(argument_obj);
-                iframe.addEventListener('load', function () {
-                    // Add your JavaScript code here to run after the iframe loads
-                    delete argument_obj['woocommerce_email_template'];
-                    // Update WordPress Customizer settings in real-time
-                    Object.keys(argument_obj).forEach(function (settingKey) {
-                        const setting = wp.customize(settingKey);
-                        if (setting) {
-                            // Set the value without triggering the callback to avoid infinite loops
-                            setting.set(argument_obj[settingKey]);
-
-                        }
-                    });
-                    // Trigger preview refresh for this specific setting
-                    // wp.customize('woocommerce_email_template').preview();
-                });
                 // // Optional: Add visual feedback that settings are being updated
                 if (typeof console !== 'undefined') {
                     console.log(woocommerce_email_customizer_controls_local.template_changed + ' ' + newval);
