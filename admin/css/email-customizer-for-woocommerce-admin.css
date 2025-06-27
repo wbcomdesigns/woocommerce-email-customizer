@@ -1,143 +1,523 @@
 /**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
+ * Enhanced Admin Styles for Email Customizer
+ * Updated to work with simplified admin class
  */
 
-.wrap .wbcom-plugin-heading{
+.wrap .wbcom-plugin-heading {
 	display: block !important;
 }
 
-
- /*----------  Faq Style  ----------*/
+/* ===== ENHANCED FAQ STYLES ===== */
 .wb-email-customizer-admin-col-12 {
 	float: left;
-	padding: 5px 0;
+	padding: 8px 0;
 	width: 100%;
-  }
-  .wb-email-customizer-admin-setting {
+}
+
+.wb-email-customizer-admin-setting {
 	float: left;
 	width: 100%;
-  }
-  button.wb-email-customizer-accordion {
-	background-color: hsl(0, 0%, 87%);
-	border: medium none;
-	color: hsl(0, 0%, 27%);
+	margin-bottom: 20px;
+}
+
+button.wb-email-customizer-accordion {
+	background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+	border: 1px solid #dee2e6;
+	color: #495057;
 	cursor: pointer;
 	font-size: 15px;
-	outline: medium none;
-	padding: 15px 20px;
+	font-weight: 600;
+	outline: none;
+	padding: 18px 20px;
 	text-align: left;
-	transition: all 0.4s ease 0s;
+	transition: all 0.3s ease;
 	width: 100%;
-  }
-  button.wb-email-customizer-accordion.active,
-  button.wb-email-customizer-accordion:hover {
-	background-color: hsl(207, 90%, 54%);
+	border-radius: 8px;
+	margin-bottom: 2px;
+	position: relative;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+button.wb-email-customizer-accordion:hover {
+	background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
 	color: white;
-  }
-  div.wb-email-customizer-panel {
-	background-color: white;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+button.wb-email-customizer-accordion.active {
+	background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+	color: white;
+	border-color: #005a87;
+}
+
+div.wb-email-customizer-panel {
+	background-color: #ffffff;
 	max-height: 0;
 	overflow: hidden;
-	padding: 0 18px;
-	transition: max-height 0.2s ease-out;
-  }
-  button.wb-email-customizer-accordion::after {
-	color: hsl(0, 0%, 47%);
+	padding: 0 20px;
+	transition: all 0.3s ease-out;
+	border: 1px solid #dee2e6;
+	border-top: none;
+	border-radius: 0 0 8px 8px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+div.wb-email-customizer-panel.active {
+	padding: 20px;
+	border-color: #0073aa;
+}
+
+button.wb-email-customizer-accordion::after {
+	color: #6c757d;
 	content: "+";
 	float: right;
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: bold;
-	margin-left: 5px;
-  }
-  button.wb-email-customizer-accordion:hover::after {
+	margin-left: 10px;
+	transition: all 0.3s ease;
+	transform: rotate(0deg);
+}
+
+button.wb-email-customizer-accordion:hover::after {
 	color: white;
-  }
-  button.wb-email-customizer-accordion.active::after {
+}
+
+button.wb-email-customizer-accordion.active::after {
 	content: "−";
 	color: white;
-	font-size: 18px;
-  }
-  .woo-document-preview-admin-row {
+	font-size: 22px;
+	transform: rotate(180deg);
+}
+
+.woo-document-preview-admin-row {
 	clear: both;
 	overflow: hidden;
-  }
+	margin-bottom: 15px;
+}
 
-  .wb-ads-tab-3-title {
+/* ===== ENHANCED ADMIN PANEL STYLES ===== */
+.wb-ads-tab-3-title {
 	font-weight: 700;
-	font-size: 16px;
-  }
+	font-size: 18px;
+	color: #23282d;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #0073aa;
+}
 
-  .wb-ads-tab-content .form-table td {
-	padding: 0;
-  }
+.wb-ads-tab-content .form-table td {
+	padding: 15px 10px;
+	vertical-align: top;
+}
 
-  /*Ads CPT UI*/
-  .wb_ads_rotator-panel .CodeMirror-wrap pre {
-	padding-left: 35px;
-  }
-  .wb_ads_rotator-wrapper.select-ads-image.image-ad {
-	align-items: center;
-	gap: 30px;
-  }
-  input#wb_ads_rotator_select_image {
-	padding: 3px 20px;
-	margin-right: 10px;
-  }
-  .wb_ads_rotator-panel
-	.wb_ads_rotator-wrapper.select-ads-image.image-ad
-	.wb_ads_rotator-label {
-	width: 40%;
-  }
-  .wb_ads_rotator-wrapper.select-ads-image.image-ad
-	.wb_ads_rotator-input
-	input.wb_ads_rotator_image {
-	width: 95%;
-  }
-  .wb_ads_rotator-input label {
-	margin-right: 20px;
-  }
-  .wb-bp-ads-size span {
-	display: block;
-	margin-bottom: 5px;
-  }
-  .wb_ads_rotator-input.wb-ads-rotator-ads-size {
-	display: flex;
-  }
-  .wb_ads_rotator-input label span {
-	display: block;
-	margin-bottom: 5px;
-  }
-  .wb_ads_rotator-input .wb_ads_margin {
-	width: 100%;
-	display: flex;
-	clear: both;
-  }
-  p.wb_ads_margin_disc {
-	display: block;
-	margin-bottom: 0;
-	clear: both;
-	width: 100%;
-  }
-  .wb_ads_bg_color input[type="color"],
-  .wb_ads_text_color input[type="color"] {
-	padding: 0;
-	border-radius: 0;
-	height: 40px;
-	width: 40px;
-	border: none !important;
+/* ===== ENHANCED RESET BUTTON STYLES ===== */
+.button-secondary-reset {
+	background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 6px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
 	cursor: pointer;
-  }
-  .shortcode-text-hide {
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button-secondary-reset:hover {
+	background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.button-secondary-reset:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button-secondary-reset:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+.button-secondary-reset.loading::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+	animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+	0% { left: -100%; }
+	100% { left: 100%; }
+}
+
+.button-secondary-reset.button-error {
+	background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+	animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-5px); }
+	75% { transform: translateX(5px); }
+}
+
+.button-secondary-reset.button-primary {
+	background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+	animation: successPulse 0.6s ease-in-out;
+}
+
+/* ===== ENHANCED SETTINGS PAGE STYLES ===== */
+.wbcom-wrap {
+	background: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+	margin-top: 20px;
+}
+
+.blpro-header {
+	background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+	color: white;
+	padding: 25px 30px;
+	border-radius: 8px 8px 0 0;
+	position: relative;
+}
+
+.blpro-header::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #00a32a, #0073aa, #7b68ee);
+}
+
+.wbcom_admin_header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+#wb_admin_plugin_name {
+	font-size: 24px;
+	font-weight: 700;
+	margin: 0;
+	text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#wb_admin_plugin_name span {
+	font-size: 14px;
+	opacity: 0.8;
+	font-weight: 400;
+	margin-left: 10px;
+	padding: 4px 8px;
+	background: rgba(255,255,255,0.2);
+	border-radius: 12px;
+}
+
+/* ===== ENHANCED TAB NAVIGATION ===== */
+.wbcom-tabs-section {
+	background: #f8f9fa;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.nav-tab-wrapper {
+	margin: 0;
+	padding: 0;
+	background: none;
+	border-bottom: none;
+}
+
+.nav-tab-wrapper ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.nav-tab-wrapper ul li {
+	margin: 0;
+}
+
+.nav-tab {
+	background: transparent;
+	border: none;
+	border-bottom: 3px solid transparent;
+	color: #495057;
+	font-weight: 600;
+	padding: 15px 25px;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	position: relative;
+	display: block;
+}
+
+.nav-tab:hover {
+	background: rgba(0,115,170,0.1);
+	color: #0073aa;
+	border-bottom-color: #0073aa;
+}
+
+.nav-tab.nav-tab-active {
+	background: white;
+	color: #0073aa;
+	border-bottom-color: #0073aa;
+	position: relative;
+}
+
+.nav-tab.nav-tab-active::after {
+	content: '';
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: #0073aa;
+}
+
+/* ===== RESPONSIVE MENU ===== */
+.wb-responsive-menu {
 	display: none;
-  }
-  .ads-shortcode-text {
-	margin-left: 40px;
-	padding: 5px 12px;
-	background-color: #000000df;
-	border-radius: 4px;
-	color: #fff;
-  }
+	padding: 15px 20px;
+	background: white;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.wb-toggle-btn {
+	display: none;
+}
+
+.wb-toggle-icon {
+	cursor: pointer;
+	font-weight: 600;
+	color: #0073aa;
+}
+
+@media (max-width: 768px) {
+	.wb-responsive-menu {
+		display: block;
+	}
+	
+	.nav-tab-wrapper ul {
+		display: none;
+		flex-direction: column;
+		width: 100%;
+	}
+	
+	.wb-toggle-btn:checked + .wb-toggle-icon + ul {
+		display: flex;
+	}
+	
+	.nav-tab {
+		border-bottom: 1px solid #dee2e6;
+		border-left: 3px solid transparent;
+		border-bottom: none;
+	}
+	
+	.nav-tab:hover,
+	.nav-tab.nav-tab-active {
+		border-left-color: #0073aa;
+		border-bottom-color: transparent;
+	}
+}
+
+/* ===== ENHANCED FORM ELEMENTS ===== */
+.wbcom-admin-settings-page {
+	padding: 30px;
+}
+
+.form-table {
+	border-spacing: 0;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.form-table th {
+	background: #f8f9fa;
+	color: #495057;
+	font-weight: 600;
+	padding: 15px 20px;
+	border-bottom: 1px solid #dee2e6;
+	width: 200px;
+	vertical-align: top;
+}
+
+.form-table td {
+	padding: 15px 20px;
+	border-bottom: 1px solid #dee2e6;
+	background: white;
+}
+
+/* ===== ENHANCED NOTICES ===== */
+.notice {
+	border-left: 4px solid;
+	padding: 12px 20px;
+	margin: 15px 0;
+	border-radius: 0 4px 4px 0;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.notice-success {
+	background: #d4edda;
+	border-color: #28a745;
+	color: #155724;
+}
+
+.notice-error {
+	background: #f8d7da;
+	border-color: #dc3545;
+	color: #721c24;
+}
+
+.notice-warning {
+	background: #fff3cd;
+	border-color: #ffc107;
+	color: #856404;
+}
+
+.notice-info {
+	background: #d1ecf1;
+	border-color: #17a2b8;
+	color: #0c5460;
+}
+
+/* ===== FAQ ENHANCEMENT ICON ===== */
 .nav-tab-wrapper ul li a#wb-email-customizer-faq-tab:before {
-	content: "\f125" !important;
+	content: "\f223" !important;
+	font-family: 'Dashicons';
+	margin-right: 8px;
+	font-size: 16px;
+}
+
+/* ===== LOADING STATES ===== */
+.loading-overlay {
+	position: relative;
+}
+
+.loading-overlay::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(255,255,255,0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.loading-overlay::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	margin: -20px 0 0 -20px;
+	border: 4px solid #f3f3f3;
+	border-top: 4px solid #0073aa;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+	z-index: 1001;
+}
+
+/* ===== ENHANCED ANIMATIONS ===== */
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes slideDown {
+	from {
+		max-height: 0;
+		opacity: 0;
+	}
+	to {
+		max-height: 500px;
+		opacity: 1;
+	}
+}
+
+@keyframes successPulse {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.05); }
+	100% { transform: scale(1); }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+/* Focus styles */
+button:focus,
+.nav-tab:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 2px solid #0073aa;
+	outline-offset: 2px;
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+	.nav-tab {
+		border: 2px solid;
+	}
+	
+	.button-secondary-reset {
+		border: 2px solid #000;
+	}
+	
+	.notice {
+		border-width: 2px;
+	}
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+	.wb-responsive-menu,
+	.button-secondary-reset,
+	.nav-tab-wrapper {
+		display: none;
+	}
+	
+	.wbcom-wrap {
+		box-shadow: none;
+		border: 1px solid #000;
+	}
+	
+	.blpro-header {
+		background: #000 !important;
+		color: #fff !important;
+	}
 }

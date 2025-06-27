@@ -180,7 +180,19 @@ class Email_Customizer_For_Woocommerce {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Email_Customizer_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+		
+		// Existing AJAX actions
 		$this->loader->add_action( 'wp_ajax_woocommerce_email_customizer_send_email', $plugin_admin, 'wb_email_customizer_send_email' );
+		
+		// NEW: AJAX actions for template presets
+		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
+		
+		// NEW: Backward compatibility - register the _cb version as well
+		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
+		
+		// Existing actions continue...
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'wb_email_customizer_enqueue_customizer_control_script' );
 		$this->loader->add_filter( 'woocommerce_email_footer_text', $plugin_admin, 'wb_email_customizer_email_footer_text' );
 		$this->loader->add_filter( 'woocommerce_email_styles', $plugin_admin, 'wb_email_customizer_add_styles' );
@@ -199,12 +211,10 @@ class Email_Customizer_For_Woocommerce {
 
 		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_admin, 'wb_email_customizer_custom_universal_email_template_override',20,3 );
 		
-		$this->loader->add_action( 'init', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
+		// REMOVE THIS LINE if it exists - it was incorrectly calling the method during init
+		// $this->loader->add_action( 'init', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
 
 		$this->loader->add_action( 'customize_save_after', $plugin_admin, 'wb_email_customizer_handle_custom_save');
-		
-
-
 	}
 
 	/**
