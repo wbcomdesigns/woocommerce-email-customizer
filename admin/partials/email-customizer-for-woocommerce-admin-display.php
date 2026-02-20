@@ -10,8 +10,9 @@
  * @package    Email_Customizer_For_Woocommerce
  * @subpackage Email_Customizer_For_Woocommerce/admin/partials
  */
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 // phpcs:disable
@@ -23,16 +24,16 @@ if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) || ( isset( $_GET['w
 }
 // phpcs:enable
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
-if(!empty($email_heading) && !empty($email)){
+if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	/*
 	* @hooked WC_Emails::email_header() Output the email header
 	*/
-	do_action( 'woocommerce_email_header', $email_heading, $email ); 
+	do_action( 'woocommerce_email_header', $email_heading, $email );
 
 	if ( ! empty( $woocommerce_email_subheading_text ) ) {
 		?>
 		<h1 class="sub_heading"><?php echo esc_html( $woocommerce_email_subheading_text, ); ?></h1>
-	<?php }?>
+	<?php } ?>
 
 	<?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
 	<p>
@@ -45,33 +46,34 @@ if(!empty($email_heading) && !empty($email)){
 	}
 	?>
 	</p>
-	<?php 
+	<?php
 	if ( ! empty( $woocommerce_email_body_text ) ) {
 		?>
 		<p><?php echo esc_html( $woocommerce_email_body_text ); ?></p>
 
-	<?php } else { 
-		if ( $email_improvements_enabled ) : ?>
+		<?php
+	} elseif ( $email_improvements_enabled ) {
+		?>
 		<p><?php esc_html_e( 'We’ve successfully processed your order, and it’s on its way to you.', 'email-customizer-for-woocommerce' ); ?></p>
 		<p><?php esc_html_e( 'Here’s a reminder of what you’ve ordered:', 'email-customizer-for-woocommerce' ); ?></p>
-	<?php else : ?>
+	<?php } else { ?>
 		<p><?php esc_html_e( 'We have finished processing your order.', 'email-customizer-for-woocommerce' ); ?></p>
-	<?php endif; 
-	}?>
+		<?php
+
+	}
+	?>
 	<?php echo $email_improvements_enabled ? '</div>' : ''; ?>
 
 	<?php
-
 	/*
 	* @hooked WC_Emails::order_details() Shows the order details table.
 	* @hooked WC_Structured_Data::generate_order_data() Generates structured data.
 	* @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
 	* @since 2.5.0
 	*/
-	// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 	?>
-	<a href="#"><?php echo esc_html__( 'Order #', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() );  ?></a>
+	<a href="#"><?php echo esc_html__( 'Order #', 'email-customizer-for-woocommerce' ) . ' ' . esc_html( $order->get_order_number() ); ?></a>
 
 	<table>
 		<thead>
@@ -85,10 +87,10 @@ if(!empty($email_heading) && !empty($email)){
 		<tbody>
 			<?php foreach ( $order->get_items() as $item ) : ?>
 				<tr>
-					<td><?php echo esc_html( $item->get_name() );?><br /></td>
-					<td><?php echo esc_html( $item->get_quantity() );  ?></td>
+					<td><?php echo esc_html( $item->get_name() ); ?><br /></td>
+					<td><?php echo esc_html( $item->get_quantity() ); ?></td>
 					<td>
-						<span><?php echo wp_kses_post(wc_price( $item->get_total()) );?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+						<span><?php echo wp_kses_post( wc_price( $item->get_total() ) ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -98,19 +100,19 @@ if(!empty($email_heading) && !empty($email)){
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Subtotal:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span><?php echo wp_kses_post(wc_price( $order->get_subtotal() ) ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
+					<span><?php echo wp_kses_post( wc_price( $order->get_subtotal() ) ); ?></span> <small><?php esc_html_e( '(ex. tax)', 'email-customizer-for-woocommerce' ); ?></small>
 				</td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
-				<td><?php echo $order->get_shipping_total() > 0 ? wp_kses_post(wc_price( $order->get_shipping_total()) ) : esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
+				<td><?php echo $order->get_shipping_total() > 0 ? wp_kses_post( wc_price( $order->get_shipping_total() ) ) : esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' ); ?></td>
 			</tr>
 
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Tax:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span><?php echo wp_kses_post(wc_price( $order->get_total_tax()) ); ?></span>
+					<span><?php echo wp_kses_post( wc_price( $order->get_total_tax() ) ); ?></span>
 				</td>
 			</tr>
 
@@ -122,28 +124,28 @@ if(!empty($email_heading) && !empty($email)){
 			<tr>
 				<th colspan="2"><?php esc_html_e( 'Total:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
-					<span><?php echo wp_kses_post(wc_price( $order->get_total() )); ?></span>
+					<span><?php echo wp_kses_post( wc_price( $order->get_total() ) ); ?></span>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
 	<br />
 	<?php if ( ! empty( $order->get_customer_note() ) ) : ?>
-        <table style="margin: 20px 0;">
-            <tr>
-                <th>
-                    <?php esc_html_e( 'The following note has been added to your order:', 'email-customizer-for-woocommerce' ); ?>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <?php 
-                    echo wptexturize( $order->get_customer_note() ) . "\n\n"; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-                    ?>
-                </td>
-            </tr>
-        </table>
-    <?php endif; ?>
+		<table style="margin: 20px 0;">
+			<tr>
+				<th>
+					<?php esc_html_e( 'The following note has been added to your order:', 'email-customizer-for-woocommerce' ); ?>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<?php
+					echo wp_kses_post( wptexturize( $order->get_customer_note() ) ) . "\n\n";
+					?>
+				</td>
+			</tr>
+		</table>
+	<?php endif; ?>
 	<table class="addresses">
 		<tr>
 			<td valign="top" width="50%">
@@ -164,17 +166,14 @@ if(!empty($email_heading) && !empty($email)){
 		</tr>
 	</table>
 	<?php
-
 	/*
 	* @hooked WC_Emails::order_meta() Shows order meta data.
 	*/
-	// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 	/*
-	* @hooked WC_Emails::customer_details() Shows customer details
-	* @hooked WC_Emails::email_address() Shows email address
+	* @hooked WC_Emails::customer_details() Shows customer details.
+	* @hooked WC_Emails::email_address() Shows email address.
 	*/
-	// do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 	/**
 	 * Show user-defined additional content - this is set in each email's settings.
@@ -189,7 +188,7 @@ if(!empty($email_heading) && !empty($email)){
 	* @hooked WC_Emails::email_footer() Output the email footer
 	*/
 	do_action( 'woocommerce_email_footer', $email );
-}else{
+} else {
 	if ( ! empty( $woocommerce_email_subheading_text ) ) {
 		?>
 		<h1 class="sub_heading"><?php echo esc_html( $woocommerce_email_subheading_text ); ?></h1>
@@ -209,13 +208,15 @@ if(!empty($email_heading) && !empty($email)){
 	}
 	?>
 
-	<a href="#"><?php 
+	<a href="#">
+	<?php
 	printf(
 		/* translators: %s: Order number */
-		esc_html__('Order #%s', 'email-customizer-for-woocommerce'),
-		esc_html('2020')
+		esc_html__( 'Order #%s', 'email-customizer-for-woocommerce' ),
+		esc_html( '2020' )
 	);
- 	?></a>
+	?>
+	</a>
 
 	<table>
 		<thead>
@@ -273,9 +274,9 @@ if(!empty($email_heading) && !empty($email)){
 	<table class="addresses">
 		<?php
 		$demo_address = array(
-			'name'    => __('John Doe', 'email-customizer-for-woocommerce'),
-			'street'  => __('1234 Fake Street', 'email-customizer-for-woocommerce'),
-			'city'    => __('WooVille, SA', 'email-customizer-for-woocommerce'),
+			'name'   => __( 'John Doe', 'email-customizer-for-woocommerce' ),
+			'street' => __( '1234 Fake Street', 'email-customizer-for-woocommerce' ),
+			'city'   => __( 'WooVille, SA', 'email-customizer-for-woocommerce' ),
 		);
 		?>
 		<tr>
@@ -284,9 +285,9 @@ if(!empty($email_heading) && !empty($email)){
 
 				<p>
 					<?php
-						foreach ($demo_address as $line) {
-							echo esc_html($line) . '<br />';
-						}
+					foreach ( $demo_address as $line ) {
+						echo esc_html( $line ) . '<br />';
+					}
 					?>
 				</p>
 			</td>
@@ -296,13 +297,13 @@ if(!empty($email_heading) && !empty($email)){
 
 				<p>
 					<?php
-						foreach ($demo_address as $line) {
-							echo esc_html($line) . '<br />';
-						}
+					foreach ( $demo_address as $line ) {
+						echo esc_html( $line ) . '<br />';
+					}
 					?>
 				</p>
 			</td>
 		</tr>
 	</table>
-	<?php 
+	<?php
 }

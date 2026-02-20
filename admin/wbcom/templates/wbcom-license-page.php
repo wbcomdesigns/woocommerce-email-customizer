@@ -1,3 +1,15 @@
+<?php
+/**
+ * Wbcom license page template.
+ *
+ * @package Email_Customizer_For_Woocommerce
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div class="wrap">
 	<div class="wbcom-bb-plugins-offer-wrapper">
 		<div id="wb_admin_logo">
@@ -7,7 +19,7 @@
 		<div class="wbcom_admin_header-wrapper">
 			<div id="wb_admin_plugin_name">
 				<?php esc_html_e( 'Email Customizer For Woocommerce', 'email-customizer-for-woocommerce' ); ?>
-				 <?php /* translators: %s: */ ?>
+				<?php /* translators: %s: */ ?>
 				<span><?php printf( esc_html__( 'Version %s', 'email-customizer-for-woocommerce' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION ); //phpcs:ignore ?></span>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>

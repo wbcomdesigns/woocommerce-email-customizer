@@ -30,21 +30,21 @@ class Email_Customizer_For_Woocommerce_Activator {
 	 */
 	public static function activate() {
 
-		if(!get_option( 'woocommerce_email_template' )){
-			update_option('woocommerce_email_template','default');
-			update_option( 'woocommerce_email_header_text_color', '#ffffff',true ) ;
-			update_option( 'woocommerce_email_body_background_color', '#fdfdfd',true ) ;
-			update_option( 'woocommerce_email_header_background_color', '#557da1',true ) ;
-			update_option( 'woocommerce_email_footer_address_background_color', '#ffffff',true ) ;
-			update_option( 'woocommerce_email_footer_address_border', '1',true ) ;
-			update_option( 'woocommerce_email_rounded_corners', '6',true ) ;
-			update_option( 'woocommerce_email_border_container_top', '1',true ) ;
-			update_option( 'woocommerce_email_border_container_bottom','1',true ) ;
-			update_option( 'woocommerce_email_border_container_left', '1',true ) ;
-			update_option( 'woocommerce_email_border_container_right', '1',true ) ;
-			update_option( 'woocommerce_email_body_border_color', '#505050',true ) ;
-			update_option( 'woocommerce_email_footer_text_color', '#ffffff',true ) ;
-			update_option( 'woocommerce_email_footer_background_color', '#202020',true ) ;	
+		if ( ! get_option( 'woocommerce_email_template' ) ) {
+			update_option( 'woocommerce_email_template', 'default' );
+			update_option( 'woocommerce_email_header_text_color', '#ffffff', true );
+			update_option( 'woocommerce_email_body_background_color', '#fdfdfd', true );
+			update_option( 'woocommerce_email_header_background_color', '#557da1', true );
+			update_option( 'woocommerce_email_footer_address_background_color', '#ffffff', true );
+			update_option( 'woocommerce_email_footer_address_border', '1', true );
+			update_option( 'woocommerce_email_rounded_corners', '6', true );
+			update_option( 'woocommerce_email_border_container_top', '1', true );
+			update_option( 'woocommerce_email_border_container_bottom', '1', true );
+			update_option( 'woocommerce_email_border_container_left', '1', true );
+			update_option( 'woocommerce_email_border_container_right', '1', true );
+			update_option( 'woocommerce_email_body_border_color', '#505050', true );
+			update_option( 'woocommerce_email_footer_text_color', '#ffffff', true );
+			update_option( 'woocommerce_email_footer_background_color', '#202020', true );
 		}
 
 		// Save current email settings.
@@ -66,15 +66,12 @@ class Email_Customizer_For_Woocommerce_Activator {
 
 		update_option( 'wc_email_customizer_old_settings', $settings );
 
-
-		$default_array = get_option('wb_email_customizer_old');
-		if( ! empty( $default_array ) ){
-			foreach ($default_array as $key => $value) {
-				update_option( $key, $value ,true ) ;
+		$default_array = get_option( 'wb_email_customizer_old' );
+		if ( ! empty( $default_array ) ) {
+			foreach ( $default_array as $key => $value ) {
+				update_option( $key, $value, true );
 			}
 			delete_option( 'wb_email_customizer_old' );
 		}
-			
 	}
-
 }

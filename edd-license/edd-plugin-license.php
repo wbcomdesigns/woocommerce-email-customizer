@@ -10,6 +10,11 @@
  * @subpackage Woocommerce_Email_Customizer/edd-license
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! defined( 'EDD_WOO_EMAIL_CUSTOMIZER_STORE_URL' ) ) {
 	define( 'EDD_WOO_EMAIL_CUSTOMIZER_STORE_URL', 'https://wbcomdesigns.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file.
 }
@@ -24,7 +29,7 @@ if ( ! defined( 'EDD_WOO_EMAIL_CUSTOMIZER_PLUGIN_LICENSE_PAGE' ) ) {
 
 if ( ! class_exists( 'EDD_WOO_EMAIL_CUSTOMIZER_Plugin_Updater' ) ) {
 	// load our custom updater.
-	include dirname( __FILE__ ) . '/EDD_Woo_Email_Customizer_Plugin_Updater.php';
+	include __DIR__ . '/EDD_Woo_Email_Customizer_Plugin_Updater.php';
 }
 
 /**
@@ -41,7 +46,7 @@ function edd_woo_email_customizer_plugin_updater() {
 		EDD_WOO_EMAIL_CUSTOMIZER_STORE_URL,
 		EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_FILE,
 		array(
-			'version'   => EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, //current version number.
+			'version'   => EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, // current version number.
 			'license'   => $license_key,        // license key (used get_option above to retrieve from DB).
 			'item_name' => EDD_WOO_EMAIL_CUSTOMIZER_ITEM_NAME,  // name of this plugin.
 			'author'    => 'wbcomdesigns',  // author of this plugin.
@@ -166,7 +171,7 @@ function edd_wbcom_woo_email_customizer_activate_license() {
 			$redirect = add_query_arg(
 				array(
 					'woo_email_customizer_activation' => 'false',
-					'message'           => urlencode( $message ),
+					'message'                         => urlencode( $message ),
 				),
 				$base_url
 			);
@@ -235,7 +240,7 @@ function edd_wbcom_woo_email_customizer_deactivate_license() {
 			$redirect = add_query_arg(
 				array(
 					'woo_email_customizer_activation' => 'false',
-					'message'           => urlencode( $message ),
+					'message'                         => urlencode( $message ),
 				),
 				$base_url
 			);
@@ -367,7 +372,6 @@ function edd_wbcom_woo_email_customizer_admin_notices() {
 		</div>
 		<?php
 	}
-
 }
 add_action( 'admin_notices', 'edd_wbcom_woo_email_customizer_admin_notices' );
 
@@ -388,11 +392,11 @@ function wbcom_woo_email_customizer_render_license_section() {
 	if ( false !== $status && 'valid' === $status && ! empty( $license_output ) && $license_output['license_data']->license == 'valid' ) {
 		$status_class = 'active';
 		$status_text  = 'Active';
-	} else if ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && $license_output['license_data']->license != '' && $license_output['license_data']->license == 'expired' ) {
+	} elseif ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && $license_output['license_data']->license != '' && $license_output['license_data']->license == 'expired' ) {
 		$status_class = 'expired';
 		$status_text  = ucfirst( str_replace( '_', ' ', $license_output['license_data']->license ) );
 
-	} else if ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && $license_output['license_data']->license != '' && $license_output['license_data']->license == 'invalid' ) {
+	} elseif ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && $license_output['license_data']->license != '' && $license_output['license_data']->license == 'invalid' ) {
 		$status_class = 'invalid';
 		$status_text  = ucfirst( str_replace( '_', ' ', $license_output['license_data']->license ) );
 
@@ -481,9 +485,9 @@ function edd_woo_email_customizer_active_license_message() {
 			return false;
 		}
 
-			$output = array();
+			$output                 = array();
 			$output['license_data'] = json_decode( wp_remote_retrieve_body( $response ) );
-			$message = '';
+			$message                = '';
 			// make sure the response came back okay
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 
@@ -497,7 +501,7 @@ function edd_woo_email_customizer_active_license_message() {
 			// Get expire date
 			$expires = false;
 			if ( isset( $license_data->expires ) && 'lifetime' != $license_data->expires ) {
-				$expires    = date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) );
+				$expires = date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) );
 			} elseif ( isset( $license_data->expires ) && 'lifetime' == $license_data->expires ) {
 				$expires = 'lifetime';
 			}
@@ -506,7 +510,7 @@ function edd_woo_email_customizer_active_license_message() {
 				// Get site counts
 				$site_count    = $license_data->site_count;
 				$license_limit = $license_data->license_limit;
-				$message = 'License key is active.';
+				$message       = 'License key is active.';
 				if ( isset( $expires ) && 'lifetime' != $expires ) {
 					/* translate %s */
 					$message .= sprintf( __( ' Expires %s.', 'email-customizer-for-woocommerce' ), $expires ) . ' ';

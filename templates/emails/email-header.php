@@ -18,38 +18,38 @@
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
-if ( isset( $_GET['nonce'] ) && wp_verify_nonce( wp_unslash( $_GET['nonce'] ), '_wc_email_customizer_send_email_nonce' ) ) {
-    $position = isset( $_GET['woocommerce_email_header_image_placement'] )
-        ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_header_image_placement'] ) )
-        : get_option( 'woocommerce_email_header_image_placement' );
+if ( isset( $_GET['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), '_wc_email_customizer_send_email_nonce' ) ) {
+	$position = isset( $_GET['woocommerce_email_header_image_placement'] )
+		? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_header_image_placement'] ) )
+		: get_option( 'woocommerce_email_header_image_placement' );
 
-    $img = isset( $_GET['woocommerce_email_header_image'] )
-        ? esc_url_raw( wp_unslash( $_GET['woocommerce_email_header_image'] ) )
-        : get_option( 'woocommerce_email_header_image' );
+	$img = isset( $_GET['woocommerce_email_header_image'] )
+		? esc_url_raw( wp_unslash( $_GET['woocommerce_email_header_image'] ) )
+		: get_option( 'woocommerce_email_header_image' );
 } else {
-    $position = get_option( 'woocommerce_email_header_image_placement' );
-    $img      = get_option( 'woocommerce_email_header_image' );
+	$position = get_option( 'woocommerce_email_header_image_placement' );
+	$img      = get_option( 'woocommerce_email_header_image' );
 }
 if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
 	$img_transient = get_transient( 'woocommerce_email_header_image' );
 	$img           = false !== $img_transient ? $img_transient : $img;
-}	
+}
 if ( ! empty( get_option( 'woocommerce_email_heading_text' ) ) || ( isset( $_GET['woocommerce_email_heading_text'] ) ) ) {
 	$email_heading = ( isset( $_GET['woocommerce_email_heading_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_heading_text'] ) ) : get_option( 'woocommerce_email_heading_text' );
 }
 
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
-	$template      = get_option( 'woocommerce_email_template' );
+	$template               = get_option( 'woocommerce_email_template' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>" />
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
-		<title><?php echo esc_html(get_bloginfo( 'name', 'display' )); ?></title>
+		<title><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></title>
 	</head>
 	<body <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
 		<table width="100%" id="outer_wrapper">
@@ -61,14 +61,14 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 							<tr>
 								<td align="center" valign="top">
 									<?php
-									
-									
+
+
 									/**
 									 * This filter is documented in templates/emails/email-styles.php
 									 *
 									 * @since 9.6.0
 									 */
-									
+
 
 									if ( $email_improvements_enabled && $img && 'outside' === $position ) :
 										?>
@@ -83,10 +83,10 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 										</table>
 									<?php else : ?>
 											<?php
-											if ( 'outside' === $position) {
-												if($img){
+											if ( 'outside' === $position ) {
+												if ( $img ) {
 													echo '<div id="template_header_image"><p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p></div>';
-												}else{
+												} else {
 													echo esc_html( get_bloginfo( 'name', 'display' ) );
 												}
 											}
@@ -100,14 +100,14 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 													<tr>
 														<td id="header_wrapper">
 															<?php
-															if ( 'inside' === $position) {
-																if($img){
+															if ( 'inside' === $position ) {
+																if ( $img ) {
 																	echo '<div id="template_header_image"><p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" /></p></div>';
-																}else{
-																	echo  '<h1>' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</h1>';
+																} else {
+																	echo '<h1>' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</h1>';
 																}
-															}else{
-																echo '<h1>'. esc_html( $email_heading ). '</h1>';
+															} else {
+																echo '<h1>' . esc_html( $email_heading ) . '</h1>';
 															}
 															?>
 														</td>
@@ -128,7 +128,7 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 																	<td valign="top" id="body_content_inner_cell">
 																		<div id="body_content_inner">
 																			<?php
-																			if ( 'inside' === $position) {
-																				echo '<h1>'. esc_html( $email_heading ). '</h1>';
+																			if ( 'inside' === $position ) {
+																				echo '<h1>' . esc_html( $email_heading ) . '</h1>';
 																			}
 																			?>

@@ -10,6 +10,5 @@
  * @package    Email_Customizer_For_Woocommerce
  * @subpackage Email_Customizer_For_Woocommerce/public/partials
  */
-?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+// This file should primarily consist of HTML with a little bit of PHP.

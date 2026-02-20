@@ -30,32 +30,30 @@ class Email_Customizer_For_Woocommerce_Deactivator {
 	 */
 	public static function deactivate() {
 
-		$default_array = array(
-			'woocommerce_email_header_text_color' => '#ffffff',
-			'woocommerce_email_body_background_color' => '#fdfdfd',
+		$default_array  = array(
+			'woocommerce_email_header_text_color'       => '#ffffff',
+			'woocommerce_email_body_background_color'   => '#fdfdfd',
 			'woocommerce_email_header_background_color' => '#557da1',
 			'woocommerce_email_footer_address_background_color' => '#202020',
-			'woocommerce_email_footer_address_border' => '12',
-			'woocommerce_email_rounded_corners' => '6',
-			'woocommerce_email_border_container_top' => '1',
+			'woocommerce_email_footer_address_border'   => '12',
+			'woocommerce_email_rounded_corners'         => '6',
+			'woocommerce_email_border_container_top'    => '1',
 			'woocommerce_email_border_container_bottom' => '1',
-			'woocommerce_email_border_container_left' => '1',
-			'woocommerce_email_border_container_right' => '1',
-			'woocommerce_email_body_border_color' => '#505050',
-			'woocommerce_email_footer_text_color' => '#ffffff',
+			'woocommerce_email_border_container_left'   => '1',
+			'woocommerce_email_border_container_right'  => '1',
+			'woocommerce_email_body_border_color'       => '#505050',
+			'woocommerce_email_footer_text_color'       => '#ffffff',
 			'woocommerce_email_footer_background_color' => '#202020',
-			'woocommerce_email_header_image' => '',
-			'woocommerce_email_heading_text' => '',
-			'woocommerce_email_subheading_text' =>  '',
-			'woocommerce_email_body_text' => '',
+			'woocommerce_email_header_image'            => '',
+			'woocommerce_email_heading_text'            => '',
+			'woocommerce_email_subheading_text'         => '',
+			'woocommerce_email_body_text'               => '',
 		);
-			$old_values = [];
-			foreach ($default_array as $key => $value) {
-				$old_values[$key] = get_option($key);
-				update_option( $key, $value ,true ) ;
-			}
-			update_option( 'wb_email_customizer_old', $old_values ,true ) ;
-
+			$old_values = array();
+		foreach ( $default_array as $key => $value ) {
+			$old_values[ $key ] = get_option( $key );
+			update_option( $key, $value, true );
+		}
+			update_option( 'wb_email_customizer_old', $old_values, true );
 	}
-
 }

@@ -12,6 +12,11 @@
  * @subpackage Email_Customizer_For_Woocommerce/includes
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The core plugin class.
  *
@@ -86,7 +91,7 @@ class Email_Customizer_For_Woocommerce {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Email_Customizer_For_Woocommerce_Loader. Orchestrates the hooks of the plugin.
-	 * - Email_Customizer_For_Woocommerce_i18n. Defines internationalization functionality.
+	 * - Email_Customizer_For_Woocommerce_I18n. Defines internationalization functionality.
 	 * - Email_Customizer_For_Woocommerce_Admin. Defines all hooks for the admin area.
 	 * - Email_Customizer_For_Woocommerce_Public. Defines all hooks for the public side of the site.
 	 *
@@ -102,61 +107,58 @@ class Email_Customizer_For_Woocommerce {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-email-customizer-for-woocommerce-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-email-customizer-for-woocommerce-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-i18n.php';
 
 		/**
 		 * The class responsible for validating the settings
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-email-customizer-validator-woocommerce.php';
-		
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-validator-woocommerce.php';
+
 		/**
 		 * The class responsible for handling settings with caching
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-email-customizer-for-woocommerce-cache.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-cache.php';
 
 		/**
 		 * The class responsible for handling settings with logging
-   		 * and error handling
+		 * and error handling
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-email-customizer-for-woocommerce-logger.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-logger.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-email-customizer-for-woocommerce-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-email-customizer-for-woocommerce-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-email-customizer-for-woocommerce-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-email-customizer-for-woocommerce-public.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/wbcom/wbcom-admin-settings.php';
 
 		/* Enqueue wbcom license file. */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-subscription-handler.php';
-		
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-subscription-handler.php';
+
 		$this->loader = new Email_Customizer_For_Woocommerce_Loader();
-
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/emails/class-custom-wc-emai-template.php';
-
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Email_Customizer_For_Woocommerce_i18n class in order to set the domain and to register the hook
+	 * Uses the Email_Customizer_For_Woocommerce_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -164,10 +166,9 @@ class Email_Customizer_For_Woocommerce {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Email_Customizer_For_Woocommerce_i18n();
+		$plugin_i18n = new Email_Customizer_For_Woocommerce_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -180,25 +181,25 @@ class Email_Customizer_For_Woocommerce {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Email_Customizer_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
-		
-		// Existing AJAX actions
+
+		// Existing AJAX actions.
 		$this->loader->add_action( 'wp_ajax_woocommerce_email_customizer_send_email', $plugin_admin, 'wb_email_customizer_send_email' );
-		
-		// NEW: AJAX actions for template presets
+
+		// AJAX actions for template presets.
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
-		
-		// NEW: Backward compatibility - register the _cb version as well
+
+		// Backward compatibility - register the _cb version as well.
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
-		
-		// Existing actions continue...
+
+		// Existing actions continue.
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'wb_email_customizer_enqueue_customizer_control_script' );
 		$this->loader->add_filter( 'woocommerce_email_footer_text', $plugin_admin, 'wb_email_customizer_email_footer_text' );
 		$this->loader->add_filter( 'woocommerce_email_styles', $plugin_admin, 'wb_email_customizer_add_styles' );
 		$this->loader->add_filter( 'query_vars', $plugin_admin, 'wb_email_customizer_add_query_vars' );
 		$this->loader->add_action( 'customize_preview_init', $plugin_admin, 'wb_email_customizer_enqueue_customizer_script' );
-		$this->loader->add_action( 'template_redirect', $plugin_admin, 'wb_email_customizer_load_email_template', 10);
+		$this->loader->add_action( 'template_redirect', $plugin_admin, 'wb_email_customizer_load_email_template', 10 );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_filter( 'customize_register', $plugin_admin, 'wb_email_customizer_add_sections', 40 );
@@ -207,14 +208,11 @@ class Email_Customizer_For_Woocommerce {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_admin_setting_submenu_pages' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_email_customizer_init_plugin_settings' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_email_customizer_views_add_admin_settings' );
-		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wb_email_hide_all_admin_notices_from_setting_page');
+		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wb_email_hide_all_admin_notices_from_setting_page' );
 
-		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_admin, 'wb_email_customizer_custom_universal_email_template_override',20,3 );
-		
-		// REMOVE THIS LINE if it exists - it was incorrectly calling the method during init
-		// $this->loader->add_action( 'init', $plugin_admin, 'wb_email_customizer_load_template_presets_cb',10);
+		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_admin, 'wb_email_customizer_custom_universal_email_template_override', 20, 3 );
 
-		$this->loader->add_action( 'customize_save_after', $plugin_admin, 'wb_email_customizer_handle_custom_save');
+		$this->loader->add_action( 'customize_save_after', $plugin_admin, 'wb_email_customizer_handle_custom_save' );
 	}
 
 	/**
@@ -230,7 +228,6 @@ class Email_Customizer_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
 	}
 
 
@@ -244,7 +241,6 @@ class Email_Customizer_For_Woocommerce {
 	private function define_subscription_hooks() {
 
 		$plugin_subscription = new Email_Customizer_Subscription_Handler( $this->get_plugin_name(), $this->get_version() );
-
 	}
 
 	/**

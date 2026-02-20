@@ -50,7 +50,6 @@ class Email_Customizer_For_Woocommerce_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
 	}
 
 	/**
@@ -80,7 +79,6 @@ class Email_Customizer_For_Woocommerce_Public {
 		}
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/email-customizer-for-woocommerce-public' . $extension, array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -110,7 +108,5 @@ class Email_Customizer_For_Woocommerce_Public {
 		}
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/email-customizer-for-woocommerce-public' . $extension, array( 'jquery' ), $this->version, false );
-
 	}
-
 }

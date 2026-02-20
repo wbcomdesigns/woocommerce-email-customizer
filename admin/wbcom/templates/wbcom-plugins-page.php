@@ -1,3 +1,15 @@
+<?php
+/**
+ * Wbcom plugins page template.
+ *
+ * @package Email_Customizer_For_Woocommerce
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div class="wrap">
 	<div class="wbcom-bb-plugins-offer-wrapper">
 		<div id="wb_admin_logo">

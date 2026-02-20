@@ -23,7 +23,7 @@
  * @subpackage Email_Customizer_For_Woocommerce/includes
  * @author     Wbcom Designs <admin@wbcomdesigns.com>
  */
-class Email_Customizer_For_Woocommerce_i18n {
+class Email_Customizer_For_Woocommerce_I18n {
 
 
 	/**
@@ -38,9 +38,5 @@ class Email_Customizer_For_Woocommerce_i18n {
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
 	}
-
-
-
 }

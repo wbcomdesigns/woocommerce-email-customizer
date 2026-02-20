@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName, Universal.Files.SeparateFunctionsFromOO.Mixed
 /**
  * Class to add top header pages of wbcom plugin and additional features.
  *
@@ -45,7 +45,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				echo esc_html( $display_extention );
 				die;
 			}
-
 		}
 
 		/**
@@ -137,7 +136,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 */
 		public function wbcom_enqueue_admin_scripts() {
 			if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
+				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), '4.7.0' );
 			}
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
@@ -149,11 +148,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				}
 
 				wp_register_script(
-					$handle    = 'wbcom_admin_setting_js',
-					$src       = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/wbcom/assets/js' . $path . '/wbcom-admin-setting' . $extension,
-					$deps      = array( 'jquery' ),
-					$ver       = time(),
-					$in_footer = true
+					'wbcom_admin_setting_js',
+					EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/wbcom/assets/js' . $path . '/wbcom-admin-setting' . $extension,
+					array( 'jquery' ),
+					(string) time(),
+					true
 				);
 				wp_localize_script(
 					'wbcom_admin_setting_js',
@@ -177,9 +176,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					$extension = is_rtl() ? '.rtl.css' : '.min.css';
 					$path      = is_rtl() ? '/rtl' : '/min';
 				}
-				wp_enqueue_style( 'wbcom-admin-setting-css', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/wbcom/assets/css' . $path . '/wbcom-admin-setting' . $extension );
+				wp_enqueue_style( 'wbcom-admin-setting-css', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . 'admin/wbcom/assets/css' . $path . '/wbcom-admin-setting' . $extension, array(), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION );
 			}
-
 		}
 
 		/**
@@ -252,8 +250,10 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {
-			$page          = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
-			$plugin_active = $theme_active = $support_active = $settings_active = '';
+			$page            = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
+			$plugin_active   = '';
+			$support_active  = '';
+			$settings_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page':
 					$plugin_active = 'is_active';
@@ -262,7 +262,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					$support_active = 'is_active';
 					break;
 				case 'wbcom-license-page':
-					$license_active = 'is_active';
 					break;
 				default:
 					$settings_active = 'is_active';
@@ -295,10 +294,14 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			</div>
 			<?php
 		}
-
 	}
 
-	function instantiate_wbcom_plugin_manager() {
+	/**
+	 * Instantiate the Wbcom_Admin_Settings class.
+	 *
+	 * @since 2.0.0
+	 */
+	function instantiate_wbcom_plugin_manager() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
 		new Wbcom_Admin_Settings();
 	}
 

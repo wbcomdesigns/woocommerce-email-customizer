@@ -38,7 +38,7 @@ if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION' ) ) {
 	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION', '1.2.0' );
 }
 if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR' ) ) {
-	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR', trailingslashit( dirname( __FILE__ ) ) );
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR', trailingslashit( __DIR__ ) );
 }
 if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH' ) ) {
 	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
@@ -88,8 +88,8 @@ if ( ! function_exists( 'wb_email_customizer_check_woocomerce' ) ) {
 		} else {
 			run_email_customizer_for_woocommerce();
 		}
-		if(isset($_GET['activate'])){
-			unset($_GET['activate']);
+		if ( isset( $_GET['activate'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 	}
 }
@@ -118,7 +118,7 @@ if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
 		) . '">' . $woo_plugin . '</a>';
 		echo '<div class="error"><p>';
 		/* Translators: %1$s: Woo Product Inquiry & Quote Pro, %2$s: WooCommerce   */
-		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'email-customizer-for-woocommerce' ), '<strong>' . esc_html( $email_customizer_plugin ) . '</strong>', '<strong>' . wp_kses_post( $plugin_install_link ) . '</strong>' );
+		printf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'email-customizer-for-woocommerce' ), '<strong>' . esc_html( $email_customizer_plugin ) . '</strong>', '<strong>' . wp_kses_post( $plugin_install_link ) . '</strong>' );
 		echo '</p></div>';
 	}
 }
@@ -160,29 +160,33 @@ add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_setting
  */
 function wb_email_customizer_activation_redirect_settings( $plugin ) {
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'WooCommerce' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_REQUEST['action'] ) && 'activate' === $_REQUEST['action'] && isset( $_REQUEST['plugin'] ) && $plugin === $_REQUEST['plugin'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_safe_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
 			exit;
 		}
 	}
-
 }
 
-// Add this to your main plugin file
-function your_plugin_add_settings_link($links) {
-		$url = admin_url('customize.php');
-		// Add the preview URL to the customizer
-		$nonce = wp_create_nonce('preview-mail');
-       // Generate the email preview URL (not the customizer URL)
-		$preview_url = home_url('/');
-		$preview_url = add_query_arg( 'email-customizer-for-woocommerce' , 'true', $preview_url);
-		$preview_url = add_query_arg('_wpnonce', $nonce, $preview_url);
+/**
+ * Add settings link to plugin action links.
+ *
+ * @param array $links Plugin action links.
+ * @return array Modified plugin action links.
+ */
+function your_plugin_add_settings_link( $links ) {
+	$url = admin_url( 'customize.php' );
+	// Add the preview URL to the customizer.
+	$nonce = wp_create_nonce( 'preview-mail' );
+	// Generate the email preview URL (not the customizer URL).
+	$preview_url = home_url( '/' );
+	$preview_url = add_query_arg( 'email-customizer-for-woocommerce', 'true', $preview_url );
+	$preview_url = add_query_arg( '_wpnonce', $nonce, $preview_url );
 
-		$url = add_query_arg('url', urlencode( $preview_url ), $url);
-		// Add our identifier to know we're in email customizer mode
-		$url = add_query_arg( 'email-customizer-for-woocommerce' , 'true', $url);
-    $settings_link = '<a href="' . $url . '">Settings</a>';
-    array_unshift($links, $settings_link);
-    return $links;
+	$url = add_query_arg( 'url', rawurlencode( $preview_url ), $url );
+	// Add our identifier to know we're in email customizer mode.
+	$url           = add_query_arg( 'email-customizer-for-woocommerce', 'true', $url );
+	$settings_link = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'email-customizer-for-woocommerce' ) . '</a>';
+	array_unshift( $links, $settings_link );
+	return $links;
 }
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'your_plugin_add_settings_link');
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'your_plugin_add_settings_link' );
