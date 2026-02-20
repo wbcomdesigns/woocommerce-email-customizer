@@ -32,11 +32,6 @@ class Email_Customizer_For_Woocommerce_I18n {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-
-		load_plugin_textdomain(
-			'email-customizer-for-woocommerce',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
+		// WordPress 6.7+ auto-loads translations via JIT.
 	}
 }
