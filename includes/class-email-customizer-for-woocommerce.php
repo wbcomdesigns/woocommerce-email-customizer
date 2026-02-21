@@ -187,11 +187,8 @@ class Email_Customizer_For_Woocommerce {
 
 		// AJAX actions for template presets.
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
-
 		// Backward compatibility - register the _cb version as well.
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
 
 		// Existing actions continue.
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'wb_email_customizer_enqueue_customizer_control_script' );

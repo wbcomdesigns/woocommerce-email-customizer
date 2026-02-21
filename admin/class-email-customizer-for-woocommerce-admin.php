@@ -1977,6 +1977,102 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
+	 * AJAX handler for sending a test email.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function wb_email_customizer_send_email(): void {
+		// Verify nonce.
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), '_wc_email_customizer_send_email_nonce' ) ) {
+			wp_send_json_error( __( 'Security check failed. Please refresh the page and try again.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		// Check user capabilities.
+		if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+			wp_send_json_error( __( 'Insufficient permissions.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		$recipient = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		if ( empty( $recipient ) || ! is_email( $recipient ) ) {
+			$recipient = get_option( 'admin_email' );
+		}
+
+		try {
+			$mailer = WC()->mailer();
+			if ( ! $mailer ) {
+				wp_send_json_error( __( 'WooCommerce mailer not available.', 'email-customizer-for-woocommerce' ) );
+				return;
+			}
+
+			// Build the query string from POST data for the template to use.
+			$query_args = array();
+			if ( isset( $_POST['settings'] ) && is_array( $_POST['settings'] ) ) {
+				foreach ( $_POST['settings'] as $key => $value ) {
+					$query_args[ sanitize_key( $key ) ] = sanitize_text_field( wp_unslash( $value ) );
+				}
+			}
+
+			$query_args['nonce'] = wp_create_nonce( '_wc_email_customizer_send_email_nonce' );
+
+			// Temporarily set GET params for template rendering.
+			$original_get = $_GET;
+			$_GET         = array_merge( $_GET, $query_args );
+
+			$template = $this->get_validated_param( 'woocommerce_email_template', 'default', 'template' );
+
+			ob_start();
+			$template_file = $this->get_template_file_path( $template );
+			if ( file_exists( $template_file ) ) {
+				include $template_file;
+			}
+			$message = ob_get_clean();
+
+			// Restore original GET.
+			$_GET = $original_get;
+
+			if ( empty( $message ) ) {
+				wp_send_json_error( __( 'Failed to generate email content.', 'email-customizer-for-woocommerce' ) );
+				return;
+			}
+
+			$email_heading = $this->get_validated_param(
+				'woocommerce_email_heading_text',
+				__( 'Thanks for your order!', 'email-customizer-for-woocommerce' ),
+				'text'
+			);
+
+			$email      = new WC_Email();
+			$email_body = $email->style_inline( $mailer->wrap_message( $email_heading, $message ) );
+
+			$subject = sprintf(
+				/* translators: %s: Site name. */
+				__( '[%s] Test Email from Email Customizer', 'email-customizer-for-woocommerce' ),
+				get_bloginfo( 'name' )
+			);
+
+			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+			$sent    = wp_mail( $recipient, $subject, $email_body, $headers );
+
+			if ( $sent ) {
+				wp_send_json_success(
+					sprintf(
+						/* translators: %s: Recipient email address. */
+						__( 'Test email sent to %s.', 'email-customizer-for-woocommerce' ),
+						$recipient
+					)
+				);
+			} else {
+				wp_send_json_error( __( 'Failed to send test email. Please check your email configuration.', 'email-customizer-for-woocommerce' ) );
+			}
+		} catch ( Exception $e ) {
+			wp_send_json_error( __( 'Error sending test email.', 'email-customizer-for-woocommerce' ) );
+		}
+	}
+
+	/**
 	 * Update all default email customizer options at once.
 	 *
 	 * @since  1.0.0

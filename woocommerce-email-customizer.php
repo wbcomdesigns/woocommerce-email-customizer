@@ -128,10 +128,24 @@ if ( ! function_exists( 'wb_email_customizer_admin_notice' ) ) {
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-email-customizer-for-woocommerce.php';
 
-/**
- * Require plugin license file.
- */
-require plugin_dir_path( __FILE__ ) . 'edd-license/edd-plugin-license.php';
+// EDD Software Licensing SDK.
+add_action(
+	'edd_sl_sdk_registry',
+	function ( $registry ) {
+		$registry->register(
+			array(
+				'id'      => 'woocommerce-email-customizer',
+				'url'     => 'https://wbcomdesigns.com',
+				'item_id' => 11, // TODO: Replace with actual EDD download ID from wbcomdesigns.com.
+				'version' => EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION,
+				'file'    => EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_FILE,
+			)
+		);
+	}
+);
+if ( file_exists( __DIR__ . '/vendor/edd-sl-sdk/edd-sl-sdk.php' ) ) {
+	require_once __DIR__ . '/vendor/edd-sl-sdk/edd-sl-sdk.php';
+}
 
 /**
  * Begins execution of the plugin.
@@ -143,6 +157,12 @@ require plugin_dir_path( __FILE__ ) . 'edd-license/edd-plugin-license.php';
  * @since    1.0.0
  */
 function run_email_customizer_for_woocommerce() {
+	// Prevent double initialization.
+	static $initialized = false;
+	if ( $initialized ) {
+		return;
+	}
+	$initialized = true;
 
 	$plugin = new Email_Customizer_For_Woocommerce();
 	$plugin->run();
