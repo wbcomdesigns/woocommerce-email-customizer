@@ -1,72 +1,104 @@
-=== Wbcom Designs – WooCommerce Email Customizer ===
-Contributors: vapvarun,wbcomdesigns
+=== Wbcom Designs - WooCommerce Email Customizer ===
+Contributors: vapvarun, wbcomdesigns
 Donate link: https://wbcomdesigns.com/
-Tags: comments, spam
-Requires at least: 3.0.1
+Tags: woocommerce, email, customizer, email template, branding
+Requires at least: 5.8
 Tested up to: 6.9
-Stable tag: 1.2.0
+Requires PHP: 7.4
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Email Customizer For WooCommerce plugin allows you to personalize your transactional emails. The plugin allows you to insert various elements into the template, such as text, images, headers, footers, and much more.
+Customize your WooCommerce transactional emails with a live preview using the WordPress Customizer. Change colors, fonts, header images, layout, and more.
 
 == Description ==
 
-Email Customizer For WooCommerce plugin allows you to personalize your transactional emails. The plugin allows you to insert various elements into the template, such as text, images, headers, footers, and much more.
+**WooCommerce Email Customizer** lets you brand your WooCommerce transactional emails right from the WordPress Customizer with a real-time live preview.
 
-A few notes about the sections above:
+No coding required. Simply adjust the controls and see your changes instantly in the preview pane.
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+= Features =
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+* **Live Preview** - See your email changes in real time using the WordPress Customizer
+* **Header Customization** - Upload a logo/header image, change background and text colors
+* **Body Styling** - Customize background colors, text colors, font size, and font family
+* **Footer Customization** - Edit footer text, colors, padding, and address block styling
+* **Container Layout** - Adjust email width, padding, borders, rounded corners, and box shadow
+* **Header Image Options** - Inside or outside placement, left/center/right alignment
+* **Test Email** - Send a test email to verify your design looks correct
+* **WooCommerce Subscriptions** - Compatible with WooCommerce Subscriptions emails
+* **RTL Support** - Full right-to-left language support
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+= How It Works =
+
+1. Go to **WooCommerce > Email Customizer** (or **Appearance > Customize > Email Customizer**)
+2. Adjust the settings in each section (Header, Body, Footer, Container)
+3. See your changes live in the preview pane
+4. Click **Publish** to save
+
+= Requirements =
+
+* WordPress 5.8 or higher
+* WooCommerce 7.0 or higher
+* PHP 7.4 or higher
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `email-customizer-for-woocommerce.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Upload the `woocommerce-email-customizer` folder to `/wp-content/plugins/`
+2. Activate the plugin through the **Plugins** menu in WordPress
+3. Go to **WooCommerce > Email Customizer** to start customizing
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Does this work with all WooCommerce emails? =
 
-An answer to that question.
+Yes, the customizer styles apply to all WooCommerce transactional emails including new order, processing, completed, refunded, and customer note emails.
 
-= What about foo bar? =
+= Can I upload a header image? =
 
-Answer to foo bar dilemma.
+Yes. Go to the Email Header section in the Customizer and upload your image. You can choose inside or outside placement and left, center, or right alignment.
+
+= Does this work with WooCommerce Subscriptions? =
+
+Yes. If WooCommerce Subscriptions is active, the customizer automatically applies your styles to subscription-related emails as well.
+
+= Can I send a test email? =
+
+Yes. There is a test email section in the Customizer where you can enter an email address and send a preview.
+
+= Will my email clients support these styles? =
+
+The plugin uses inline CSS which is the standard for email client compatibility. It works with Gmail, Outlook, Apple Mail, Yahoo Mail, and most other major email clients.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Email Customizer panel in the WordPress Customizer
+2. Header customization options with live preview
+3. Footer and container styling options
 
 == Changelog ==
+
+= 1.3.0 =
+* Fix: Removed orphaned JS enqueue causing 404 error on every Customizer load
+* Fix: Plugin now properly checks for WooCommerce before bootstrapping
+* Fix: Added isset guard for $additional_content in all email templates
+* Fix: Proper wp_unslash() on POST data during test email
+* Fix: $_GET superglobal properly restored in all code paths
+* Fix: WP_Customize_Control class only loaded in Customizer (performance improvement)
+* Removed: Dead code - Cache, Logger, Validator classes (~600 lines)
+* Removed: Orphaned methods (control_filter, add_email_header)
+* Added: ABSPATH guards on all include files
+* Added: Build tooling (gruntfile.js, package.json, .distignore)
+
 = 1.2.0 =
-Fix: Removed view more extension button
-Fix: Hide admin notices and update extension, support title
-Fix: Uupdated backend UI
+* Fix: Removed view more extension button
+* Fix: Hide admin notices and update extension, support title
+* Fix: Updated backend UI
 
 = 1.0.0 =
 * Initial Release
+
+== Upgrade Notice ==
+
+= 1.3.0 =
+Important stability update. Fixes 5 critical bugs including a JavaScript 404 error and WooCommerce dependency check. Removes ~600 lines of dead code for better performance.

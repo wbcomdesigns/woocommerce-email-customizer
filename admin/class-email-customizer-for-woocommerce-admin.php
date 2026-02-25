@@ -1290,23 +1290,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Show only our email settings in the preview.
-	 *
-	 * @since 1.0.0
-	 * @param bool   $active  Whether the control is active.
-	 * @param object $control The control object.
-	 * @return bool Whether the control should be active.
-	 */
-	public function control_filter( $active, $control ): bool {
-		if ( in_array( $control->section, array( 'wc_email_template', 'wc_email_text', 'wc_email_header', 'wc_email_body', 'wc_email_footer', 'wc_email_send' ), true ) ) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Added Customizer Settings.
 	 *
 	 * @param string $wp_customize Get a Customizer Section.
@@ -1624,39 +1607,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Hook in email header with access to the email object
-	 *
-	 * @param string $email_heading email heading.
-	 * @param object $email the email object.
-	 * @access public
-	 * @return void
-	 */
-	public function add_email_header( $email_heading, $email = '' ): void {
-		wc_get_template(
-			'emails/email-header.php',
-			array(
-				'email_heading' => $email_heading,
-				'email'         => $email,
-			)
-		);
-	}
-
-	/**
-	 * Enqueues the customizer JS script.
-	 */
-	public function wb_email_customizer_enqueue_customizer_script(): void {
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$extension = '.js';
-			$path      = '';
-		} else {
-			$extension = '.min.js';
-			$path      = '/min';
-		}
-
-		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer' . $extension, array( 'jquery', 'customize-preview' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
-	}
-
-	/**
 	 * Get and validate a parameter from $_GET or options.
 	 *
 	 * @param string $key             The parameter key.
@@ -1967,16 +1917,6 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * AJAX handler for loading template presets (backward compatibility).
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_email_customizer_load_template_presets_cb(): void {
-		$this->wb_email_customizer_load_template_presets();
-	}
-
-	/**
 	 * AJAX handler for sending a test email.
 	 *
 	 * @since  1.0.0
@@ -2010,8 +1950,9 @@ class Email_Customizer_For_Woocommerce_Admin {
 			// Build the query string from POST data for the template to use.
 			$query_args = array();
 			if ( isset( $_POST['settings'] ) && is_array( $_POST['settings'] ) ) {
-				foreach ( $_POST['settings'] as $key => $value ) {
-					$query_args[ sanitize_key( $key ) ] = sanitize_text_field( wp_unslash( $value ) );
+				$raw_settings = wp_unslash( $_POST['settings'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				foreach ( $raw_settings as $key => $value ) {
+					$query_args[ sanitize_key( $key ) ] = sanitize_text_field( $value );
 				}
 			}
 
@@ -2019,19 +1960,21 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			// Temporarily set GET params for template rendering.
 			$original_get = $_GET;
-			$_GET         = array_merge( $_GET, $query_args );
+			try {
+				$_GET = array_merge( $_GET, $query_args );
 
-			$template = $this->get_validated_param( 'woocommerce_email_template', 'default', 'template' );
+				$template = $this->get_validated_param( 'woocommerce_email_template', 'default', 'template' );
 
-			ob_start();
-			$template_file = $this->get_template_file_path( $template );
-			if ( file_exists( $template_file ) ) {
-				include $template_file;
+				ob_start();
+				$template_file = $this->get_template_file_path( $template );
+				if ( file_exists( $template_file ) ) {
+					include $template_file;
+				}
+				$message = ob_get_clean();
+			} finally {
+				// Always restore original GET, even on exceptions.
+				$_GET = $original_get;
 			}
-			$message = ob_get_clean();
-
-			// Restore original GET.
-			$_GET = $original_get;
 
 			if ( empty( $message ) ) {
 				wp_send_json_error( __( 'Failed to generate email content.', 'email-customizer-for-woocommerce' ) );

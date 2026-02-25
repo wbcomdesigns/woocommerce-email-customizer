@@ -116,25 +116,6 @@ class Email_Customizer_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-i18n.php';
 
 		/**
-		 * The class responsible for validating the settings
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-validator-woocommerce.php';
-
-		/**
-		 * The class responsible for handling settings with caching
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-cache.php';
-
-		/**
-		 * The class responsible for handling settings with logging
-		 * and error handling
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-email-customizer-for-woocommerce-logger.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-email-customizer-for-woocommerce-admin.php';
@@ -187,15 +168,13 @@ class Email_Customizer_For_Woocommerce {
 
 		// AJAX actions for template presets.
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
-		// Backward compatibility - register the _cb version as well.
-		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets_cb', $plugin_admin, 'wb_email_customizer_load_template_presets_cb' );
 
 		// Existing actions continue.
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'wb_email_customizer_enqueue_customizer_control_script' );
 		$this->loader->add_filter( 'woocommerce_email_footer_text', $plugin_admin, 'wb_email_customizer_email_footer_text' );
 		$this->loader->add_filter( 'woocommerce_email_styles', $plugin_admin, 'wb_email_customizer_add_styles' );
 		$this->loader->add_filter( 'query_vars', $plugin_admin, 'wb_email_customizer_add_query_vars' );
-		$this->loader->add_action( 'customize_preview_init', $plugin_admin, 'wb_email_customizer_enqueue_customizer_script' );
+
 		$this->loader->add_action( 'template_redirect', $plugin_admin, 'wb_email_customizer_load_email_template', 10 );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

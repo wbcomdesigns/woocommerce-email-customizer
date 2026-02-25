@@ -12,6 +12,11 @@
  * @subpackage Email_Customizer_For_Woocommerce/includes
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Define the internationalization functionality.
  *

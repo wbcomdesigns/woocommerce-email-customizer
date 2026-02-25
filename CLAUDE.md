@@ -3,18 +3,18 @@
 ## Plugin Identity
 - **Name:** Wbcom Designs - Woocommerce Email Customizer
 - **Slug:** `email-customizer-for-woocommerce`
-- **Version:** 1.2.0
+- **Version:** 1.3.0
 - **Author:** Wbcom Designs
 - **License:** GPL-2.0+
 - **Text Domain:** `email-customizer-for-woocommerce`
 - **Plugin URI:** https://wbcomdesigns.com/downloads/email-customizer-for-woocommerce
 - **Monetization:** EDD License (paid plugin, not on WordPress.org free directory)
-- **WP Requires:** 3.0.1+
+- **WP Requires:** 5.8+
 - **Tested Up To:** WP 6.9
 
 ## Codebase Stats
-- **Total PHP Lines:** ~8,000
-- **Total Files:** ~69 (excluding .git)
+- **Total PHP Lines:** ~7,200 (after dead code removal)
+- **Total Files:** ~66 (excluding .git)
 - **Architecture:** WordPress Plugin Boilerplate pattern (admin/public/includes separation)
 
 ## Architecture
@@ -30,9 +30,6 @@
 | `includes/class-email-customizer-for-woocommerce-i18n.php` | `Email_Customizer_For_Woocommerce_I18n` | Internationalization |
 | `includes/class-email-customizer-for-woocommerce-activator.php` | `Email_Customizer_For_Woocommerce_Activator` | Activation logic |
 | `includes/class-email-customizer-for-woocommerce-deactivator.php` | `Email_Customizer_For_Woocommerce_Deactivator` | Deactivation logic |
-| `includes/class-email-customizer-for-woocommerce-cache.php` | `WB_Email_Customizer_Cache` | Option/transient caching with master tracking |
-| `includes/class-email-customizer-for-woocommerce-logger.php` | `WB_Email_Customizer_Logger` | Error logging (WP_DEBUG dependent) |
-| `includes/class-email-customizer-validator-woocommerce.php` | `WB_Email_Customizer_Validator` | Input validation & sanitization for all settings |
 | `includes/class-subscription-handler.php` | `Email_Customizer_Subscription_Handler` | WooCommerce Subscriptions integration |
 
 ### Admin Classes
@@ -157,11 +154,10 @@ woocommerce_email_footer_address_border_style (solid/dotted)
 - All customizer settings stored as individual WP options
 - `edd_wbcom_woo_email_customizer_license_key` - License key
 - `edd_wbcom_woo_email_customizer_license_status` - License status
-- `wb_email_customizer_cached_options` - Master tracking of cached options
 
 ## Constants
 ```php
-EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION  // '1.2.0'
+EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION  // '1.3.0'
 EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR      // Plugin directory with trailing slash
 EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH  // Plugin directory (no trailing slash)
 EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL   // Plugin URL with trailing slash
@@ -175,11 +171,11 @@ EDD_WOO_EMAIL_CUSTOMIZER_ITEM_NAME   // 'Woocommerce Email Customizer'
 - Nonce verification on all AJAX handlers
 - `manage_woocommerce` capability checks
 - Sanitization callbacks on all Customizer settings
-- Dedicated Validator class with per-type validation
 - Input sanitization via `sanitize_text_field`, `sanitize_hex_color`, `absint`, `esc_url_raw`
 
 ## Recent Changes
 | Version | Changes |
 |---------|---------|
+| 1.3.0 | Critical bug fixes (5), dead code removal (~600 lines), ABSPATH guards, build tooling, README rewrite, version bump |
 | 1.2.0 | Removed view more extension button, hide admin notices, updated backend UI |
 | 1.0.0 | Initial Release |

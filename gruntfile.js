@@ -2,15 +2,86 @@
 module.exports = function (grunt) {
 
   // load all grunt tasks matching the `grunt-*` pattern
-  // Ref. https://npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
+
   grunt.initConfig({
+
+    // Package info
+    pkg: grunt.file.readJSON('package.json'),
+
+    // Clean dist folder
+    clean: {
+      dist: {
+        src: [ 'dist/**' ]
+      }
+    },
+
+    // Copy files to dist folder
+    copy: {
+      dist: {
+        files: [
+          {
+            expand: true,
+            src: [
+              '**',
+              '!node_modules/**',
+              '!dist/**',
+              '!.git/**',
+              '!.github/**',
+              '!tests/**',
+              '!bin/**',
+              '!docs/**',
+              '!.gitignore',
+              '!.gitattributes',
+              '!.editorconfig',
+              '!.distignore',
+              '!gruntfile.js',
+              '!Gruntfile.js',
+              '!package.json',
+              '!package-lock.json',
+              '!composer.json',
+              '!composer.lock',
+              '!phpcs.xml',
+              '!phpunit.xml',
+              '!README.md',
+              '!claude.md',
+              '!CLAUDE.md',
+              '!DEEP-AUDIT.md',
+              '!BUGFIX-LOG.md',
+              '!CHANGELOG.md',
+              '!market-audit.md',
+              '!competitive-analysis.md',
+              '!.DS_Store'
+            ],
+            dest: 'dist/<%= pkg.name %>/'
+          }
+        ]
+      }
+    },
+
+    // Compress to zip
+    compress: {
+      dist: {
+        options: {
+          archive: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip',
+          mode: 'zip'
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'dist/',
+            src: [ '<%= pkg.name %>/**' ],
+            dest: '/'
+          }
+        ]
+      }
+    },
 
     // Check text domain
     checktextdomain: {
       options: {
-        text_domain: ['email-customizer-for-woocommerce'], // Specify allowed domain(s)
-        keywords: [ // List keyword specifications
+        text_domain: ['email-customizer-for-woocommerce'],
+        keywords: [
           '__:1,2d',
           '_e:1,2d',
           '_x:1,2c,3d',
@@ -33,10 +104,9 @@ module.exports = function (grunt) {
             '*.php',
             '**/*.php',
             '!node_modules/**',
-            '!options/framework/**',
-            '!tests/**',
-            '!wec-update-checker/**'
-          ], // all php
+            '!vendor/**',
+            '!tests/**'
+          ],
           expand: true
         }]
       }
@@ -47,28 +117,28 @@ module.exports = function (grunt) {
       public: {
         files: [{
           expand: true,
-          cwd: 'public/css/', // Source directory for frontend CSS files
-          src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all frontend CSS files except already minified ones
-          dest: 'public/css/min', // Destination directory for minified frontend CSS
-          ext: '.min.css', // Extension for minified files
+          cwd: 'public/css/',
+          src: ['*.css', '!*.min.css', '!vendor/*.css'],
+          dest: 'public/css/min',
+          ext: '.min.css',
         }],
       },
       admin: {
         files: [{
           expand: true,
-          cwd: 'admin/css/', // Source directory for admin CSS files
-          src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
-          dest: 'admin/css/', // Destination directory for minified admin CSS
-          ext: '.min.css', // Extension for minified files
+          cwd: 'admin/css/',
+          src: ['*.css', '!*.min.css', '!vendor/*.css'],
+          dest: 'admin/css/',
+          ext: '.min.css',
         }],
       },
       wbcom: {
         files: [{
           expand: true,
-          cwd: 'admin/wbcom/assets/css/', // Source directory for admin CSS files
-          src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
-          dest: 'admin/wbcom/assets/css/min/', // Destination directory for minified admin CSS
-          ext: '.min.css', // Extension for minified files
+          cwd: 'admin/wbcom/assets/css/',
+          src: ['*.css', '!*.min.css', '!vendor/*.css'],
+          dest: 'admin/wbcom/assets/css/min/',
+          ext: '.min.css',
         }],
       },
     },
@@ -77,38 +147,38 @@ module.exports = function (grunt) {
     uglify: {
       public: {
         options: {
-          mangle: false, // Prevents variable name mangling
+          mangle: false,
         },
         files: [{
           expand: true,
-          cwd: 'public/js/', // Source directory for frontend JS files
-          src: ['*.js', '!*.min.js', '!vendor/*.js'], // Minify all frontend JS files except already minified ones
-          dest: 'public/js/min/', // Destination directory for minified frontend JS
-          ext: '.min.js', // Extension for minified files
+          cwd: 'public/js/',
+          src: ['*.js', '!*.min.js', '!vendor/*.js'],
+          dest: 'public/js/min/',
+          ext: '.min.js',
         }],
       },
       admin: {
         options: {
-          mangle: false, // Prevents variable name mangling
+          mangle: false,
         },
         files: [{
           expand: true,
-          cwd: 'admin/js/', // Source directory for admin JS files
-          src: ['*.js', '!*.min.js', '!vendor/*.js'], // Minify all admin JS files except already minified ones
-          dest: 'admin/js/min/', // Destination directory for minified admin JS
-          ext: '.min.js', // Extension for minified files
+          cwd: 'admin/js/',
+          src: ['*.js', '!*.min.js', '!vendor/*.js'],
+          dest: 'admin/js/min/',
+          ext: '.min.js',
         }],
       },
       wbcom: {
         options: {
-          mangle: false, // Prevents variable name mangling
+          mangle: false,
         },
         files: [{
           expand: true,
-          cwd: 'admin/wbcom/assets/js', // Source directory for admin JS files
-          src: ['*.js', '!*.min.js', '!vendor/*.js'], // Minify all admin JS files except already minified ones
-          dest: 'admin/wbcom/assets/js/min/', // Destination directory for minified admin JS
-          ext: '.min.js', // Extension for minified files
+          cwd: 'admin/wbcom/assets/js',
+          src: ['*.js', '!*.min.js', '!vendor/*.js'],
+          dest: 'admin/wbcom/assets/js/min/',
+          ext: '.min.js',
         }],
       },
     },
@@ -116,24 +186,24 @@ module.exports = function (grunt) {
     // Task for watching file changes
     watch: {
       css: {
-        files: ['public/css/*.css'], // Watch for changes in frontend CSS files
-        tasks: ['cssmin:public'], // Run frontend CSS minification task
+        files: ['public/css/*.css'],
+        tasks: ['cssmin:public'],
       },
       adminCss: {
-        files: ['admin/css/*.css'], // Watch for changes in admin CSS files
-        tasks: ['cssmin:admin'], // Run admin CSS minification task
+        files: ['admin/css/*.css'],
+        tasks: ['cssmin:admin'],
       },
       js: {
-        files: ['public/js/*.js'], // Watch for changes in frontend JS files
-        tasks: ['uglify:public'], // Run frontend JS minification task
+        files: ['public/js/*.js'],
+        tasks: ['uglify:public'],
       },
       adminJs: {
-        files: ['admin/js/*.js'], // Watch for changes in admin JS files
-        tasks: ['uglify:admin'], // Run admin JS minification task
+        files: ['admin/js/*.js'],
+        tasks: ['uglify:admin'],
       },
       php: {
-        files: ['**/*.php'], // Watch for changes in PHP files
-        tasks: ['checktextdomain'], // Run text domain check
+        files: ['**/*.php'],
+        tasks: ['checktextdomain'],
       },
     },
 
@@ -141,45 +211,42 @@ module.exports = function (grunt) {
     rtlcss: {
       myTask: {
         options: {
-          // Generate source maps
           map: { inline: false },
-          // RTL CSS options
           opts: {
             clean: false
           },
-          // RTL CSS plugins
           plugins: [],
-          // Save unmodified files
           saveUnmodified: true,
         },
         files: [
           {
             expand: true,
-            cwd: 'public/css/', // Source directory for public CSS
-            src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
-            dest: 'public/css/rtl/', // Destination directory for public RTL CSS
-            ext: '.rtl.css', // Extension for RTL files
-            flatten: true // Prevents creating subdirectories
+            cwd: 'public/css/',
+            src: ['**/*.min.css', '!vendor/**/*.css'],
+            dest: 'public/css/rtl/',
+            ext: '.rtl.css',
+            flatten: true
           },
           {
             expand: true,
-            cwd: 'admin/css/', // Source directory for admin CSS
-            src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
-            dest: 'admin/css/', // Destination directory for admin RTL CSS
-            ext: '.rtl.css', // Extension for RTL files
-            flatten: true // Prevents creating subdirectories
+            cwd: 'admin/css/',
+            src: ['**/*.min.css', '!vendor/**/*.css'],
+            dest: 'admin/css/',
+            ext: '.rtl.css',
+            flatten: true
           },
           {
             expand: true,
-            cwd: 'admin/wbcom/assets/css/', // Source directory for public CSS
-            src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
-            dest: 'admin/wbcom/assets/css/rtl/', // Destination directory for public RTL CSS
-            ext: '.rtl.css', // Extension for RTL files
-            flatten: true // Prevents creating subdirectories
+            cwd: 'admin/wbcom/assets/css/',
+            src: ['**/*.min.css', '!vendor/**/*.css'],
+            dest: 'admin/wbcom/assets/css/rtl/',
+            ext: '.rtl.css',
+            flatten: true
           }
         ]
       }
     },
+
     shell: {
       wpcli: {
         command: 'wp i18n make-pot . languages/email-customizer-for-woocommerce.pot',
@@ -187,15 +254,10 @@ module.exports = function (grunt) {
     }
   });
 
-  // Load the plugins
-  grunt.loadNpmTasks('grunt-wp-i18n');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-checktextdomain');
-  grunt.loadNpmTasks('grunt-rtlcss');
-  grunt.loadNpmTasks('grunt-shell');
-
-  // Register default tasks
-  grunt.registerTask('default', ['cssmin', 'uglify', 'checktextdomain', 'rtlcss', 'shell', 'watch']);
+  // Register tasks
+  grunt.registerTask('default', ['cssmin', 'uglify', 'checktextdomain', 'rtlcss', 'shell']);
+  grunt.registerTask('minify', ['cssmin', 'uglify', 'rtlcss']);
+  grunt.registerTask('i18n', ['checktextdomain', 'shell']);
+  grunt.registerTask('build', ['clean:dist', 'copy:dist', 'compress:dist']);
+  grunt.registerTask('zip', ['clean:dist', 'copy:dist', 'compress:dist']);
 };

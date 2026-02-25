@@ -9,6 +9,11 @@
  * @subpackage Email_Customizer_For_Woocommerce/includes
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Fired during plugin activation.
  *

@@ -1,0 +1,17 @@
+.git
+.gitignore
+.gitattributes
+.editorconfig
+node_modules
+package.json
+package-lock.json
+gruntfile.js
+CLAUDE.md
+DEEP-AUDIT.md
+market-audit.md
+competitive-analysis.md
+README.md
+BUGFIX-LOG.md
+CHANGELOG.md
+.DS_Store
+.distignore
