@@ -677,6 +677,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 		 * Mail texts
 		 */
 
+		$placeholder_desc = __( 'Placeholders: {site_title}, {order_number}, {order_date}, {order_total}, {customer_first_name}, {customer_last_name}, {customer_full_name}, {customer_email}, {year}', 'email-customizer-for-woocommerce' );
+
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -684,12 +686,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 				array(
 					'type'        => 'text',
 					'label'       => __( 'Email Heading', 'email-customizer-for-woocommerce' ),
-					'description' => __( 'Enter the main heading text for emails (max 200 characters).', 'email-customizer-for-woocommerce' ),
+					'description' => __( 'Enter the main heading text for emails.', 'email-customizer-for-woocommerce' ) . '<br><small>' . $placeholder_desc . '</small>',
 					'section'     => 'wc_email_text',
 					'settings'    => 'woocommerce_email_heading_text',
 					'input_attrs' => array(
 						'maxlength'   => 200,
-						'placeholder' => __( 'Enter heading text...', 'email-customizer-for-woocommerce' ),
+						'placeholder' => __( 'e.g. Thanks for your order, {customer_first_name}!', 'email-customizer-for-woocommerce' ),
 					),
 				)
 			)
@@ -700,11 +702,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_text_subheading_control',
 				array(
-					'label'    => __( 'Subheading Text', 'email-customizer-for-woocommerce' ),
-					'priority' => 30,
-					'section'  => 'wc_email_text',
-					'settings' => 'woocommerce_email_subheading_text',
-					'type'     => 'text',
+					'label'       => __( 'Subheading Text', 'email-customizer-for-woocommerce' ),
+					'description' => '<small>' . $placeholder_desc . '</small>',
+					'priority'    => 30,
+					'section'     => 'wc_email_text',
+					'settings'    => 'woocommerce_email_subheading_text',
+					'type'        => 'text',
 				)
 			)
 		);
@@ -714,11 +717,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_text_body_control',
 				array(
-					'label'    => __( 'Body Text', 'email-customizer-for-woocommerce' ),
-					'priority' => 30,
-					'section'  => 'wc_email_text',
-					'settings' => 'woocommerce_email_body_text',
-					'type'     => 'textarea',
+					'label'       => __( 'Body Text', 'email-customizer-for-woocommerce' ),
+					'description' => '<small>' . $placeholder_desc . '</small>',
+					'priority'    => 30,
+					'section'     => 'wc_email_text',
+					'settings'    => 'woocommerce_email_body_text',
+					'type'        => 'textarea',
 				)
 			)
 		);
@@ -1142,11 +1146,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 				$wp_customize,
 				'wc_email_footer_text_control',
 				array(
-					'label'    => __( 'Footer Text', 'email-customizer-for-woocommerce' ),
-					'priority' => 30,
-					'section'  => 'wc_email_footer',
-					'settings' => 'woocommerce_email_footer_text',
-					'type'     => 'text',
+					'label'       => __( 'Footer Text', 'email-customizer-for-woocommerce' ),
+					'description' => '<small>' . __( 'Placeholders: {site_title}, {site_url}, {year}', 'email-customizer-for-woocommerce' ) . '</small>',
+					'priority'    => 30,
+					'section'     => 'wc_email_footer',
+					'settings'    => 'woocommerce_email_footer_text',
+					'type'        => 'text',
 				)
 			)
 		);
@@ -2043,6 +2048,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_email_footer_text( $text ): string {
 		$footer_text = ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// Replace dynamic placeholders (no order context in footer filter).
+		if ( function_exists( 'wb_email_replace_placeholders' ) ) {
+			$footer_text = wb_email_replace_placeholders( $footer_text );
+		}
 
 		$social_html = $this->get_social_links_html();
 		if ( ! empty( $social_html ) ) {

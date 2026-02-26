@@ -44,6 +44,12 @@ if ( ! isset( $email_heading ) || empty( $email_heading ) ) {
 	$email_heading = get_bloginfo( 'name' );
 }
 
+// Replace dynamic placeholders.
+if ( function_exists( 'wb_email_replace_placeholders' ) ) {
+	$placeholder_order = isset( $order ) && $order instanceof WC_Order ? $order : null;
+	$email_heading     = wb_email_replace_placeholders( $email_heading, $placeholder_order );
+}
+
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 	$template               = get_option( 'woocommerce_email_template' );
 ?>

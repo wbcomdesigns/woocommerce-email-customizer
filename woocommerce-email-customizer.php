@@ -178,6 +178,61 @@ add_action(
 	}
 );
 
+/**
+ * Replace dynamic placeholders in email text.
+ *
+ * Supported: {site_title}, {site_url}, {year}, {order_number}, {order_date},
+ * {order_total}, {customer_first_name}, {customer_last_name}, {customer_full_name},
+ * {customer_email}, {customer_username}, {payment_method}, {shipping_method}.
+ *
+ * @since  1.3.0
+ * @param  string        $text  Text containing placeholders.
+ * @param  WC_Order|null $order WooCommerce order object (optional).
+ * @return string Text with placeholders replaced.
+ */
+function wb_email_replace_placeholders( $text, $order = null ) {
+	if ( empty( $text ) || strpos( $text, '{' ) === false ) {
+		return $text;
+	}
+
+	// Site-level placeholders (always available).
+	$replacements = array(
+		'{site_title}' => get_bloginfo( 'name' ),
+		'{site_url}'   => home_url(),
+		'{year}'       => gmdate( 'Y' ),
+	);
+
+	// Order-level placeholders.
+	if ( $order instanceof WC_Order ) {
+		$replacements['{order_number}']        = $order->get_order_number();
+		$replacements['{order_date}']          = wc_format_datetime( $order->get_date_created() );
+		$replacements['{order_total}']         = wp_strip_all_tags( wc_price( $order->get_total() ) );
+		$replacements['{customer_first_name}'] = $order->get_billing_first_name();
+		$replacements['{customer_last_name}']  = $order->get_billing_last_name();
+		$replacements['{customer_full_name}']  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
+		$replacements['{customer_email}']      = $order->get_billing_email();
+		$replacements['{payment_method}']      = $order->get_payment_method_title();
+		$replacements['{shipping_method}']     = $order->get_shipping_method();
+
+		$user = $order->get_user();
+		$replacements['{customer_username}'] = $user ? $user->user_login : '';
+	} else {
+		// Sample data for Customizer preview.
+		$replacements['{order_number}']        = '1234';
+		$replacements['{order_date}']          = wp_date( wc_date_format() );
+		$replacements['{order_total}']         = wp_strip_all_tags( wc_price( 99.99 ) );
+		$replacements['{customer_first_name}'] = 'John';
+		$replacements['{customer_last_name}']  = 'Doe';
+		$replacements['{customer_full_name}']  = 'John Doe';
+		$replacements['{customer_email}']      = 'john@example.com';
+		$replacements['{customer_username}']   = 'johndoe';
+		$replacements['{payment_method}']      = 'Credit Card';
+		$replacements['{shipping_method}']     = 'Flat Rate';
+	}
+
+	return str_replace( array_keys( $replacements ), array_values( $replacements ), $text );
+}
+
 // Declare HPOS compatibility.
 add_action(
 	'before_woocommerce_init',

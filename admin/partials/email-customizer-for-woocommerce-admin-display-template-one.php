@@ -26,6 +26,18 @@ if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) || ( isset( $_GET['w
 	$woocommerce_email_body_text = ( isset( $_GET['woocommerce_email_body_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_body_text'] ) ) : get_option( 'woocommerce_email_body_text' );
 }
 // phpcs:enable
+
+// Replace dynamic placeholders in text fields.
+if ( function_exists( 'wb_email_replace_placeholders' ) ) {
+	$placeholder_order = isset( $order ) && $order instanceof WC_Order ? $order : null;
+	if ( ! empty( $woocommerce_email_subheading_text ) ) {
+		$woocommerce_email_subheading_text = wb_email_replace_placeholders( $woocommerce_email_subheading_text, $placeholder_order );
+	}
+	if ( ! empty( $woocommerce_email_body_text ) ) {
+		$woocommerce_email_body_text = wb_email_replace_placeholders( $woocommerce_email_body_text, $placeholder_order );
+	}
+}
+
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	/*
