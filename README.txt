@@ -25,7 +25,12 @@ No coding required. Simply adjust the controls and see your changes instantly in
 * **Footer Customization** - Edit footer text, colors, padding, and address block styling
 * **Container Layout** - Adjust email width, padding, borders, rounded corners, and box shadow
 * **Header Image Options** - Inside or outside placement, left/center/right alignment
+* **Social Media Links** - Add Facebook, X (Twitter), Instagram, LinkedIn, YouTube links to email footer
+* **Dynamic Placeholders** - Use {order_number}, {customer_first_name}, {site_title}, and more in text fields
+* **Custom CSS** - Add your own CSS for advanced email styling control
+* **Import/Export** - Export settings as JSON and import on another site
 * **Test Email** - Send a test email to verify your design looks correct
+* **HPOS Compatible** - Works with WooCommerce High-Performance Order Storage
 * **WooCommerce Subscriptions** - Compatible with WooCommerce Subscriptions emails
 * **RTL Support** - Full right-to-left language support
 
@@ -95,6 +100,12 @@ The plugin uses inline CSS which is the standard for email client compatibility.
 * Performance: N+1 query fix — hoisted get_option calls out of loops
 * Performance: Set autoload=no on migration data options
 * Fix: Proper sanitization of settings array in Customizer save
+* Added: HPOS (High-Performance Order Storage) compatibility declaration
+* Added: Custom CSS section in Customizer for advanced email styling
+* Added: Social Media Links section (Facebook, X, Instagram, LinkedIn, YouTube) in email footer
+* Added: Import/Export settings as JSON for easy migration between sites
+* Added: Dynamic placeholders ({site_title}, {order_number}, {customer_first_name}, etc.) in all text fields
+* Added: Custom email-footer.php template override with social links support
 
 = 1.2.0 =
 * Fix: Removed view more extension button
