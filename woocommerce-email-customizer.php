@@ -178,6 +178,16 @@ add_action(
 	}
 );
 
+// Declare HPOS compatibility.
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
+
 add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_settings' );
 
 /**

@@ -285,6 +285,12 @@
             updateEmailPreviewFrame(argument_obj);
         });
 
+        // Custom CSS - Real-time updates
+        bindCustomizerSetting('woocommerce_email_custom_css', function (newval) {
+            argument_obj['woocommerce_email_custom_css'] = newval;
+            updateEmailPreviewFrame(argument_obj);
+        });
+
         // Template Selection - Real-time updates with settings synchronization
         wp.customize('woocommerce_email_template', function (value) {
             value.bind(function (newval) {

@@ -615,6 +615,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Customize the footer section including text and styling.', 'email-customizer-for-woocommerce' ),
 				'priority'    => 60,
 			),
+			'wc_email_custom_css'            => array(
+				'title'       => __( 'Custom CSS', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Add your own CSS to further customize email styling.', 'email-customizer-for-woocommerce' ),
+				'priority'    => 70,
+			),
 		);
 
 		foreach ( $sections as $section_id => $section_args ) {
@@ -1287,6 +1292,25 @@ class Email_Customizer_For_Woocommerce_Admin {
 				)
 			)
 		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_custom_css_control',
+				array(
+					'label'       => __( 'Custom CSS', 'email-customizer-for-woocommerce' ),
+					'description' => __( 'Add custom CSS to style your emails. These styles will be appended after all other email styles.', 'email-customizer-for-woocommerce' ),
+					'section'     => 'wc_email_custom_css',
+					'settings'    => 'woocommerce_email_custom_css',
+					'type'        => 'textarea',
+					'input_attrs' => array(
+						'placeholder' => __( 'e.g. #template_header h1 { letter-spacing: 2px; }', 'email-customizer-for-woocommerce' ),
+						'rows'        => 10,
+						'style'       => 'font-family: monospace; font-size: 12px;',
+					),
+				)
+			)
+		);
 	}
 
 	/**
@@ -1515,6 +1539,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'transport'         => 'postMessage',
 				'sanitize_callback' => 'sanitize_key',
 			),
+			'woocommerce_email_custom_css'                => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'wp_strip_all_tags',
+			),
 		);
 
 		$settings_config = apply_filters( 'wb_email_customizer_settings_config', $settings_config, $wp_customize );
@@ -1645,6 +1674,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 			case 'font_family':
 				$allowed = array( 'sans-serif', 'serif' );
 				return in_array( $value, $allowed, true ) ? $value : $default;
+			case 'custom_css':
+				return wp_strip_all_tags( $value );
 			default:
 				return sanitize_text_field( $value );
 		}
@@ -1841,6 +1872,13 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$styles .= $footer_bottom;
 		$styles .= $image_alignment;
 		$styles .= $body_title_style;
+
+		// Append custom CSS.
+		$custom_css = $this->get_validated_param( 'woocommerce_email_custom_css', '', 'custom_css' );
+		if ( ! empty( $custom_css ) ) {
+			$styles .= PHP_EOL . '/* Custom CSS */' . PHP_EOL;
+			$styles .= wp_strip_all_tags( $custom_css );
+		}
 
 		return $styles;
 	}
@@ -2173,6 +2211,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'woocommerce_email_footer_address_border'     => 1,
 			'woocommerce_email_footer_address_border_color' => '#dddddd',
 			'woocommerce_email_footer_address_border_style' => 'solid',
+			'woocommerce_email_custom_css'                => '',
 		);
 
 		// Get template-specific overrides.
