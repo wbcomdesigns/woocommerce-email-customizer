@@ -15,7 +15,7 @@
  * Plugin Name:       Wbcom Designs – Woocommerce Email Customizer
  * Plugin URI:        https://wbcomdesigns.com/downloads/email-customizer-for-woocommerce
  * Description:       The Email Customizer For WooCommerce plugin allows you to personalize your transactional emails. You can insert various elements into the template, such as text, images, headers, footers, and much more.
- * Version:           1.3.0
+ * Version:           1.3.1
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION' ) ) {
-	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION', '1.3.0' );
+	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION', '1.3.1' );
 }
 if ( ! defined( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR' ) ) {
 	define( 'EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR', trailingslashit( __DIR__ ) );
@@ -189,7 +189,7 @@ add_action( 'activated_plugin', 'wb_email_customizer_activation_redirect_setting
  */
 function wb_email_customizer_activation_redirect_settings( $plugin ) {
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'WooCommerce' ) ) {
-		if ( isset( $_REQUEST['action'] ) && 'activate' === $_REQUEST['action'] && isset( $_REQUEST['plugin'] ) && $plugin === $_REQUEST['plugin'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_REQUEST['action'] ) && 'activate' === sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) && isset( $_REQUEST['plugin'] ) && $plugin === sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_safe_redirect( admin_url( 'admin.php?page=wb-email-customizer-settings&tab=wb-email-customizer-welcome' ) );
 			exit;
 		}

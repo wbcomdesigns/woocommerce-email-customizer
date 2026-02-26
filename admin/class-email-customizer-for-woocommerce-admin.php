@@ -115,7 +115,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 */
 	public function wb_email_customizer_maybe_run_email_customizer(): void {
 		if ( isset( $_GET[ $this->email_trigger ] ) && isset( $_GET['_wpnonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( wp_verify_nonce( wp_unslash( $_GET['_wpnonce'] ), 'preview-mail' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+			if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'preview-mail' ) ) {
 				add_action( 'wp_print_styles', array( $this, 'wb_email_customizer_remove_theme_styles' ), 100 );
 			} else {
 				wp_die( esc_html__( 'Invalid nonce.', 'email-customizer-for-woocommerce' ), 403 );
@@ -483,7 +483,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 
 		try {
-			if ( isset( $_GET[ $this->email_trigger ] ) && 'true' === $_GET[ $this->email_trigger ] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET[ $this->email_trigger ] ) && 'true' === sanitize_text_field( wp_unslash( $_GET[ $this->email_trigger ] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				// Use a more specific check to prevent multiple executions.
 				if ( defined( 'WC_EMAIL_PREVIEW_LOADED' ) ) {
 					return $wp_query;
@@ -531,7 +531,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 				// Set proper content type header.
 				header( 'Content-Type: text/html; charset=utf-8' );
 
-				echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Nonce-verified admin preview; full HTML email document from WooCommerce internals cannot be run through wp_kses_post without stripping required <html>/<head>/<style> tags.
 				exit;
 			}
 		} catch ( Exception $e ) {
@@ -1949,9 +1949,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 			// Build the query string from POST data for the template to use.
 			$query_args = array();
-			if ( isset( $_POST['settings'] ) && is_array( $_POST['settings'] ) ) {
-				$raw_settings = wp_unslash( $_POST['settings'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				foreach ( $raw_settings as $key => $value ) {
+			if ( isset( $_POST['settings'] ) && is_array( $_POST['settings'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotUnslashed
+				$unslashed_settings = wp_unslash( $_POST['settings'] );
+				// phpcs:enable
+				foreach ( $unslashed_settings as $key => $value ) {
 					$query_args[ sanitize_key( $key ) ] = sanitize_text_field( $value );
 				}
 			}
@@ -2031,10 +2033,14 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		$success = true;
 
+		// Fetch current values once to avoid a get_option() call per iteration.
+		$current_values = array_map( 'get_option', array_keys( $options_to_update ) );
+		$current_values = array_combine( array_keys( $options_to_update ), $current_values );
+
 		// Update each option.
 		foreach ( $options_to_update as $option_name => $option_value ) {
 			$result = update_option( $option_name, $option_value );
-			if ( false === $result && get_option( $option_name ) !== $option_value ) {
+			if ( false === $result && $current_values[ $option_name ] !== $option_value ) {
 				$success = false;
 			}
 		}

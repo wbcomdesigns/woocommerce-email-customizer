@@ -37,7 +37,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 		<h1 class="sub_heading"><?php echo esc_html( $woocommerce_email_subheading_text, ); ?></h1>
 	<?php } ?>
 
-	<?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
+	<?php echo wp_kses_post( $email_improvements_enabled ? '<div class="email-introduction">' : '' ); ?>
 	<p>
 	<?php
 	if ( ! empty( $order->get_billing_first_name() ) ) {
@@ -74,7 +74,7 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 
 	}
 	?>
-	<?php echo $email_improvements_enabled ? '</div>' : ''; ?>
+	<?php echo wp_kses_post( $email_improvements_enabled ? '</div>' : '' ); ?>
 
 	<?php
 	/*
@@ -135,9 +135,11 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 				<th colspan="2"><?php esc_html_e( 'Shipping:', 'email-customizer-for-woocommerce' ); ?></th>
 				<td>
 					<?php
-					echo $order->get_shipping_total() > 0
-						? wp_kses_post( wc_price( $order->get_shipping_total() ) )
-						: esc_html__( 'Free Shipping', 'email-customizer-for-woocommerce' );
+					if ( $order->get_shipping_total() > 0 ) {
+						echo wp_kses_post( wc_price( $order->get_shipping_total() ) );
+					} else {
+						esc_html_e( 'Free Shipping', 'email-customizer-for-woocommerce' );
+					}
 					?>
 				</td>
 			</tr>
@@ -217,9 +219,9 @@ if ( ! empty( $email_heading ) && ! empty( $email ) ) {
 	 * Show user-defined additional content - this is set in each email's settings.
 	 */
 	if ( ! empty( $additional_content ) ) {
-		echo $email_improvements_enabled ? '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td class="email-additional-content">' : '';
+		echo wp_kses_post( $email_improvements_enabled ? '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td class="email-additional-content">' : '' );
 		echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
-		echo $email_improvements_enabled ? '</td></tr></table>' : '';
+		echo wp_kses_post( $email_improvements_enabled ? '</td></tr></table>' : '' );
 	}
 
 	/*

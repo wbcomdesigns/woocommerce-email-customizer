@@ -3,7 +3,7 @@
 ## Plugin Identity
 - **Name:** Wbcom Designs - Woocommerce Email Customizer
 - **Slug:** `email-customizer-for-woocommerce`
-- **Version:** 1.3.0
+- **Version:** 1.3.1
 - **Author:** Wbcom Designs
 - **License:** GPL-2.0+
 - **Text Domain:** `email-customizer-for-woocommerce`
@@ -157,7 +157,7 @@ woocommerce_email_footer_address_border_style (solid/dotted)
 
 ## Constants
 ```php
-EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION  // '1.3.0'
+EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION  // '1.3.1'
 EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_DIR      // Plugin directory with trailing slash
 EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH  // Plugin directory (no trailing slash)
 EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL   // Plugin URL with trailing slash
@@ -176,6 +176,7 @@ EDD_WOO_EMAIL_CUSTOMIZER_ITEM_NAME   // 'Woocommerce Email Customizer'
 ## Recent Changes
 | Version | Changes |
 |---------|---------|
+| 1.3.1 | QA hardening: input sanitization on all superglobals, output escaping (wp_kses_post) on email templates, N+1 query fixes, autoload optimization, ABSPATH guard on public class |
 | 1.3.0 | Critical bug fixes (5), dead code removal (~600 lines), ABSPATH guards, build tooling, README rewrite, version bump |
 | 1.2.0 | Removed view more extension button, hide admin notices, updated backend UI |
 | 1.0.0 | Initial Release |

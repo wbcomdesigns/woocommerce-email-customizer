@@ -9,6 +9,8 @@
  * @subpackage Email_Customizer_For_Woocommerce/public
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The public-facing functionality of the plugin.
  *

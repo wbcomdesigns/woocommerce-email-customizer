@@ -69,7 +69,7 @@ class Email_Customizer_For_Woocommerce_Activator {
 			'woocommerce_email_text_color'            => $text_color,
 		);
 
-		update_option( 'wc_email_customizer_old_settings', $settings );
+		update_option( 'wc_email_customizer_old_settings', $settings, 'no' );
 
 		$default_array = get_option( 'wb_email_customizer_old' );
 		if ( ! empty( $default_array ) ) {

@@ -54,11 +54,11 @@ class Email_Customizer_For_Woocommerce_Deactivator {
 			'woocommerce_email_subheading_text'         => '',
 			'woocommerce_email_body_text'               => '',
 		);
-			$old_values = array();
+		$option_keys = array_keys( $default_array );
+		$old_values  = array_combine( $option_keys, array_map( 'get_option', $option_keys ) );
 		foreach ( $default_array as $key => $value ) {
-			$old_values[ $key ] = get_option( $key );
 			update_option( $key, $value, true );
 		}
-			update_option( 'wb_email_customizer_old', $old_values, true );
+		update_option( 'wb_email_customizer_old', $old_values, 'no' );
 	}
 }
