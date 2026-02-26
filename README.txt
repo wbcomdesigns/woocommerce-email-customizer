@@ -89,6 +89,12 @@ The plugin uses inline CSS which is the standard for email client compatibility.
 * Removed: Orphaned methods (control_filter, add_email_header)
 * Added: ABSPATH guards on all include files
 * Added: Build tooling (gruntfile.js, package.json, .distignore)
+* Security: Input sanitization on all $_GET/$_POST/$_REQUEST usage
+* Security: Output escaping with wp_kses_post() on email template HTML
+* Security: Nonce field sanitization with sanitize_text_field(wp_unslash())
+* Performance: N+1 query fix — hoisted get_option calls out of loops
+* Performance: Set autoload=no on migration data options
+* Fix: Proper sanitization of settings array in Customizer save
 
 = 1.2.0 =
 * Fix: Removed view more extension button
