@@ -5,7 +5,7 @@ Tags: woocommerce, email, customizer, email template, branding
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,15 +77,6 @@ The plugin uses inline CSS which is the standard for email client compatibility.
 3. Footer and container styling options
 
 == Changelog ==
-
-= 1.3.1 =
-* Security: Input sanitization on all $_GET/$_POST/$_REQUEST usage
-* Security: Output escaping with wp_kses_post() on email template HTML
-* Security: Nonce field sanitization with sanitize_text_field(wp_unslash())
-* Performance: N+1 query fix — hoisted get_option calls out of loops
-* Performance: Set autoload=no on migration data options
-* Fix: Added ABSPATH guard on public class file
-* Fix: Proper sanitization of settings array in Customizer save
 
 = 1.3.0 =
 * Fix: Removed orphaned JS enqueue causing 404 error on every Customizer load
