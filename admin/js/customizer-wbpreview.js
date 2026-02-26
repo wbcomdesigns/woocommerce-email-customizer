@@ -285,6 +285,20 @@
             updateEmailPreviewFrame(argument_obj);
         });
 
+        // Social Media Links - Real-time updates
+        var socialPlatforms = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube'];
+        socialPlatforms.forEach(function(platform) {
+            bindCustomizerSetting('woocommerce_email_social_' + platform, function (newval) {
+                argument_obj['woocommerce_email_social_' + platform] = newval;
+                updateEmailPreviewFrame(argument_obj);
+            });
+        });
+
+        bindCustomizerSetting('woocommerce_email_social_alignment', function (newval) {
+            argument_obj['woocommerce_email_social_alignment'] = newval;
+            updateEmailPreviewFrame(argument_obj);
+        });
+
         // Custom CSS - Real-time updates
         bindCustomizerSetting('woocommerce_email_custom_css', function (newval) {
             argument_obj['woocommerce_email_custom_css'] = newval;

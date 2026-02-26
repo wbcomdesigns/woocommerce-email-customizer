@@ -106,6 +106,100 @@
             });
         });
 
+        // Export settings handler
+        $(document).on('click', '#wb-email-export-btn', function(e) {
+            e.preventDefault();
+            var $btn = $(this);
+            $btn.prop('disabled', true).text(woocommerce_email_customizer_controls_local.loading);
+
+            $.ajax({
+                url: woocommerce_email_customizer_controls_local.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: woocommerce_email_customizer_controls_local.export_action,
+                    nonce: woocommerce_email_customizer_controls_local.importExportNonce
+                },
+                success: function(response) {
+                    if (response.success && response.data) {
+                        var json = JSON.stringify(response.data, null, 2);
+                        var blob = new Blob([json], { type: 'application/json' });
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'email-customizer-settings-' + new Date().toISOString().slice(0,10) + '.json';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        showSuccessMessage(woocommerce_email_customizer_controls_local.export_success);
+                    } else {
+                        showErrorMessage(response.data || woocommerce_email_customizer_controls_local.error_occurred);
+                    }
+                },
+                error: function() {
+                    showErrorMessage(woocommerce_email_customizer_controls_local.error_occurred);
+                },
+                complete: function() {
+                    $btn.prop('disabled', false).text($btn.data('original-text') || 'Download Settings (JSON)');
+                }
+            });
+        });
+
+        // Import settings handler
+        $(document).on('click', '#wb-email-import-btn', function(e) {
+            e.preventDefault();
+            var $btn = $(this);
+            var $status = $('#wb-email-import-status');
+            var fileInput = document.getElementById('wb-email-import-file');
+
+            if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+                $status.text(woocommerce_email_customizer_controls_local.import_invalid).css('color', 'red');
+                return;
+            }
+
+            var file = fileInput.files[0];
+            if (!file.name.endsWith('.json')) {
+                $status.text(woocommerce_email_customizer_controls_local.import_invalid).css('color', 'red');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $btn.prop('disabled', true).text(woocommerce_email_customizer_controls_local.loading);
+                $status.text('').css('color', '');
+
+                $.ajax({
+                    url: woocommerce_email_customizer_controls_local.ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: woocommerce_email_customizer_controls_local.import_action,
+                        nonce: woocommerce_email_customizer_controls_local.importExportNonce,
+                        import_data: event.target.result
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $status.text(response.data).css('color', 'green');
+                            showSuccessMessage(woocommerce_email_customizer_controls_local.import_success);
+                            // Refresh after short delay so user sees the message.
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1500);
+                        } else {
+                            $status.text(response.data).css('color', 'red');
+                            showErrorMessage(response.data);
+                        }
+                    },
+                    error: function() {
+                        $status.text(woocommerce_email_customizer_controls_local.error_occurred).css('color', 'red');
+                    },
+                    complete: function() {
+                        $btn.prop('disabled', false).text('Import Settings');
+                    }
+                });
+            };
+            reader.readAsText(file);
+        });
+
         // Add error handling for AJAX operations
         $(document).ajaxError(function(event, xhr, settings, thrownError) {
             if (settings.url && settings.url.indexOf('admin-ajax.php') !== -1) {

@@ -231,6 +231,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'previewUrl'         => $this->get_preview_url(),
 			'email_trigger'      => $this->email_trigger,
 			'panel_id'           => $this->panel_id,
+			'importExportNonce'  => wp_create_nonce( 'wb_email_customizer_import_export' ),
+			'export_action'      => 'wb_email_customizer_export_settings',
+			'import_action'      => 'wb_email_customizer_import_settings',
+			'export_success'     => __( 'Settings exported successfully!', 'email-customizer-for-woocommerce' ),
+			'import_success'     => __( 'Settings imported! Refreshing...', 'email-customizer-for-woocommerce' ),
+			'import_invalid'     => __( 'Please select a valid JSON file.', 'email-customizer-for-woocommerce' ),
 		);
 		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
@@ -615,10 +621,20 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Customize the footer section including text and styling.', 'email-customizer-for-woocommerce' ),
 				'priority'    => 60,
 			),
+			'wc_email_social_links'          => array(
+				'title'       => __( 'Social Media Links', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Add social media links to your email footer.', 'email-customizer-for-woocommerce' ),
+				'priority'    => 65,
+			),
 			'wc_email_custom_css'            => array(
 				'title'       => __( 'Custom CSS', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Add your own CSS to further customize email styling.', 'email-customizer-for-woocommerce' ),
 				'priority'    => 70,
+			),
+			'wc_email_import_export'         => array(
+				'title'       => __( 'Import / Export', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Export your email settings as JSON or import from a previous export.', 'email-customizer-for-woocommerce' ),
+				'priority'    => 80,
 			),
 		);
 
@@ -1311,6 +1327,97 @@ class Email_Customizer_For_Woocommerce_Admin {
 				)
 			)
 		);
+
+		// Social Media Link Controls.
+		$social_platforms = array(
+			'facebook'  => __( 'Facebook URL', 'email-customizer-for-woocommerce' ),
+			'twitter'   => __( 'X (Twitter) URL', 'email-customizer-for-woocommerce' ),
+			'instagram' => __( 'Instagram URL', 'email-customizer-for-woocommerce' ),
+			'linkedin'  => __( 'LinkedIn URL', 'email-customizer-for-woocommerce' ),
+			'youtube'   => __( 'YouTube URL', 'email-customizer-for-woocommerce' ),
+		);
+
+		foreach ( $social_platforms as $platform => $label ) {
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wc_email_social_' . $platform . '_control',
+					array(
+						'label'       => $label,
+						'section'     => 'wc_email_social_links',
+						'settings'    => 'woocommerce_email_social_' . $platform,
+						'type'        => 'url',
+						'input_attrs' => array(
+							'placeholder' => 'https://',
+						),
+					)
+				)
+			);
+		}
+
+		$wp_customize->add_control(
+			'wc_email_social_alignment_control',
+			array(
+				'type'     => 'radio',
+				'label'    => __( 'Alignment', 'email-customizer-for-woocommerce' ),
+				'section'  => 'wc_email_social_links',
+				'settings' => 'woocommerce_email_social_alignment',
+				'choices'  => array(
+					'left'   => __( 'Left', 'email-customizer-for-woocommerce' ),
+					'center' => __( 'Center', 'email-customizer-for-woocommerce' ),
+					'right'  => __( 'Right', 'email-customizer-for-woocommerce' ),
+				),
+			)
+		);
+
+		// Import/Export Controls — dummy settings to satisfy Customizer API.
+		$wp_customize->add_setting(
+			'woocommerce_email_export_dummy',
+			array(
+				'type'              => 'option',
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_import_dummy',
+			array(
+				'type'              => 'option',
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_export_control',
+				array(
+					'label'       => __( 'Export Settings', 'email-customizer-for-woocommerce' ),
+					'description' => '<button type="button" class="button" id="wb-email-export-btn">' . esc_html__( 'Download Settings (JSON)', 'email-customizer-for-woocommerce' ) . '</button>',
+					'section'     => 'wc_email_import_export',
+					'settings'    => 'woocommerce_email_export_dummy',
+					'type'        => 'hidden',
+				)
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_import_control',
+				array(
+					'label'       => __( 'Import Settings', 'email-customizer-for-woocommerce' ),
+					'description' => '<input type="file" id="wb-email-import-file" accept=".json" /><br><button type="button" class="button" id="wb-email-import-btn" style="margin-top:8px;">' . esc_html__( 'Import Settings', 'email-customizer-for-woocommerce' ) . '</button><p class="description" id="wb-email-import-status"></p>',
+					'section'     => 'wc_email_import_export',
+					'settings'    => 'woocommerce_email_import_dummy',
+					'type'        => 'hidden',
+				)
+			)
+		);
 	}
 
 	/**
@@ -1544,6 +1651,37 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'transport'         => 'postMessage',
 				'sanitize_callback' => 'wp_strip_all_tags',
 			),
+			// Social Media Links.
+			'woocommerce_email_social_facebook'           => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'esc_url_raw',
+			),
+			'woocommerce_email_social_twitter'            => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'esc_url_raw',
+			),
+			'woocommerce_email_social_instagram'          => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'esc_url_raw',
+			),
+			'woocommerce_email_social_linkedin'           => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'esc_url_raw',
+			),
+			'woocommerce_email_social_youtube'            => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'esc_url_raw',
+			),
+			'woocommerce_email_social_alignment'          => array(
+				'default'           => 'center',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'sanitize_key',
+			),
 		);
 
 		$settings_config = apply_filters( 'wb_email_customizer_settings_config', $settings_config, $wp_customize );
@@ -1630,6 +1768,13 @@ class Email_Customizer_For_Woocommerce_Admin {
 
 		if ( 'emails/email-header.php' === $template_name ) {
 			$template = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/email-header.php';
+		}
+
+		if ( 'emails/email-footer.php' === $template_name ) {
+			$custom_footer = EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_PATH . '/templates/emails/email-footer.php';
+			if ( file_exists( $custom_footer ) ) {
+				$template = $custom_footer;
+			}
 		}
 
 		return $template;
@@ -1873,6 +2018,14 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$styles .= $image_alignment;
 		$styles .= $body_title_style;
 
+		// Social links styles.
+		$social_alignment = $this->get_validated_param( 'woocommerce_email_social_alignment', 'center', 'alignment' );
+		$styles          .= '
+		.wb-social-links { text-align: ' . esc_attr( $social_alignment ) . '; padding: 15px 0; }
+		.wb-social-links a { display: inline-block; margin: 0 6px; padding: 6px 12px; text-decoration: none; color: ' . esc_attr( $woocommerce_email_link_color ) . '; font-size: 13px; font-family: ' . esc_attr( $woocommerce_email_font_family ) . '; }
+		.wb-social-links a:hover { text-decoration: underline; }
+		';
+
 		// Append custom CSS.
 		$custom_css = $this->get_validated_param( 'woocommerce_email_custom_css', '', 'custom_css' );
 		if ( ! empty( $custom_css ) ) {
@@ -1889,7 +2042,138 @@ class Email_Customizer_For_Woocommerce_Admin {
 	 * @param string $text Email Footer Text.
 	 */
 	public function wb_email_customizer_email_footer_text( $text ): string {
-		return ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$footer_text = ( isset( $_GET['woocommerce_email_footer_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['woocommerce_email_footer_text'] ) ) : get_option( 'woocommerce_email_footer_text', __( 'Email Customizer For WooCommerce - Powered by WooCommerce and WordPress', 'email-customizer-for-woocommerce' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$social_html = $this->get_social_links_html();
+		if ( ! empty( $social_html ) ) {
+			$footer_text = $social_html . "\n" . $footer_text;
+		}
+
+		return $footer_text;
+	}
+
+	/**
+	 * Generate social media links HTML for email footer.
+	 *
+	 * @since  1.3.0
+	 * @return string Social links HTML or empty string.
+	 */
+	public function get_social_links_html(): string {
+		$platforms = array(
+			'facebook'  => __( 'Facebook', 'email-customizer-for-woocommerce' ),
+			'twitter'   => __( 'X', 'email-customizer-for-woocommerce' ),
+			'instagram' => __( 'Instagram', 'email-customizer-for-woocommerce' ),
+			'linkedin'  => __( 'LinkedIn', 'email-customizer-for-woocommerce' ),
+			'youtube'   => __( 'YouTube', 'email-customizer-for-woocommerce' ),
+		);
+
+		$links = array();
+		foreach ( $platforms as $key => $label ) {
+			$url = $this->get_validated_param( 'woocommerce_email_social_' . $key, '', 'url' );
+			if ( ! empty( $url ) ) {
+				$links[] = '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $label ) . '</a>';
+			}
+		}
+
+		if ( empty( $links ) ) {
+			return '';
+		}
+
+		return '<div class="wb-social-links">' . implode( ' ', $links ) . '</div>';
+	}
+
+	/**
+	 * AJAX handler for exporting email customizer settings as JSON.
+	 *
+	 * @since  1.3.0
+	 * @return void
+	 */
+	public function wb_email_customizer_export_settings(): void {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wb_email_customizer_import_export' ) ) {
+			wp_send_json_error( __( 'Security check failed.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+			wp_send_json_error( __( 'Insufficient permissions.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		$defaults = $this->get_woocommerce_email_template_options();
+		$settings = array();
+
+		foreach ( array_keys( $defaults ) as $key ) {
+			$settings[ $key ] = get_option( $key, $defaults[ $key ] );
+		}
+
+		$export = array(
+			'plugin'  => 'woocommerce-email-customizer',
+			'version' => EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION,
+			'date'    => current_time( 'mysql' ),
+			'settings' => $settings,
+		);
+
+		wp_send_json_success( $export );
+	}
+
+	/**
+	 * AJAX handler for importing email customizer settings from JSON.
+	 *
+	 * @since  1.3.0
+	 * @return void
+	 */
+	public function wb_email_customizer_import_settings(): void {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wb_email_customizer_import_export' ) ) {
+			wp_send_json_error( __( 'Security check failed.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+			wp_send_json_error( __( 'Insufficient permissions.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		$import_json = isset( $_POST['import_data'] ) ? sanitize_text_field( wp_unslash( $_POST['import_data'] ) ) : '';
+		if ( empty( $import_json ) ) {
+			wp_send_json_error( __( 'No import data provided.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		$import_data = json_decode( $import_json, true );
+		if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $import_data ) ) {
+			wp_send_json_error( __( 'Invalid JSON data.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		if ( ! isset( $import_data['plugin'] ) || 'woocommerce-email-customizer' !== $import_data['plugin'] ) {
+			wp_send_json_error( __( 'Invalid export file. This file was not generated by WooCommerce Email Customizer.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		if ( ! isset( $import_data['settings'] ) || ! is_array( $import_data['settings'] ) ) {
+			wp_send_json_error( __( 'No settings found in import data.', 'email-customizer-for-woocommerce' ) );
+			return;
+		}
+
+		// Only import known setting keys.
+		$allowed_keys = array_keys( $this->get_woocommerce_email_template_options() );
+		$imported     = 0;
+
+		foreach ( $import_data['settings'] as $key => $value ) {
+			if ( ! in_array( $key, $allowed_keys, true ) ) {
+				continue;
+			}
+			update_option( $key, sanitize_text_field( $value ) );
+			++$imported;
+		}
+
+		wp_send_json_success(
+			sprintf(
+				/* translators: %d: Number of settings imported. */
+				__( 'Successfully imported %d settings. Please refresh the Customizer to see changes.', 'email-customizer-for-woocommerce' ),
+				$imported
+			)
+		);
 	}
 
 	/**
@@ -2212,6 +2496,14 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'woocommerce_email_footer_address_border_color' => '#dddddd',
 			'woocommerce_email_footer_address_border_style' => 'solid',
 			'woocommerce_email_custom_css'                => '',
+
+			// Social Media Links.
+			'woocommerce_email_social_facebook'           => '',
+			'woocommerce_email_social_twitter'            => '',
+			'woocommerce_email_social_instagram'          => '',
+			'woocommerce_email_social_linkedin'           => '',
+			'woocommerce_email_social_youtube'            => '',
+			'woocommerce_email_social_alignment'          => 'center',
 		);
 
 		// Get template-specific overrides.

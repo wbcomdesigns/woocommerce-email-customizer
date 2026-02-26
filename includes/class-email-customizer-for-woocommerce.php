@@ -169,6 +169,10 @@ class Email_Customizer_For_Woocommerce {
 		// AJAX actions for template presets.
 		$this->loader->add_action( 'wp_ajax_wb_email_customizer_load_template_presets', $plugin_admin, 'wb_email_customizer_load_template_presets' );
 
+		// AJAX actions for import/export.
+		$this->loader->add_action( 'wp_ajax_wb_email_customizer_export_settings', $plugin_admin, 'wb_email_customizer_export_settings' );
+		$this->loader->add_action( 'wp_ajax_wb_email_customizer_import_settings', $plugin_admin, 'wb_email_customizer_import_settings' );
+
 		// Existing actions continue.
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'wb_email_customizer_enqueue_customizer_control_script' );
 		$this->loader->add_filter( 'woocommerce_email_footer_text', $plugin_admin, 'wb_email_customizer_email_footer_text' );
