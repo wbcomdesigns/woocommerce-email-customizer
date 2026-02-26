@@ -305,6 +305,17 @@
             updateEmailPreviewFrame(argument_obj);
         });
 
+        // Email Preview Options — Email Type and Order Selector
+        bindCustomizerSetting('woocommerce_email_preview_type', function (newval) {
+            argument_obj['woocommerce_email_preview_type'] = newval;
+            updateEmailPreviewFrame(argument_obj);
+        });
+
+        bindCustomizerSetting('woocommerce_email_preview_order', function (newval) {
+            argument_obj['woocommerce_email_preview_order'] = newval;
+            updateEmailPreviewFrame(argument_obj);
+        });
+
         // Template Selection - Real-time updates with settings synchronization
         wp.customize('woocommerce_email_template', function (value) {
             value.bind(function (newval) {

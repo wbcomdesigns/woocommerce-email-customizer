@@ -502,42 +502,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 					wp_die( esc_html__( 'Security check failed.', 'email-customizer-for-woocommerce' ) );
 				}
 
-				$mailer = WC()->mailer();
-				if ( ! $mailer ) {
-					throw new Exception( 'WooCommerce mailer not available' );
-				}
-
-				ob_start();
-
-				$template = $this->get_validated_param( 'woocommerce_email_template', 'default', 'template' );
-
-				$template_file = $this->get_template_file_path( $template );
-
-				if ( ! file_exists( $template_file ) ) {
-					throw new Exception( 'Template file not found: ' . $template_file );
-				}
-
-				include $template_file;
-
-				$message = ob_get_clean();
-
-				if ( empty( $message ) ) {
-					throw new Exception( 'Empty email template generated' );
-				}
-
-				$email_heading = $this->get_validated_param(
-					'woocommerce_email_heading_text',
-					__( 'Thanks for your order!', 'email-customizer-for-woocommerce' ),
-					'text'
-				);
-
-				$email    = new WC_Email();
-				$messages = $email->style_inline( $mailer->wrap_message( $email_heading, $message ) );
-
-				// Set proper content type header.
-				header( 'Content-Type: text/html; charset=utf-8' );
-
-				echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Nonce-verified admin preview; full HTML email document from WooCommerce internals cannot be run through wp_kses_post without stripping required <html>/<head>/<style> tags.
+				$this->render_email_preview();
 				exit;
 			}
 		} catch ( Exception $e ) {
@@ -559,6 +524,84 @@ class Email_Customizer_For_Woocommerce_Admin {
 		return $wp_query;
 	}
 
+	/**
+	 * Render the email preview with optional real order data.
+	 *
+	 * @since  1.3.0
+	 * @throws Exception If template or mailer fails.
+	 * @return void
+	 */
+	private function render_email_preview(): void {
+		$mailer = WC()->mailer();
+		if ( ! $mailer ) {
+			throw new Exception( 'WooCommerce mailer not available' );
+		}
+
+		// Check for real order preview.
+		$preview_order_id = isset( $_GET['woocommerce_email_preview_order'] ) ? absint( $_GET['woocommerce_email_preview_order'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$preview_type     = isset( $_GET['woocommerce_email_preview_type'] ) ? sanitize_key( wp_unslash( $_GET['woocommerce_email_preview_type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// Set up template variables for real order preview.
+		$order              = null;
+		$email              = null;
+		$sent_to_admin      = false;
+		$plain_text         = false;
+		$additional_content = '';
+
+		if ( $preview_order_id > 0 ) {
+			$order = wc_get_order( $preview_order_id );
+		}
+
+		// Get the email type object if specified.
+		if ( ! empty( $preview_type ) ) {
+			$email_obj = $this->get_email_object_for_type( $preview_type );
+			if ( $email_obj ) {
+				$additional_content = $email_obj->get_additional_content();
+			}
+			// Only pass $email to template when we have a real order — templates call $order methods directly.
+			if ( $email_obj && $order ) {
+				$email             = $email_obj;
+				$email->object     = $order;
+				$sent_to_admin     = in_array( $preview_type, array( 'new_order', 'cancelled_order', 'failed_order' ), true );
+			}
+		}
+
+		// Determine heading: user-customized heading takes priority, then email type heading.
+		$custom_heading = $this->get_validated_param( 'woocommerce_email_heading_text', '', 'text' );
+
+		if ( ! empty( $custom_heading ) ) {
+			$email_heading = $custom_heading;
+		} elseif ( $email && $order ) {
+			$email_heading = $email->get_heading();
+		} else {
+			$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
+		}
+
+		ob_start();
+
+		$template      = $this->get_validated_param( 'woocommerce_email_template', 'default', 'template' );
+		$template_file = $this->get_template_file_path( $template );
+
+		if ( ! file_exists( $template_file ) ) {
+			throw new Exception( 'Template file not found: ' . $template_file );
+		}
+
+		include $template_file;
+
+		$message = ob_get_clean();
+
+		if ( empty( $message ) ) {
+			throw new Exception( 'Empty email template generated' );
+		}
+
+		$wrap_email = $email ? $email : new WC_Email();
+		$messages   = $wrap_email->style_inline( $mailer->wrap_message( $email_heading, $message ) );
+
+		// Set proper content type header.
+		header( 'Content-Type: text/html; charset=utf-8' );
+
+		echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Nonce-verified admin preview; full HTML email document from WooCommerce internals cannot be run through wp_kses_post without stripping required <html>/<head>/<style> tags.
+	}
 
 	/**
 	 * Added Customizer Sections.
@@ -626,6 +669,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'description' => __( 'Add social media links to your email footer.', 'email-customizer-for-woocommerce' ),
 				'priority'    => 65,
 			),
+			'wc_email_preview_options'       => array(
+				'title'       => __( 'Email Preview', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Select which email type and order to preview.', 'email-customizer-for-woocommerce' ),
+				'priority'    => 15,
+			),
 			'wc_email_custom_css'            => array(
 				'title'       => __( 'Custom CSS', 'email-customizer-for-woocommerce' ),
 				'description' => __( 'Add your own CSS to further customize email styling.', 'email-customizer-for-woocommerce' ),
@@ -670,6 +718,37 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'template-two'   => __( 'Minimal Template', 'email-customizer-for-woocommerce' ),
 					'template-three' => __( 'Bold Template', 'email-customizer-for-woocommerce' ),
 				),
+			)
+		);
+
+		// Email Preview controls — email type + order selector.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_preview_type_control',
+				array(
+					'type'        => 'select',
+					'label'       => __( 'Email Type', 'email-customizer-for-woocommerce' ),
+					'description' => __( 'Select which WooCommerce email type to preview.', 'email-customizer-for-woocommerce' ),
+					'section'     => 'wc_email_preview_options',
+					'settings'    => 'woocommerce_email_preview_type',
+					'choices'     => $this->get_email_type_choices(),
+				)
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_preview_order_control',
+				array(
+					'type'        => 'select',
+					'label'       => __( 'Preview Order', 'email-customizer-for-woocommerce' ),
+					'description' => __( 'Select an order to preview with real data. Choose "Sample Data" for dummy content.', 'email-customizer-for-woocommerce' ),
+					'section'     => 'wc_email_preview_options',
+					'settings'    => 'woocommerce_email_preview_order',
+					'choices'     => $this->get_preview_order_choices(),
+				)
 			)
 		);
 
@@ -1375,6 +1454,27 @@ class Email_Customizer_For_Woocommerce_Admin {
 			)
 		);
 
+		// Email Preview controls — settings registered outside the main loop as they use 'theme_mod' type.
+		$wp_customize->add_setting(
+			'woocommerce_email_preview_type',
+			array(
+				'type'              => 'theme_mod',
+				'default'           => 'customer_completed_order',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'sanitize_key',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'woocommerce_email_preview_order',
+			array(
+				'type'              => 'theme_mod',
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'absint',
+			)
+		);
+
 		// Import/Export Controls — dummy settings to satisfy Customizer API.
 		$wp_customize->add_setting(
 			'woocommerce_email_export_dummy',
@@ -2027,7 +2127,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$social_alignment = $this->get_validated_param( 'woocommerce_email_social_alignment', 'center', 'alignment' );
 		$styles          .= '
 		.wb-social-links { text-align: ' . esc_attr( $social_alignment ) . '; padding: 15px 0; }
-		.wb-social-links a { display: inline-block; margin: 0 6px; padding: 6px 12px; text-decoration: none; color: ' . esc_attr( $woocommerce_email_link_color ) . '; font-size: 13px; font-family: ' . esc_attr( $woocommerce_email_font_family ) . '; }
+		.wb-social-links a { display: inline-block; margin: 0 6px; padding: 6px 12px; text-decoration: none; color: ' . esc_attr( $woocommerce_email_link_color ) . '; font-size: 13px; font-family: ' . esc_attr( $font_family_css ) . '; }
 		.wb-social-links a:hover { text-decoration: underline; }
 		';
 
@@ -2090,6 +2190,111 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 
 		return '<div class="wb-social-links">' . implode( ' ', $links ) . '</div>';
+	}
+
+	/**
+	 * Get email type choices for the preview selector.
+	 *
+	 * Dynamically detects ALL registered WooCommerce email classes,
+	 * including those from third-party plugins like Subscriptions,
+	 * Memberships, Bookings, etc.
+	 *
+	 * @since  1.3.0
+	 * @return array Associative array of email_id => label.
+	 */
+	private function get_email_type_choices(): array {
+		$choices = array();
+		$mailer  = WC()->mailer();
+
+		if ( ! $mailer ) {
+			return $choices;
+		}
+
+		$emails = $mailer->get_emails();
+
+		foreach ( $emails as $email ) {
+			if ( ! empty( $email->id ) && ! empty( $email->title ) ) {
+				$choices[ $email->id ] = $email->title;
+			}
+		}
+
+		return $choices;
+	}
+
+	/**
+	 * Get preview order choices for the order selector dropdown.
+	 *
+	 * @since  1.3.0
+	 * @return array Associative array of order_id => label.
+	 */
+	private function get_preview_order_choices(): array {
+		$choices = array(
+			'' => __( '— Sample Data —', 'email-customizer-for-woocommerce' ),
+		);
+
+		$orders = wc_get_orders(
+			array(
+				'limit'   => 10,
+				'orderby' => 'date',
+				'order'   => 'DESC',
+				'status'  => array( 'wc-completed', 'wc-processing', 'wc-on-hold', 'wc-pending', 'wc-refunded', 'wc-failed' ),
+			)
+		);
+
+		foreach ( $orders as $order ) {
+			$choices[ $order->get_id() ] = sprintf(
+				/* translators: 1: Order number, 2: Customer name, 3: Order total. */
+				__( '#%1$s — %2$s (%3$s)', 'email-customizer-for-woocommerce' ),
+				$order->get_order_number(),
+				$order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+				wp_strip_all_tags( wc_price( $order->get_total() ) )
+			);
+		}
+
+		return $choices;
+	}
+
+	/**
+	 * Get the WooCommerce email heading for a specific email type.
+	 *
+	 * @since  1.3.0
+	 * @param  string   $email_type The email type ID.
+	 * @param  WC_Order $order      The order object.
+	 * @return string The email heading text.
+	 */
+	private function get_email_heading_for_type( $email_type, $order ): string {
+		$mailer = WC()->mailer();
+		$emails = $mailer->get_emails();
+
+		foreach ( $emails as $email_obj ) {
+			if ( $email_obj->id === $email_type ) {
+				// Set the order on the email object so placeholders resolve.
+				$email_obj->object = $order;
+				return $email_obj->get_heading();
+			}
+		}
+
+		return __( 'Your order is complete', 'email-customizer-for-woocommerce' );
+	}
+
+	/**
+	 * Get the WooCommerce email object for a specific email type.
+	 *
+	 * @since  1.3.0
+	 * @param  string $email_type The email type ID.
+	 * @return WC_Email|null The email object or null.
+	 */
+	private function get_email_object_for_type( $email_type ) {
+		$mailer = WC()->mailer();
+		$emails = $mailer->get_emails();
+
+		foreach ( $emails as $email_obj ) {
+			if ( $email_obj->id === $email_type ) {
+				return $email_obj;
+			}
+		}
+
+		return null;
 	}
 
 	/**

@@ -98,16 +98,22 @@
 |--------|---------|
 | `woocommerce_email_customizer_send_email` | Send test email |
 | `wb_email_customizer_load_template_presets` | Load template preset defaults |
+| `wb_email_customizer_export_settings` | Export settings as JSON |
+| `wb_email_customizer_import_settings` | Import settings from JSON |
 
-## Customizer Settings (35+ settings)
+## Customizer Settings (45+ settings)
 
 ### Sections (Panel: `wc_email_customizer_panel`)
 1. **Email Templates** (`wc_email_templates`) - Template selection (4 templates)
-2. **Email Content** (`wc_email_text`) - Heading, subheading, body text
-3. **Email Header** (`wc_email_header`) - Image, placement, alignment, colors, font size
-4. **Container & Layout** (`wc_email_appearance_customizer`) - Background, borders, padding, width, corners, shadow
-5. **Email Body** (`wc_email_body`) - Colors, font size, font family
-6. **Email Footer** (`wc_email_footer`) - Text, colors, padding, address section styling
+2. **Email Preview** (`wc_email_preview_options`) - Email type + order selector for live preview
+3. **Email Content** (`wc_email_text`) - Heading, subheading, body text
+4. **Email Header** (`wc_email_header`) - Image, placement, alignment, colors, font size
+5. **Container & Layout** (`wc_email_appearance_customizer`) - Background, borders, padding, width, corners, shadow
+6. **Email Body** (`wc_email_body`) - Colors, font size, font family
+7. **Email Footer** (`wc_email_footer`) - Text, colors, padding, address section styling
+8. **Social Media Links** (`wc_email_social_links`) - Facebook, X, Instagram, LinkedIn, YouTube
+9. **Custom CSS** (`wc_email_custom_css`) - Custom CSS textarea
+10. **Import / Export** (`wc_email_import_export`) - JSON import/export
 
 ### All Customizer Settings
 ```
@@ -144,6 +150,11 @@ woocommerce_email_footer_address_background_color
 woocommerce_email_footer_address_border
 woocommerce_email_footer_address_border_color
 woocommerce_email_footer_address_border_style (solid/dotted)
+woocommerce_email_custom_css
+woocommerce_email_social_facebook/twitter/instagram/linkedin/youtube
+woocommerce_email_social_alignment (left/center/right)
+woocommerce_email_preview_type (theme_mod, not stored as option)
+woocommerce_email_preview_order (theme_mod, not stored as option)
 ```
 
 ## Dependencies

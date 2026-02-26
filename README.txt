@@ -29,6 +29,8 @@ No coding required. Simply adjust the controls and see your changes instantly in
 * **Dynamic Placeholders** - Use {order_number}, {customer_first_name}, {site_title}, and more in text fields
 * **Custom CSS** - Add your own CSS for advanced email styling control
 * **Import/Export** - Export settings as JSON and import on another site
+* **Email Type Preview** - Preview different WooCommerce email types (Completed, Processing, Refunded, etc.)
+* **Real Order Preview** - Select a real order to preview with actual customer data
 * **Test Email** - Send a test email to verify your design looks correct
 * **HPOS Compatible** - Works with WooCommerce High-Performance Order Storage
 * **WooCommerce Subscriptions** - Compatible with WooCommerce Subscriptions emails
@@ -106,6 +108,8 @@ The plugin uses inline CSS which is the standard for email client compatibility.
 * Added: Import/Export settings as JSON for easy migration between sites
 * Added: Dynamic placeholders ({site_title}, {order_number}, {customer_first_name}, etc.) in all text fields
 * Added: Custom email-footer.php template override with social links support
+* Added: Email Type Preview selector — preview different WooCommerce email types (Completed, Processing, Refunded, etc.)
+* Added: Real Order Preview — select an actual order to preview with real customer data instead of dummy content
 
 = 1.2.0 =
 * Fix: Removed view more extension button
