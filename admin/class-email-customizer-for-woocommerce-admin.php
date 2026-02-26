@@ -237,6 +237,11 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'export_success'     => __( 'Settings exported successfully!', 'email-customizer-for-woocommerce' ),
 			'import_success'     => __( 'Settings imported! Refreshing...', 'email-customizer-for-woocommerce' ),
 			'import_invalid'     => __( 'Please select a valid JSON file.', 'email-customizer-for-woocommerce' ),
+			'emailTypeContent'   => $this->get_email_type_content_for_js(),
+			'globalHeading'      => get_option( 'woocommerce_email_heading_text', '' ),
+			'globalSubheading'   => get_option( 'woocommerce_email_subheading_text', '' ),
+			'globalBodyText'     => get_option( 'woocommerce_email_body_text', '' ),
+			'perTypeLabel'       => __( 'Per-type content active', 'email-customizer-for-woocommerce' ),
 		);
 		wp_enqueue_script( 'woocommerce-email-customizer-live-preview', EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_PLUGIN_URL . '/admin/js' . $path . '/customizer-wbpreview' . $extension, array( 'jquery' ), EMAIL_CUSTOMIZER_FOR_WOOCOMMERCE_VERSION, true );
 		wp_localize_script( 'woocommerce-email-customizer-live-preview', 'woocommerce_email_customizer_controls_local', $localized_vars );
@@ -566,15 +571,29 @@ class Email_Customizer_For_Woocommerce_Admin {
 			}
 		}
 
-		// Determine heading: user-customized heading takes priority, then email type heading.
+		// Determine heading: URL param > per-type override > WC email heading > default.
 		$custom_heading = $this->get_validated_param( 'woocommerce_email_heading_text', '', 'text' );
 
 		if ( ! empty( $custom_heading ) ) {
 			$email_heading = $custom_heading;
+		} elseif ( ! empty( $preview_type ) && function_exists( 'wb_email_get_type_content' ) ) {
+			$per_type_heading = wb_email_get_type_content( $preview_type, 'heading' );
+			if ( ! empty( $per_type_heading ) ) {
+				$email_heading = $per_type_heading;
+			} elseif ( $email && $order ) {
+				$email_heading = $email->get_heading();
+			} else {
+				$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
+			}
 		} elseif ( $email && $order ) {
 			$email_heading = $email->get_heading();
 		} else {
 			$email_heading = __( 'Thanks for your order!', 'email-customizer-for-woocommerce' );
+		}
+
+		// Replace placeholders in heading.
+		if ( function_exists( 'wb_email_replace_placeholders' ) ) {
+			$email_heading = wb_email_replace_placeholders( $email_heading, $order );
 		}
 
 		ob_start();
@@ -641,7 +660,7 @@ class Email_Customizer_For_Woocommerce_Admin {
 		$sections = array(
 			'wc_email_text'                  => array(
 				'title'       => __( 'Email Content', 'email-customizer-for-woocommerce' ),
-				'description' => __( 'Customize the text content of your emails.', 'email-customizer-for-woocommerce' ),
+				'description' => __( 'Customize the text content of your emails. Content is saved per email type — select a type in the Email Preview section to customize each email individually.', 'email-customizer-for-woocommerce' ),
 				'priority'    => 20,
 			),
 			'wc_email_header'                => array(
@@ -802,6 +821,20 @@ class Email_Customizer_For_Woocommerce_Admin {
 					'section'     => 'wc_email_text',
 					'settings'    => 'woocommerce_email_body_text',
 					'type'        => 'textarea',
+				)
+			)
+		);
+
+		// Hidden control for per-email-type content storage (JSON).
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'wc_email_type_content_control',
+				array(
+					'type'     => 'hidden',
+					'section'  => 'wc_email_text',
+					'settings' => 'woocommerce_email_type_content',
+					'priority' => 40,
 				)
 			)
 		);
@@ -1787,6 +1820,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 				'transport'         => 'postMessage',
 				'sanitize_callback' => 'sanitize_key',
 			),
+			// Per-email-type content overrides (JSON).
+			'woocommerce_email_type_content'              => array(
+				'default'           => '',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => array( $this, 'sanitize_email_type_content' ),
+			),
 		);
 
 		$settings_config = apply_filters( 'wb_email_customizer_settings_config', $settings_config, $wp_customize );
@@ -2255,6 +2294,24 @@ class Email_Customizer_For_Woocommerce_Admin {
 	}
 
 	/**
+	 * Get per-email-type content for JS localization.
+	 *
+	 * @since  1.3.0
+	 * @return array Decoded per-type content array.
+	 */
+	private function get_email_type_content_for_js(): array {
+		$raw = get_option( 'woocommerce_email_type_content', '' );
+		if ( empty( $raw ) ) {
+			return array();
+		}
+		if ( is_string( $raw ) ) {
+			$decoded = json_decode( $raw, true );
+			return is_array( $decoded ) ? $decoded : array();
+		}
+		return is_array( $raw ) ? $raw : array();
+	}
+
+	/**
 	 * Get the WooCommerce email heading for a specific email type.
 	 *
 	 * @since  1.3.0
@@ -2378,7 +2435,12 @@ class Email_Customizer_For_Woocommerce_Admin {
 			if ( ! in_array( $key, $allowed_keys, true ) ) {
 				continue;
 			}
-			update_option( $key, sanitize_text_field( $value ) );
+			// Per-type content is JSON — use dedicated sanitizer.
+			if ( 'woocommerce_email_type_content' === $key ) {
+				update_option( $key, $this->sanitize_email_type_content( $value ) );
+			} else {
+				update_option( $key, sanitize_text_field( $value ) );
+			}
 			++$imported;
 		}
 
@@ -2719,6 +2781,8 @@ class Email_Customizer_For_Woocommerce_Admin {
 			'woocommerce_email_social_linkedin'           => '',
 			'woocommerce_email_social_youtube'            => '',
 			'woocommerce_email_social_alignment'          => 'center',
+			// Per-email-type content overrides.
+			'woocommerce_email_type_content'              => '',
 		);
 
 		// Get template-specific overrides.
@@ -2825,6 +2889,39 @@ class Email_Customizer_For_Woocommerce_Admin {
 		}
 
 		return $template_overrides;
+	}
+
+	/**
+	 * Sanitize per-email-type content JSON.
+	 *
+	 * @since  1.3.0
+	 * @param  string $value JSON string of per-type content.
+	 * @return string Sanitized JSON string.
+	 */
+	public function sanitize_email_type_content( $value ) {
+		if ( empty( $value ) ) {
+			return '';
+		}
+
+		$decoded = json_decode( $value, true );
+		if ( ! is_array( $decoded ) ) {
+			return '';
+		}
+
+		$sanitized = array();
+		foreach ( $decoded as $type_id => $content ) {
+			$safe_key = sanitize_key( $type_id );
+			if ( ! is_array( $content ) ) {
+				continue;
+			}
+			$sanitized[ $safe_key ] = array(
+				'heading'    => isset( $content['heading'] ) ? sanitize_text_field( $content['heading'] ) : '',
+				'subheading' => isset( $content['subheading'] ) ? sanitize_text_field( $content['subheading'] ) : '',
+				'body_text'  => isset( $content['body_text'] ) ? sanitize_textarea_field( $content['body_text'] ) : '',
+			);
+		}
+
+		return wp_json_encode( $sanitized );
 	}
 
 	/**

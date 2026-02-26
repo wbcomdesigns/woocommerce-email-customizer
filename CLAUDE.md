@@ -106,7 +106,7 @@
 ### Sections (Panel: `wc_email_customizer_panel`)
 1. **Email Templates** (`wc_email_templates`) - Template selection (4 templates)
 2. **Email Preview** (`wc_email_preview_options`) - Email type + order selector for live preview
-3. **Email Content** (`wc_email_text`) - Heading, subheading, body text
+3. **Email Content** (`wc_email_text`) - Heading, subheading, body text (per-email-type content)
 4. **Email Header** (`wc_email_header`) - Image, placement, alignment, colors, font size
 5. **Container & Layout** (`wc_email_appearance_customizer`) - Background, borders, padding, width, corners, shadow
 6. **Email Body** (`wc_email_body`) - Colors, font size, font family
@@ -153,6 +153,7 @@ woocommerce_email_footer_address_border_style (solid/dotted)
 woocommerce_email_custom_css
 woocommerce_email_social_facebook/twitter/instagram/linkedin/youtube
 woocommerce_email_social_alignment (left/center/right)
+woocommerce_email_type_content (JSON: per-email-type heading/subheading/body overrides)
 woocommerce_email_preview_type (theme_mod, not stored as option)
 woocommerce_email_preview_order (theme_mod, not stored as option)
 ```
@@ -187,6 +188,6 @@ EDD_WOO_EMAIL_CUSTOMIZER_ITEM_NAME   // 'Woocommerce Email Customizer'
 ## Recent Changes
 | Version | Changes |
 |---------|---------|
-| 1.3.0 | Critical bug fixes (5), dead code removal (~600 lines), ABSPATH guards, build tooling, README rewrite, QA hardening (input sanitization, output escaping, N+1 fixes, autoload optimization) |
+| 1.3.0 | Critical bug fixes (5), dead code removal (~600 lines), ABSPATH guards, build tooling, README rewrite, QA hardening (input sanitization, output escaping, N+1 fixes, autoload optimization). Per-email-type content customization, Email Type Preview, Real Order Preview, Custom CSS, Social Media Links, Import/Export, Dynamic Placeholders, WC Subscriptions/Memberships/Bookings compat |
 | 1.2.0 | Removed view more extension button, hide admin notices, updated backend UI |
 | 1.0.0 | Initial Release |

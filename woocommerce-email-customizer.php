@@ -233,6 +233,40 @@ function wb_email_replace_placeholders( $text, $order = null ) {
 	return str_replace( array_keys( $replacements ), array_values( $replacements ), $text );
 }
 
+/**
+ * Get per-email-type content override.
+ *
+ * Looks up the stored per-type content for a specific email type and field.
+ * Returns the override value if set, otherwise the fallback.
+ *
+ * @since  1.3.0
+ * @param  string $email_id  The WooCommerce email type ID (e.g. 'customer_completed_order').
+ * @param  string $field     The content field: 'heading', 'subheading', or 'body_text'.
+ * @param  string $fallback  Value to return if no per-type override exists.
+ * @return string The per-type content or fallback.
+ */
+function wb_email_get_type_content( $email_id, $field, $fallback = '' ) {
+	if ( empty( $email_id ) || empty( $field ) ) {
+		return $fallback;
+	}
+
+	$type_content = get_option( 'woocommerce_email_type_content', '' );
+	if ( empty( $type_content ) ) {
+		return $fallback;
+	}
+
+	if ( is_string( $type_content ) ) {
+		$type_content = json_decode( $type_content, true );
+	}
+
+	if ( ! is_array( $type_content ) || ! isset( $type_content[ $email_id ][ $field ] ) ) {
+		return $fallback;
+	}
+
+	$value = $type_content[ $email_id ][ $field ];
+	return ! empty( $value ) ? $value : $fallback;
+}
+
 // Declare HPOS compatibility.
 add_action(
 	'before_woocommerce_init',

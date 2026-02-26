@@ -26,6 +26,7 @@ No coding required. Simply adjust the controls and see your changes instantly in
 * **Container Layout** - Adjust email width, padding, borders, rounded corners, and box shadow
 * **Header Image Options** - Inside or outside placement, left/center/right alignment
 * **Social Media Links** - Add Facebook, X (Twitter), Instagram, LinkedIn, YouTube links to email footer
+* **Per-Email-Type Content** - Customize heading, subheading, and body text for each email type individually (Completed, Processing, Refunded, etc.)
 * **Dynamic Placeholders** - Use {order_number}, {customer_first_name}, {site_title}, and more in text fields
 * **Custom CSS** - Add your own CSS for advanced email styling control
 * **Import/Export** - Export settings as JSON and import on another site
@@ -108,6 +109,7 @@ The plugin uses inline CSS which is the standard for email client compatibility.
 * Added: Import/Export settings as JSON for easy migration between sites
 * Added: Dynamic placeholders ({site_title}, {order_number}, {customer_first_name}, etc.) in all text fields
 * Added: Custom email-footer.php template override with social links support
+* Added: Per-email-type content customization — unique heading, subheading, and body text for each WooCommerce email type
 * Added: Email Type Preview selector — preview different WooCommerce email types (Completed, Processing, Refunded, etc.)
 * Added: Real Order Preview — select an actual order to preview with real customer data instead of dummy content
 

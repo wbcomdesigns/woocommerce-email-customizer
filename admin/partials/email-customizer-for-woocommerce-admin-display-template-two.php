@@ -27,6 +27,22 @@ if ( ! empty( get_option( 'woocommerce_email_body_text' ) ) || ( isset( $_GET['w
 }
 // phpcs:enable
 
+// Per-email-type content overrides (for real WooCommerce email sends, not Customizer preview).
+if ( ! isset( $_GET['email-customizer-for-woocommerce'] ) && isset( $email ) && $email instanceof WC_Email && ! empty( $email->id ) && function_exists( 'wb_email_get_type_content' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$wb_per_heading = wb_email_get_type_content( $email->id, 'heading' );
+	if ( ! empty( $wb_per_heading ) ) {
+		$email_heading = $wb_per_heading;
+	}
+	$wb_per_sub = wb_email_get_type_content( $email->id, 'subheading' );
+	if ( ! empty( $wb_per_sub ) ) {
+		$woocommerce_email_subheading_text = $wb_per_sub;
+	}
+	$wb_per_body = wb_email_get_type_content( $email->id, 'body_text' );
+	if ( ! empty( $wb_per_body ) ) {
+		$woocommerce_email_body_text = $wb_per_body;
+	}
+}
+
 // Replace dynamic placeholders in text fields.
 if ( function_exists( 'wb_email_replace_placeholders' ) ) {
 	$placeholder_order = isset( $order ) && $order instanceof WC_Order ? $order : null;
@@ -35,6 +51,9 @@ if ( function_exists( 'wb_email_replace_placeholders' ) ) {
 	}
 	if ( ! empty( $woocommerce_email_body_text ) ) {
 		$woocommerce_email_body_text = wb_email_replace_placeholders( $woocommerce_email_body_text, $placeholder_order );
+	}
+	if ( isset( $email_heading ) && ! empty( $email_heading ) ) {
+		$email_heading = wb_email_replace_placeholders( $email_heading, $placeholder_order );
 	}
 }
 
